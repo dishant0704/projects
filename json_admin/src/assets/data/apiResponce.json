@@ -1,0 +1,46 @@
+{
+    "name": "sample",
+    "cid": "test_123",
+    "pages": [
+        {
+            "name": "home01",
+            "title": "Welcom to ...",
+            "profiles": [
+                {"name": "Show All", "proId": "oxuo"},
+                {"name": "Clinical Trials", "proId": "hi55"},
+                {"name": "Conferences", "proId": "dluk"},
+                {"name": "Journals", "proId": "x9y5"}
+            ]
+        },
+        {
+            "name": "page01",
+            "title": "Welcom to ...",
+            "profiles": [
+                {"name": "Show All", "proId": "oxuo"},
+                {"name": "Clinical Trials", "proId": "hi55"},
+                {"name": "Conferences", "proId": "dluk"},
+                {"name": "Journals", "proId": "x9y5"}
+            ]
+        },
+        {
+            "name": "page02",
+            "title": "Welcom to ...",
+            "profiles": [
+                {"name": "Show All", "proId": "oxuo"},
+                {"name": "Clinical Trials", "proId": "hi55"},
+                {"name": "Conferences", "proId": "dluk"},
+                {"name": "Journals", "proId": "x9y5"}
+            ]
+        },
+        {
+            "name": "page03",
+            "title": "Welcom to ...",
+            "profiles": [
+                {"name": "Show All", "proId": "oxuo"},
+                {"name": "Clinical Trials", "proId": "hi55"},
+                {"name": "Conferences", "proId": "dluk"},
+                {"name": "Journals", "proId": "x9y5"}
+            ]
+        }
+    ]
+}

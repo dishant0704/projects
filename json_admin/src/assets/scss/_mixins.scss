@@ -1,0 +1,145 @@
+// Mobile
+@mixin xs-p {
+    @media only screen and (max-width : 480px) and (orientation : portrait), 
+    only screen and (max-width : 640px) and (orientation : portrait), 
+    only screen and (max-device-width : 667px) and (orientation : portrait), 
+    only screen and (max-device-width : 568px) and (orientation : portrait) {
+        @content;
+    }
+}
+
+@mixin xs-l {
+    @media only screen and (max-width : 480px) and (orientation : landscape), 
+	only screen and (min-device-width : 414px) and (max-device-width : 736px) and (orientation : landscape), 
+	only screen and (max-width : 640px) and (orientation : landscape), 
+	only screen and (max-device-width : 667px) and (orientation : landscape), 
+	only screen and (max-device-width : 568px) and (orientation : landscape) {
+        @content;
+    }
+}
+
+@mixin xs {
+    @media only screen and (max-width : 480px) and (orientation : landscape),
+    only screen and (min-device-width : 414px) and (max-device-width : 736px) and (orientation : landscape), 
+    only screen and (max-width : 640px) and (orientation : landscape), 
+    only screen and (max-device-width : 667px) and (orientation : landscape), 
+    only screen and (max-device-width : 568px) and (orientation : landscape),
+    only screen and (max-width : 480px) and (orientation : portrait),
+    only screen and (max-width : 640px) and (orientation : portrait),
+    only screen and (max-device-width : 667px) and (orientation : portrait),
+    only screen and (max-device-width : 568px) and (orientation : portrait),
+    only screen and (max-width : 767px){
+        @content;
+    }
+}
+
+@mixin mobile {
+    @media (max-width: 767px){
+        @content;
+    }
+}
+
+// Ipad
+@mixin ipad {
+    @media only screen and (min-width : 768px) and (max-width : 1024px) and (orientation:portrait),
+    only screen and (min-width : 768px) and (max-width : 1024px) and (orientation:landscape),
+    only screen and  (min-width: 768px) and (max-width: 1023.99) {
+        @content;
+    }
+}
+
+@mixin ipad-p {
+    @media only screen and (min-width : 768px) and (max-width : 1024px) and (orientation:portrait) {
+        @content;
+    }
+}
+
+@mixin ipad-l {
+    @media only screen and (min-width : 768px) and (max-width : 1024px) and (orientation:landscape) {
+        @content;
+    }
+}
+
+
+// Large devices 1200 or more
+@mixin lg {
+    @media only screen and (min-width : 1200px) {
+        @content;
+    }
+}
+
+// Large devices with resize between 768 to 991
+@mixin md-resize {
+    @media only screen and (min-width : 768px) and (max-width: 991px)  {
+        @content;
+    }
+}
+
+// Large devices with resize between 1025 to 1199
+@mixin resize {
+    @media only screen and (min-width : 1025px) and (max-width: 1199.98px)  {
+        @content;
+    }
+}
+
+// Large devices with resize between 1025 to 1199 & 1200
+@mixin lg-resize {
+    @media only screen and (min-width : 1200px),
+    only screen and (min-width : 1025px) and (max-width: 1199.98px) {
+        @content;
+    }
+}
+@mixin xsmax-l {
+    @media only screen and (device-width : 414px) and (device-height : 896px) and (-webkit-device-pixel-ratio : 3) and (orientation:landscape), 
+    only screen and (device-width : 414px) and (device-height : 896px) and (-webkit-device-pixel-ratio : 2) and (orientation:landscape) {
+        @content;
+    }
+}
+
+// laptop & xl screens 1280, 1400px, 1600px, 1900px
+
+@mixin screen-1280 {
+    @media only screen and (max-height: 800px) and (max-width: 1280px) {
+        @content;
+    }
+}
+
+@mixin screen-1400 {
+    @media (min-width: 1400px) {
+        @content;
+    }
+}
+
+@mixin screen-1600 {
+    @media (min-width: 1600px) {
+        @content;
+    }
+}
+
+@mixin screen-1900 {
+    @media (min-width: 1900px) {
+        @content;
+    }
+}
+
+@mixin  ios($keys...) { 
+    @each $key in $keys {
+        @if ($key == mobile){
+            @include mobile{
+                @content
+            }
+        } @else if ($key == ipad){
+            @include ipad{
+                @content
+            }
+        }@else if ($key == ipad-p){
+            @include ipad-p{
+                @content
+            }
+        } @else if ($key == xsmax-l){
+            @include xsmax-l{
+                @content
+            }
+        }
+    }
+}

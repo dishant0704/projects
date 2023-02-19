@@ -1,0 +1,76 @@
+{
+    "paramcheck": "off",
+    "baseURL": "https://widget.infodesk.com/",
+    "headline": {
+        "count": "10",
+        "more": "50",
+        "rss": "1",
+        "cid": "rea5956_widget",
+        "theme": "content",
+        "toolbar": "style3",
+        "layout": "G1",
+        "height": "570",
+        "frameHeight": "630",
+        "type": "iwidget4",
+        "version": 4
+    },
+    "search": {
+        "cid": "rea5956_widget",
+        "semantic": "off",
+        "savedsearch": "off",
+        "facets": "contentcategory,organization,drug,drugclass,moa,medphase,medindication,medform,topics,industry,location,lang",
+        "exportTemplate": "g2_sample_export_html.ftl",
+        "helpURL": "https://cdn.infodesk.com/resources/infowatch/searchhelp/iwidget5_boolean_help.pdf",
+        "version": 5
+    },
+    "archive": {
+        "days": "365",
+        "subject": "off",
+        "desc": "off",
+        "count": "400",
+        "theme": "style7",
+        "dynamic": "on",
+        "height": "550",
+        "frameHeight": "565",
+        "mode": "inline"
+    },
+    "visual": {
+        "cid": "rea5956_widget",
+        "title": "",
+        "theme": "light1",
+        "styleconfig": "style_light1",
+        "timeperiodoptions": "1,2,3,4,5,6,7,8,9",
+        "timeperiod": "6",
+        "categoryoptions": "contentcategory,organization,drugclass,medphase,medindication,medform,topics,location",
+        "category": "contentcategory",
+        "styleoptions": "pie,vbar,hbar,bubble",
+        "style": "pie",
+        "default": "pdf",
+        "exportTemplate": "g2_infodesk_export_html.ftl",
+        "exportPrint": "g2_idsk_print.ftl",
+        "version": 4
+    },
+    "stat": {
+        "level": "account",
+        "type": "top",
+        "data": "headline",
+        "days": "7",
+        "count": "5",
+        "display": "list",
+        "dataUnit": "absolute",
+        "sort": "desc",
+        "layout": "D12",
+        "theme": "ucb",
+        "app": "6",
+        "frameHeight": "340",
+        "frameWidth": "1200",
+        "width": "1200",
+        "height": "340"
+    },
+    "menu": {
+        "megaMenu": false,
+        "parentGroupClass": "col-sm-6",
+        "childGroupClass": "col-sm-3",
+        "maxSubMenuList": "4"
+    }
+}

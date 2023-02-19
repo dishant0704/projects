@@ -1,0 +1,39 @@
+body {
+  background-color: $black;
+  color: $pageFontColor;
+  padding: 0px;
+  margin: 0px;
+
+  .pageWrapper{
+
+    background-color: $pageBody;
+
+    .headerWrapper {
+      padding: 15px 0px;
+      margin-bottom: 15px;
+      border-bottom: 15px solid $black;
+
+      .logoWrapper {
+        background-image: url('../../../public/images/json_admin_logo.svg');
+        background-repeat: no-repeat;
+        background-position: left center;
+        background-size: contain;
+        height: 90px;
+        width: 185px;
+        float: left;
+      }
+     
+    }
+    .bodyWrapper {
+      min-height: calc(100% + 10px);
+      border-bottom: 15px solid $black;
+    }
+  
+    .footerWrapper {
+      padding: 15px;      
+      text-align: right;
+      font-size: 10px;
+    }
+
+  }
+}

@@ -1,0 +1,12 @@
+@include md-resize{
+    #wrapper {
+        margin-top: 155px;
+        transition: all 0.4s ease 0s;
+    }
+}
+@include resize {
+    #wrapper {
+        margin-top: 0px;
+        transition: all 0.4s ease 0s;
+    }
+}
