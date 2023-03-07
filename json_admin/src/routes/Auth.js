@@ -1,28 +1,19 @@
-import React, { Component, Fragment } from 'react'
-import SignIn from './SignIn'
 
-class Auth extends Component {
-  render() {
-    const currYear =  new Date().getFullYear()
+import React, { Fragment } from "react";
+import SignUpForm from "../components/SignUpForm/SignUpForm";
+import SignInForm from "../components/SignInForm/SignInForm";
+const Auth = () => {   
+    
     return (
         <Fragment>
-            <div className='headerWrapper row'>
-                <div className='logoWrapper'>{/*logo*/}</div>
-            </div>
-            <div className='bodyWrapper row'>
-                <div className='col-sm-12 col-xs-12'>
-                   Login form:
-                   <SignIn />
-                </div>
-            </div>
-            <div className='footerWrapper row'>
-                <div className='col-sm-12 col-xs-12'>
-                    @{currYear} ketandutt@gmail.com.
-                </div>                
-            </div> 
+            <div className="col-sm-12 col-xs-12 auth-container">
+                <SignInForm className="col-sm-5 col-xs-12"/>
+                <div className="col-sm-2"></div>            
+                <SignUpForm className="col-sm-5 col-xs-12"/>
+            </div>            
         </Fragment>
     )
-  }
+
 }
 
-export default Auth
+export default Auth;

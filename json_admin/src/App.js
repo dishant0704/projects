@@ -14,14 +14,27 @@ export class App extends Component {
   }
 
   render() {
+    const currYear =  new Date().getFullYear()
     return (
       <div className="container pageWrapper">
-        {
-        this.state.isAuthFlag ?
-            <Main />
-       :
-          <Auth />
-        }
+        <div className='headerWrapper row'>
+                <div className='logoWrapper'>{/*logo*/}</div>
+            </div>
+            <div className='bodyWrapper row'>
+                <div className='col-sm-12 col-xs-12'>
+                  {
+                  this.state.isAuthFlag ?
+                    <Main />
+                :
+                    <Auth />
+                  }
+                </div>
+            </div>
+            <div className='footerWrapper row'>
+                <div className='col-sm-12 col-xs-12'>
+                    @{currYear} ketandutt@gmail.com.
+                </div>                
+            </div> 
       </div>
     )
   }

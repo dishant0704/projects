@@ -1,0 +1,20 @@
+@import '../../assets/scss/variables';
+.sign-up-container{    
+    h2{margin: 10px 0px;}
+}
+
+.button-wrapper{
+    display: table;
+    button:first-child{ margin-right: 10px;}
+    button{
+        display: table-column;       
+    }
+}
+
+// .error{
+//     color:$white;
+//     padding: 10px;
+//     margin: 10px 0px;
+//     font-size: 16px;
+//     background-color: $error;
+// }
