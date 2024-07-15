@@ -1,0 +1,7 @@
+.mainWrapper{
+    vertical-align: middle;
+    align-items: center;
+    width: 80%;
+    margin: 20px auto;
+}
+.active{font-weight: 600; color:#cc0000;}
