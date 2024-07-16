@@ -8,7 +8,7 @@ import Footer from "./Footer";
 
 const NewsList = () => {
 
-  const {bodyWrapper} = Liststyle
+  const {bodyWrapper, btnWrapper} = Liststyle
  
   const [productsData, setproductsData] = useState([]);
 
@@ -19,8 +19,9 @@ const NewsList = () => {
   const [startData, setStartData] = useState(perPageData);
   const [endData, setendData] = useState(1);
   const [loadingFlag, setLoadingFlag] =useState(true)
+  const [period, setPeriod] = useState(1)
 
-  const apiURL =  `${process.env.REACT_APP_API_URL}api-key=${process.env.REACT_APP_API_KEY}`
+  const apiURL =  `${process.env.REACT_APP_API_URL}${period}.json?api-key=${process.env.REACT_APP_API_KEY}`
   const [searchProductsField, setSearchField] = useState("");
   const fetchAPI = async (URL) => {
     const responce = await fetch(URL);
@@ -33,6 +34,10 @@ const NewsList = () => {
   useEffect(() => {
    fetchAPI(apiURL);
   }, []);
+
+  useEffect(() => {
+    fetchAPI(apiURL);
+   }, [period]);
 
   const pageNation_prePage = () => {
     setCurrPage(currPage - 1);
@@ -89,6 +94,11 @@ const NewsList = () => {
     <Fragment>     
       <Header onKeyUp={(e) => debounce(searchFilter(e), 1000)} dataLength={filterData.length}/>        
       <div key="mainBody" className={bodyWrapper}>
+        <div className={btnWrapper}>
+          <button onClick={() => setPeriod(1)} disabled={period === 1}>Period 01</button>
+          <button onClick={() => setPeriod(7)} disabled={period === 7}>Period 07</button>
+          <button onClick={() => setPeriod(30)} disabled={period === 30}>Period 30</button>
+        </div>
         <h2>New York Times API</h2>
         {loadingFlag? "loadingFlag...":    
           <ul>

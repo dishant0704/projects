@@ -17,6 +17,8 @@ h3 {font-size: 1rem; font-weight: 600;}
 ul{margin: 0px; padding: 0px;}
 ul li{list-style-type: none;}
 
+button{padding: 5px 10px; border: 1px solid #e2e2e2; font-weight: 600;}
+
 .headerWrapper{
     display: flex;
     border-bottom: 1px solid #e2e2e2;
@@ -26,6 +28,8 @@ ul li{list-style-type: none;}
 .searchWrapper input{padding: 8px 10px;}
 .searchRasult{font-weight: 500;}
 .searchRasult span{font-weight: 800;}
+
+.btnWrapper{display: flex; gap: 10px;}
 
 .bodyWrapper{display: grid; padding: 20px 0px}
 
