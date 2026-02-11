@@ -1,2 +1,8 @@
-News URL:
-https://gnews.io/api/v4/search?q=example&lang=en&country=ind&max=20&apikey=22f9f823966fb6b7b23ef715de520326
+News URL:https://gnews.io/api/v4/search?q=example&lang=en&country=ind&max=20&apikey=22f9f823966fb6b7b23ef715de520326
+
+"bcryptjs": "^3.0.3",
+"mongoose": "^8.0.3",
+"next": "16.1.1",
+"next-auth": "^5.0.0-beta.30",
+"nodemailer": "^7.0.12",
+"jsonwebtoken": "^9.0.3"
