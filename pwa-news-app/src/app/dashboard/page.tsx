@@ -8,7 +8,7 @@ import Footer from '@/components/Footer'
 import PageBody from '@/components/PageBody'
 
 
-const page = () => {
+const Dashboard = () => {
     const {data: session, status} = useSession(); 
 
     if(status === "unauthenticated"){
@@ -30,4 +30,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Dashboard

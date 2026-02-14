@@ -10,12 +10,14 @@ export async function POST(request:NextRequest){
     try {
         const reqBody = await request.json()
         const {username, email, password} = reqBody;
-        console.log("reqBody: ", reqBody);
 
         const user = await User.findOne({email});
 
         if(user){
-            return NextResponse.json({error:"User alredy exists"},{status:400})
+            return NextResponse.json({
+                message:"User alredy exists",
+                success:false,
+            })
         }
 
         const salt =  await bcrypt.genSalt(10);
@@ -28,7 +30,6 @@ export async function POST(request:NextRequest){
         })
 
         const saveUser = await newUser.save();
-        console.log("saveUser: ",saveUser)
 
         //send verification mail
         await sendMail({email, emailType:"VERIFY", userId:saveUser._id})
