@@ -9,20 +9,20 @@ export async function POST(request:NextRequest){
     try {
         //extract data from token
         const userID = await getDataFromToken(request);
-        const user = await User.findOne({_id: userID}).select("-passworld -username");
+        const user = await User.findOne({_id: userID}).select("-password");
 
         //Check user
         if(!user){
              return NextResponse.json({
                 message:"User not found",
                 data:[]
-             }, {status:500})
+             }, {status:400})
         }else{
 
             return NextResponse.json({
                 message:"User found",
                 data:user
-             }, {status:400})
+             }, {status:200})
 
         }
 

@@ -1,11 +1,7 @@
 
-import { oauthSignOut } from '@/actions/auth';
-import Image from 'next/image';
-
-import { ProfileProps } from '@/type'; 
 import ProfileIcon from './ProfileIcon';
 
-const Header = (props:ProfileProps) => {
+const Header = () => {
   return (
     <div className='container mx-auto my-5'>
       <div className='flex border-b-2 border-b-neutral-900 '>        
@@ -23,7 +19,7 @@ const Header = (props:ProfileProps) => {
         {/* center  */}
       </div>
       <div>
-        <ProfileIcon {...props} />
+        <ProfileIcon />
         {/* <button className='cursor-pointer' onClick={oauthSignOut}>Sign Out</button> */}
         </div>
       </div>

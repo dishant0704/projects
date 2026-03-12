@@ -19,6 +19,12 @@ export async function POST(request: NextRequest) {
     const user = await User.findOne({ email });
 
     //if User not exists
+    if(user.provider !== 'email'){
+        message: `Please login with ${user.provider}`,
+        success: false,
+      });
+    }
+
     if (!user) {
       return NextResponse.json({
         message: "User does not exists",

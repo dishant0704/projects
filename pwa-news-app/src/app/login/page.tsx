@@ -30,7 +30,7 @@ const OAuthBtnArray: OAuthBtnArrayProps = [
 const Login = () => {
   const { data: session, status } = useSession();
 
-  const defaultFormData = {    
+  const defaultFormData = {
     email: "",
     password: "",
   };
@@ -45,10 +45,7 @@ const Login = () => {
   const timerCount = useRef<any | null>(null);
 
   useEffect(() => {
-    if (      
-      form.email.length > 0 &&
-      form.password.length > 0
-    ) {
+    if (form.email.length > 0 && form.password.length > 0) {
       setBtnFlag(false);
     } else {
       setBtnFlag(true);
@@ -71,6 +68,16 @@ const Login = () => {
     };
   }, [message]);
 
+  //authenticated [Loging with Google ...]
+  if (message.success === false && status === "authenticated") {
+    redirect("/dashboard");
+  }
+
+  //unauthenticated [Login with Username pass]
+  if (message.success === true && status === "unauthenticated") {
+    redirect("/dashboard");
+  }
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
@@ -83,21 +90,16 @@ const Login = () => {
       setLoadingFlag(false);
       setBtnFlag(false);
 
-      console.log("Data: ", responce.data);
+      const { message, success } = await responce.data;
 
-      const { message, success } = responce.data;
       setMessage({ message: message, success: success });
-      setForm(defaultFormData);      
+      setForm(defaultFormData);
     } catch (error: any) {
       console.log("Signup failed");
       console.log(error.message);
     }
   };
 
-  if (status === "authenticated" || message.success) {
-    redirect("/dashboard");
-  }
-  // console.log("session", session);
   return (
     <div className="grid place-items-center h-screen">
       <div className="lx:w-1/3 2xl:w-1/4 p-5 space-y-5 bg-white dark:bg-dark-conBgColor rounded-sm dark:text-dark-fontColor shadow-2xl">
@@ -105,10 +107,10 @@ const Login = () => {
           Login
         </h1>
         {message.message.length > 0 && errorBoxFlag ? (
-              <div className="input text-center p-5 space-y-5">
-                <h1 className="font-bold text-2x1">{message.message}</h1>
-              </div>
-            ) : null}
+          <div className="input text-center p-5 space-y-5">
+            <h1 className="font-bold text-2x1">{message.message}</h1>
+          </div>
+        ) : null}
         <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
           <input
             className="input"
@@ -129,13 +131,13 @@ const Login = () => {
           <span className="text-right text-[14px]">Forgot password?</span>
           <div className="p-2 text-center">
             <button
-                  className={
-                    !btnFlag
-                      ? "px-4 py-2 outline-0 bg-linkColor text-black rounded-sm cursor-pointer"
-                      : "px-4 py-2 outline-0 bg-linkColor text-black rounded-sm"
-                  }
-                  disabled={btnFlag}
-                >
+              className={
+                !btnFlag
+                  ? "px-4 py-2 outline-0 bg-linkColor text-black rounded-sm cursor-pointer"
+                  : "px-4 py-2 outline-0 bg-linkColor text-black rounded-sm"
+              }
+              disabled={btnFlag}
+            >
               Login
             </button>
           </div>

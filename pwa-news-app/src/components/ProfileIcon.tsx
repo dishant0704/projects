@@ -1,16 +1,43 @@
 import Image from "next/image";
-import { ProfileProps } from "@/type";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import { oauthSignOut } from "@/actions/auth";
 
 import { useEffect, useRef, useState } from "react";
+import { useAppSelector } from "@/hooks/store/hooks";
+import { useSession } from "next-auth/react";
+import axios from "axios";
+import { redirect } from "next/navigation";
 
-const ProfileIcon = (props: ProfileProps) => {
+
+const ProfileIcon = () => {
   const [isOpen, setIsopen] = useState(false);
-  const { name, email, image: imgURL } = props;
+
+  const { data: session } = useSession();
+  let curUser;
+
+  // fetchData from MongoDB
+  const r_user = useAppSelector((state) => state.user);
+  const { user } = r_user as any;
+
+   if(session){
+    curUser = session?.user;
+   }else{
+    curUser = user.data 
+   }
+  
+  if (!curUser) {    
+    return null; // or loading spinner
+  }
+  console.log("curUser: ",curUser)
+  // console.log("tokenUser: ",tokenUser)
+
+  const { username, image: imgURL } = curUser as {username:string, image:string};
+
+
+
   const dropdownRef = useRef<HTMLDivElement | null>(null);
-  // Close dropdown on outside click
+  // Close dropdown on outside clickimage
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -38,17 +65,37 @@ const ProfileIcon = (props: ProfileProps) => {
     };
   }, []);
 
+  const signOutEmailUser = async()=>{
+    const responce = await axios.post("/api/users/logout")
+    const responceData = responce.data;
+    const {success} = responceData;
+    if(success){
+      redirect("/login")
+    }
+  }
+
   const signOutUser = () => {
-    oauthSignOut();
+    const { provider } = curUser;
+    if (provider === "email") {
+      signOutEmailUser();
+      console.log(provider);
+    } else {
+      oauthSignOut();
+      console.log(provider);
+    }
     setIsopen(!isOpen);
   };
 
   return (
-    <div ref={dropdownRef} className="profileWrapper z-1 relative grid gap-2 justify-center p-4">
-      <div        
+    <div
+      ref={dropdownRef}
+      className="profileWrapper z-1 relative grid gap-2 justify-center p-4"
+    >
+      <div
         className="relative rounded-full w-10 h-10 bg-amber-300 mx-auto cursor-pointer"
         onClick={() => setIsopen(!isOpen)}
-      >
+      >{imgURL?(
+
         <Image
           className="rounded-full"
           src={`${imgURL}`}
@@ -57,21 +104,33 @@ const ProfileIcon = (props: ProfileProps) => {
           alt="ketanLogo"
           sizes="(max-width: 200px) 100vw, 50vw" //
         />
+      ):(
+        <div className="flex items-stretch align-middle">
+          <b className="px-3 py-2 text-gray-900 text-lg">{username.charAt(0)}</b>
+        </div>
+      )}
       </div>
-      <h3 className="text-l">{name}</h3>
+      <h3 className="text-l">{username}</h3>
       {isOpen && (
         <div className="absolute mt-25 rounded-sm p-4 justify-cente space-y-4 bg-white dark:bg-dark-conBgColor dark:text-dark-fontColor">
           <div className="relative rounded-full w-16 h-16 bg-amber-300 mx-auto">
-            <Image
-              className="rounded-full"
-              src={`${imgURL}`}
-              fill // Image will fill the parent
-              style={{ objectFit: "cover" }} // CSS styling
-              alt="ketanLogo"
-              sizes="(max-width: 200px) 100vw, 50vw" //
-            />
+            {imgURL?(
+
+        <Image
+          className="rounded-full"
+          src={`${imgURL}`}
+          fill // Image will fill the parent
+          style={{ objectFit: "cover" }} // CSS styling
+          alt="ketanLogo"
+          sizes="(max-width: 200px) 100vw, 50vw" //
+        />
+      ):(
+        <div className="flex items-stretch align-middle">
+          <b className="px-5 py-4 text-gray-900 text-2xl">{username.charAt(0)}</b>
+        </div>
+      )}
           </div>
-          <h3>{name}</h3>
+          <h3>{username}</h3>
           <div
             className="border-t-2  border-t-neutral-900 py-3 cursor-pointer"
             onClick={signOutUser}

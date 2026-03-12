@@ -15,6 +15,14 @@ const userSchema = new mongoose.Schema({
         type:String,
         require:[true, "Please provide a Username"]
     },
+    image:{
+        type:String,
+        default:null
+    },
+    provider:{
+        type:String,
+        default:"email"
+    },
     isVerified:{
         type:Boolean,
         default:false
@@ -29,5 +37,6 @@ const userSchema = new mongoose.Schema({
     verifyTokenExpiry:Date
 })
 
-const User = mongoose.model.users || mongoose.model("users", userSchema)
+const User = mongoose.model.users || mongoose.model("users", userSchema);
+// const User = mongoose.models.user || mongoose.model("users", userSchema);
 export default User;

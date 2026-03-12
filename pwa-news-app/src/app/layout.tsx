@@ -5,6 +5,7 @@ import "./globals.css";
 import PageBody from "@/components/PageBody";
 import FontawesomeConfig from "./fortawesome";
 import Authprovider from "@/components/Authprovider/Authprovider";
+import StoreProvider from "./StoreProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,19 +28,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <head>
-        <FontawesomeConfig />
-      </head>
-      <Authprovider>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >        
-        <PageBody>
-          {children}
-        </PageBody>
-      </body>
-      </Authprovider>
-    </html>
+    <StoreProvider>
+      <html lang="en">
+        <head>
+          <FontawesomeConfig />
+        </head>
+        <Authprovider>
+          <body
+            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          >
+            <PageBody>{children}</PageBody>
+          </body>
+        </Authprovider>
+      </html>
+    </StoreProvider>
   );
 }

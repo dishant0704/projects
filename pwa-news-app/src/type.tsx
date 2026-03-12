@@ -1,8 +1,7 @@
-import { JwtPayload } from "jsonwebtoken";
 
 export type ProfileProps = {
   id?: string;
-  name?: string | null;
+  username?: string | null;
   email?: string | null;
   image?: string | null;
 };
