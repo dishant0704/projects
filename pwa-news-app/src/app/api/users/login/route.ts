@@ -20,6 +20,7 @@ export async function POST(request: NextRequest) {
 
     //if User not exists
     if(user.provider !== 'email'){
+      return NextResponse.json({
         message: `Please login with ${user.provider}`,
         success: false,
       });
