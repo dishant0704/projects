@@ -153,7 +153,7 @@ const SwiperMain = () => {
 
                 </div>
                 <div className='p-5'>                    
-                        <h2 className="text-base/7 font-semibold text-gray-900">Swiper Form:</h2>
+                        <h2 className="text-base/7 font-semibold text-gray-900">Swiper Setting:</h2>
                         <p className="mt-1 text-sm/6 text-gray-600">This information will be update Swiper.</p>
                         <BasePath data={swiperData} setData={setSwiperData}/>
                         <AddData editObj={editObj} setEditObj={setEditObj} mainData={swiperData} setData={setSwiperData}/>
