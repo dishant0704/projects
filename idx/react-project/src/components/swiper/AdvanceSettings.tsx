@@ -1,5 +1,5 @@
 import React from 'react'
-import type { SwiperAdvSettings, modulesItems } from '../../types/swiper'
+import type { SwiperAdvSettings } from '../../types/swiper'
 
 interface AdvanceSettingsProps {
     advData: SwiperAdvSettings,
@@ -38,37 +38,7 @@ const AdvanceSettings = ({ ...props }: AdvanceSettingsProps): React.JSX.Element 
                             required={true}
                             aria-required="true"
                             className="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-400 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-back-300 sm:text-sm/6" />
-                    </div>
-                    <div>
-                        <label htmlFor="pagination" className="block text-sm/6 font-medium text-gray-900">Pagination</label>
-                        <input
-                            type="checkbox"
-                            id="pagination"
-                            name="pagination"
-                            required={false}
-                            aria-required="true"
-                            checked={advData.pagination}
-                            onChange={(e) => setAdvData((pre) => ({
-                                ...pre,
-                                pagination: e.target.checked
-                            }))}
-                            className=" my-5 block w-full rounded-md bg-white " />
-                    </div>
-                    <div>
-                        <label htmlFor="scrollbar" className="block text-sm/6 font-medium text-gray-900">Scrollbar</label>
-                        <input
-                            type="checkbox"
-                            id="scrollbar"
-                            name="scrollbar"
-                            required={false}
-                            aria-required="true"
-                            checked={advData.scrollbar}
-                            onChange={(e) => setAdvData((pre) => ({
-                                ...pre,
-                                scrollbar: e.target.checked
-                            }))}
-                            className=" my-5 block w-full rounded-md bg-white " />
-                    </div>
+                    </div>                    
                 </div>
                 <div>
                     <label className="block text-sm/6 font-medium text-gray-900">Modules:</label>
