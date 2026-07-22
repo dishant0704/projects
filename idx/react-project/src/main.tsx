@@ -1,0 +1,47 @@
+
+import ReactDOM from "react-dom/client";
+import { createBrowserRouter } from "react-router";
+import { RouterProvider } from "react-router/dom";
+
+import NotFoundPage from "./components/NotFoundPage.tsx";
+import MainTemplate from "./components/page-templates/MainTemplate.tsx";
+import Dashboard from "./components/Dashboard.tsx";
+
+import Chart from "./components/Chart.tsx";
+import Swiper from "./components/swiper/Swiper.tsx";
+
+import './index.css'
+import React from "react";
+// import App from './App.tsx'
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <MainTemplate />,
+    children: [
+      {
+        path: "/",
+        element: <Dashboard />,
+      },
+      {
+        path: "/chart",
+        element: <Chart />
+      },
+      {
+        path: "/swiper",
+        element: <Swiper />
+      },
+      { path: "*", element: <NotFoundPage /> }
+    ]
+  },
+
+])
+
+const root = document.getElementById('root')
+
+ReactDOM.createRoot(root!).render(
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>
+)
+
