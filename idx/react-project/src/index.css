@@ -1,8 +1,15 @@
 @import "tailwindcss";
+
 :root {
-  --text: #6b6375;
+  --text: #1d1d1d;
   --text-h: #08060d;
-  --bg: #fff;
+  --bg: #efefef;  
+  --primary-4-light-5: #efff0d;
+  --primary-5-light-5: #ff0d76;
+  --primary-6-light-5: #1dffcf;
+  --secondary-1-light-5: #0d70ff;
+  --monochrome-1-light-5: #0d0d0d;
+  --link-btn: var(--primary-5-light-5);
   --border: #e5e4e7;
   --code-bg: #f4f3ec;
   --accent: #aa3bff;
@@ -33,12 +40,18 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --text: #9ca3af;
+    --color-borderColor: #181818;
+    --text: #d8d8d8;
     --text-h: #f3f4f6;
-    --bg: #16171d;
+    --bg: #181818;
     --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
+    --code-bg: #1f2028;    
+    --primary-4-light-5: #efff0d;
+    --primary-5-light-5: #ff0d76;
+    --primary-6-light-5: #1dffcf;
+    --secondary-1-light-5: #0d70ff;
+    --monochrome-1-light-5: #0d0d0d;
+    --link-btn: var(--primary-6-light-5); 
     --accent-bg: rgba(192, 132, 252, 0.15);
     --accent-border: rgba(192, 132, 252, 0.5);
     --social-bg: rgba(47, 48, 58, 0.5);
@@ -50,6 +63,7 @@
     filter: invert(1) brightness(2);
   }
 }
+
 /* 
 #root {
   width: 1126px;
@@ -65,7 +79,18 @@
 
 body {
   margin: 0;
-  background-color: #f3f4f6;
+  padding: 0;
+  background: var(--bg);
+  font-size: 1.25rem;
+  fonrt-family: var(--sans);
+}
+
+a {
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  color: var(--link-btn);
+  transition: all 0.3s ease-in-out;
 }
 
 h1,
@@ -76,23 +101,28 @@ h2 {
 }
 
 h1 {
-  font-size: 56px;
+  text-transform: capitalize;
+  font-size: 1.85rem;
   letter-spacing: -1.68px;
   margin: 32px 0;
+
   @media (max-width: 1024px) {
     font-size: 36px;
     margin: 20px 0;
   }
 }
+
 h2 {
-  font-size: 24px;
+  font-size: 1.25rem;
   line-height: 118%;
   letter-spacing: -0.24px;
   margin: 0 0 8px;
+
   @media (max-width: 1024px) {
     font-size: 20px;
   }
 }
+
 p {
   margin: 0;
 }

@@ -23,15 +23,14 @@ const faqData: AccordionItemData[] = [
 const AccordionRoot = () => {
   return (
     <section className='p-5 '>
-      <h2 className='text-2xl'>Accordion: </h2>
-      <Link to={`/`} className='text-[14px] text-red-500' >Back to Dashboard</Link>
+      <h1 >Accordion: </h1>
+      <Link to={`/`} className='text-[14px] text-primary-6-light-6' >Back to Dashboard</Link>
       <div className='grid md:grid-cols-2 gap-5'>
-        <div className='p-5 '>
-          <h2 className="text-base/7 font-semibold text-gray-900 my-5">Accordion</h2>
+        <div className='p-5 '>          
           <Accordion items={faqData} />
         </div>
         <div className='p-5 '>
-          <h2 className="text-base/7 font-semibold text-gray-900 my-5">Accordion Setting:</h2>
+          <h2>Accordion Setting:</h2>
           <p className="mt-1 text-sm/6 text-gray-600">This information will be update Accordion.</p>
         </div>
       </div>
