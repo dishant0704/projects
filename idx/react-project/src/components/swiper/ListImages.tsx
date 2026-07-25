@@ -1,9 +1,8 @@
-import React, { type ReactElement } from 'react'
+import React from 'react'
 
 import type { SwiperData, EditObject, SwiperItem } from '../../types/swiper'
 // { inx: null; flag: boolean; }, Dispatch<SetStateAction<{ inx: null; flag: boolean; }
 interface ListImagesProps {
-    editObj:EditObject,
     setEditObj:React.Dispatch<React.SetStateAction<EditObject>> 
     mainData:SwiperData,
     setData:React.Dispatch<React.SetStateAction<SwiperData>>

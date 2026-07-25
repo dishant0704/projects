@@ -1,6 +1,6 @@
 // swiper Types:
 export interface SwiperItem {
-  id: number | null;
+  id: number;
   name: string;
   url: string;
 }

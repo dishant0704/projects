@@ -11,7 +11,6 @@ const AdvanceSettings = ({ ...props }: AdvanceSettingsProps): React.JSX.Element 
     const { modules } = advData
     return (
         <>
-            <h5 className="mt-3 text-base/7 font-semibold text-gray-900">Advance Settings:</h5>
             <p className="mt-1 text-sm/6 text-gray-600">Swiper Main Settings</p>
             <form>
                 <div className="flex gap-2">
@@ -38,7 +37,7 @@ const AdvanceSettings = ({ ...props }: AdvanceSettingsProps): React.JSX.Element 
                             required={true}
                             aria-required="true"
                             className="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-400 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-back-300 sm:text-sm/6" />
-                    </div>                    
+                    </div>
                 </div>
                 <div>
                     <label className="block text-sm/6 font-medium text-gray-900">Modules:</label>
