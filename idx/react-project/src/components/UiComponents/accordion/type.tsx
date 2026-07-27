@@ -1,11 +1,12 @@
 // Define structure for the accordion data
 export interface AccordionItemData {
-  id: number;
+  id?: number;
   title: string;
   content?: string;
 }
 
 export interface AccordionProps{
+    index?:number;
     items: AccordionItemData[];
     allowMultiple?: boolean // If true, multiple sections can be open at once
 }

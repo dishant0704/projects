@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from 'react'
 
-import type {AccordionProps } from './type'
+import type { AccordionProps } from './type'
 
-const Accordion: React.FC<AccordionProps> = ({ items, allowMultiple = false }) => {
+const Accordion: React.FC<AccordionProps> = ({ index, items, allowMultiple = false }) => {
     // Track open state: array of IDs if multiple allowed, single ID or null if not
     const [openIds, setOpenIds] = useState<(string | number)[]>([]);
     const [openId, setOpenId] = useState<string | number | null>(null);
 
-    useEffect(() => { handleToggle(0) }, [])
+    console.log("index: ", index)
+
+    useEffect(() => {
+        if (index) {
+            setOpenId(index);
+        }
+    }, [items]);
 
     const handleToggle = (id: string | number) => {
         if (allowMultiple) {
@@ -28,17 +34,17 @@ const Accordion: React.FC<AccordionProps> = ({ items, allowMultiple = false }) =
     return (
         <div className="w-full max-w-2xl mx-auto ">
             {
-                items.map((item) => {
+                items.map((item,inx) => {
                     const { id, content } = item
-                    const isOpen = checkIsOpen(id);
+                    const isOpen = checkIsOpen(inx);
                     // const isLast = index === items.length - 1;
                     return (
                         <div key={id} >
                             {/* Header Trigger */}
                             <button
                                 type="button"
-                                className={`flex justify-between items-center w-full py-2 text-left font-medium text-slate-700 dark:text-slate-300 hover:border-gray-400 ${!isOpen? 'border-b': 'border-0'} dark:hover:border-zinc-800 border-b-transparent transition-colors duration-200 `}
-                                onClick={() => handleToggle(id)}
+                                className={`flex justify-between items-center w-full py-2 text-left font-medium text-slate-700 dark:text-slate-300 hover:border-gray-400 ${!isOpen ? 'border-b' : 'border-0'} dark:hover:border-zinc-800 border-b-transparent transition-colors duration-200 `}
+                                onClick={() => handleToggle(inx)}
                                 aria-expanded={isOpen}
                             >
                                 <h3>{item.title}</h3>
