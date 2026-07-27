@@ -63,6 +63,7 @@ const AddData = ({ ...pros }: addDataProps): React.JSX.Element => {
                             value={formData?.name ?? ""}
                             onChange={(e) => setFormData((pre) => ({ ...pre, name: e.target.value }))}
                             type="text"
+                            placeholder="Image name / alt text"
                             required={true}
                             aria-required="true"
                             className="form-input" />
@@ -73,6 +74,7 @@ const AddData = ({ ...pros }: addDataProps): React.JSX.Element => {
                             value={formData?.url ?? ""}
                             onChange={(e) => setFormData((pre) => ({ ...pre, url: e.target.value }))}
                             type="text"
+                            placeholder="Image name extension (e.g., .jpg, .png ...)"
                             required={true}
                             aria-required="true"
                             className="form-input"  />
