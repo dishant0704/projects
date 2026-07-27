@@ -28,25 +28,27 @@ const AccordionWithComp:React.FC<DynamicAccordionProps> = ({ items, allowMultipl
     };
 
     return (
-        <div className="w-full max-w-2xl mx-auto border border-slate-200 rounded-lg bg-white shadow-sm">
+        <div className="w-full max-w-2xl mx-auto ">
             {
-                items.map((item, index) => {                    
+                items.map((item) => {                    
                     const { id,  component, props} = item                    
                     const Component = component;
                     console.log("Component: ",Component);
                     console.log("props: ",props);
                     const isOpen = checkIsOpen(id);
-                    const isLast = index === items.length - 1;
+                    // const isLast = index === items.length - 1;
                     return (
-                        <div key={id} className={`border-slate-200 ${!isLast ? 'border-b' : ''}`}>
+                        <div key={id} 
+                        // className={`border-slate-200 ${!isLast ? 'border-b' : ''}`}
+                        >
                             {/* Header Trigger */}
                             <button
                                 type="button"
-                                className="flex justify-between items-center w-full p-5 text-left font-medium text-slate-700 hover:bg-slate-50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
+                                className={`flex justify-between items-center w-full py-2 text-left font-medium text-slate-700 dark:text-slate-300 hover:border-gray-400 ${!isOpen? 'border-b': 'border-0'} dark:hover:border-zinc-800 border-b-transparent transition-colors duration-200 `}
                                 onClick={() => handleToggle(id)}
                                 aria-expanded={isOpen}
                             >
-                                <span>{item.title}</span>
+                                <h3>{item.title}</h3>
                                 {/* Chevron Icon with Rotation Animation */}
                                 <svg
                                     className={`w-5 h-5 text-slate-500 transform transition-transform duration-300 ${isOpen ? 'rotate-180' : ''
@@ -60,11 +62,11 @@ const AccordionWithComp:React.FC<DynamicAccordionProps> = ({ items, allowMultipl
                             </button>
                             {/* Content Container with Height Transition */}
                             <div
-                                className={`grid transition-all duration-300 ease-in-out overflow-hidden text-slate-600 bg-slate-50/50 ${isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+                                className={`grid transition-all duration-300 ease-in-out overflow-hidden ${isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
                                     }`}
                             >
-                                <div className="min-h-0">
-                                    <div className="p-5 text-sm leading-relaxed border-t border-slate-100">
+                                <div className="min-h-0 border-t border-t-gray-200 dark:border-t-zinc-800">
+                                    <div className="py-5 text-sm leading-relaxed">
                                         {Component && <Component {...props} />}
                                     </div>
                                 </div>

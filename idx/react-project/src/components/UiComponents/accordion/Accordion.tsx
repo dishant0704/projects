@@ -28,16 +28,16 @@ const Accordion: React.FC<AccordionProps> = ({ items, allowMultiple = false }) =
     return (
         <div className="w-full max-w-2xl mx-auto ">
             {
-                items.map((item, index) => {
+                items.map((item) => {
                     const { id, content } = item
                     const isOpen = checkIsOpen(id);
-                    const isLast = index === items.length - 1;
+                    // const isLast = index === items.length - 1;
                     return (
                         <div key={id} >
                             {/* Header Trigger */}
                             <button
                                 type="button"
-                                className="flex justify-between items-center w-full py-2 text-left font-medium text-slate-700 dark:text-slate-300 hover:border-gray-400 dark:hover:border-zinc-800 border-b border-b-transparent transition-colors duration-200 "
+                                className={`flex justify-between items-center w-full py-2 text-left font-medium text-slate-700 dark:text-slate-300 hover:border-gray-400 ${!isOpen? 'border-b': 'border-0'} dark:hover:border-zinc-800 border-b-transparent transition-colors duration-200 `}
                                 onClick={() => handleToggle(id)}
                                 aria-expanded={isOpen}
                             >

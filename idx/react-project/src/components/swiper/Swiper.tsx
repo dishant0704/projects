@@ -17,7 +17,7 @@ import ImageCont from "./ImageCont";
 import BasePath from "./BasePath";
 import AddData from "./AddData";
 import AdvanceSettings from "./AdvanceSettings";
-import SorTableList from "../UiComponents/SorTableList";
+import SorTableList from "../UiComponents/dragAndDrop/SorTableList";
 import AccordionWithComp from "../UiComponents/accordion/AccordionWithComp";
 import type {DynamicAccordionItemData } from "../UiComponents/accordion/type";
 
@@ -196,8 +196,8 @@ const SwiperMain = () => {
                 </div>
                 <div className='p-5'>
                     <h2 className="text-base/7 font-semibold text-gray-900">Swiper Setting:</h2>
-                    <p className="mt-1 text-sm/6 text-gray-600">This information will be update Swiper.</p>
-                    <h2 className="text-base/7 font-semibold text-gray-900 py-4 border-b-2 border-gray-200">Images</h2>
+                    <p className="mt-1 text-sm/6 ">This information will be update Swiper.</p>
+                    <h2 className="text-base/7 font-semibold text-gray-900 py-4 border-b-2 border-gray-200 dark:border-zinc-800">Images</h2>
                     {swiperData.data.length > 0?(
                         <>
                             {/* <ListImages setEditObj={setEditObj} mainData={swiperData} setData={setSwiperData}/> */}

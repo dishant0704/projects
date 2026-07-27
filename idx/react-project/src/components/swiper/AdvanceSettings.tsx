@@ -10,12 +10,11 @@ const AdvanceSettings = ({ ...props }: AdvanceSettingsProps): React.JSX.Element 
     const { advData, setAdvData } = props
     const { modules } = advData
     return (
-        <>
-            <p className="mt-1 text-sm/6 text-gray-600">Swiper Main Settings</p>
+        <>            
             <form>
                 <div className="flex gap-2">
                     <div>
-                        <label className="block text-sm/6 font-medium text-gray-900">Space Between</label>
+                        <label className="">Space Between</label>
                         <input type="number"
                             value={advData.spaceBetween}
                             onChange={(e) => setAdvData((pre) => ({
@@ -24,10 +23,10 @@ const AdvanceSettings = ({ ...props }: AdvanceSettingsProps): React.JSX.Element 
                             }))}
                             required={true}
                             aria-required="true"
-                            className="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-400 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-back-300 sm:text-sm/6" />
+                            className="" />
                     </div>
                     <div>
-                        <label className="block text-sm/6 font-medium text-gray-900">Slides PerView</label>
+                        <label className=" ">Slides PerView</label>
                         <input type="number"
                             value={advData.slidesPerView}
                             onChange={(e) => setAdvData((pre) => ({
@@ -36,11 +35,11 @@ const AdvanceSettings = ({ ...props }: AdvanceSettingsProps): React.JSX.Element 
                             }))}
                             required={true}
                             aria-required="true"
-                            className="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-400 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-back-300 sm:text-sm/6" />
+                            className="" />
                     </div>
                 </div>
                 <div>
-                    <label className="block text-sm/6 font-medium text-gray-900">Modules:</label>
+                    <h3 className='pt-4'>Modules:</h3>
                     <div className="grid grid-cols-2 sm:grid-cols-6">
                         {modules && modules.map((item, inx) => {
                             const { name, flag } = item
@@ -61,7 +60,7 @@ const AdvanceSettings = ({ ...props }: AdvanceSettingsProps): React.JSX.Element 
                                             }));
                                         }}
                                         className=" my-2 block w-5 rounded-md bg-white " />
-                                    <label htmlFor="navigation" className="block text-sm/6 font-medium text-gray-900">{name}</label>
+                                    <label htmlFor="navigation" className="">{name}</label>
                                 </div>)
                         })}
                     </div>
