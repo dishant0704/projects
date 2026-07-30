@@ -5,9 +5,7 @@ import type { AccordionProps } from './type'
 const Accordion: React.FC<AccordionProps> = ({ index, items, allowMultiple = false }) => {
     // Track open state: array of IDs if multiple allowed, single ID or null if not
     const [openIds, setOpenIds] = useState<(string | number)[]>([]);
-    const [openId, setOpenId] = useState<string | number | null>(null);
-
-    console.log("index: ", index)
+    const [openId, setOpenId] = useState<string | number | null>(null);    
 
     useEffect(() => {
         if (index) {
