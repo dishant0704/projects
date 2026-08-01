@@ -4,14 +4,14 @@ interface Props {
 
 const SubPageTemplate = ({ children }: Props) => (
   <section className="p-5">
-    <div className="grid lg:grid-cols-2 gap-5">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
       {children}
     </div>
   </section>
 );
 
 const Left = ({ children }: Props) => (
-  <div className="grid items-center justify-center">{children}</div>
+  <div className="p-5">{children}</div>
 );
 
 const Right = ({ children }: Props) => (

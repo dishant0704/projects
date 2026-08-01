@@ -11,6 +11,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 
+import type {DynamicAccordionItemData } from "../UiComponents/accordion/type";
 import type { SwiperData, SwiperAdvSettings, EditObject, SwiperModuleName, imageData} from "../../types/swiper";
 
 import ImageCont from "./ImageCont";
@@ -19,7 +20,7 @@ import AddData from "./AddData";
 import AdvanceSettings from "./AdvanceSettings";
 import SorTableList from "../UiComponents/dragAndDrop/SorTableList";
 import AccordionWithComp from "../UiComponents/accordion/AccordionWithComp";
-import type {DynamicAccordionItemData } from "../UiComponents/accordion/type";
+import SubPageTemplate from "../page-templates/SubPageTemplate";
 
 
 const swiperAdvSettings: SwiperAdvSettings = {
@@ -151,65 +152,81 @@ const SwiperMain = () => {
         },
     ];
 
+    const SwiperControler = () => {
+        return (
+            <>
+                <h2 className="text-base/7 font-semibold text-gray-900">Swiper </h2>
+                <Swiper
+                    className="w-full"
+                    // install Swiper modules
+                    modules={selectedModules}
+                    spaceBetween={advSettings.spaceBetween}
+                    slidesPerView={advSettings.slidesPerView}
+                    navigation={advSettings.modules.find(m => m.name === "Navigation")?.flag}
+                    pagination={
+                        advSettings.modules.find(m => m.name === "Pagination")?.flag
+                            ? { clickable: true }
+                            : { clickable: false }
+                    }
+                    scrollbar={
+                        advSettings.modules.find(m => m.name === "Scrollbar")?.flag
+                            ? { draggable: true }
+                            : { draggable: false }}
+                    onSwiper={(swiper: any) => console.log("swiper:", swiper)}
+                    onSlideChange={() => console.log('slide change')}
+                >
+                    {swiperData.data && swiperData.data.map((item) => {
+                        let updatedData = {
+                            id: item.id,
+                            url: swiperData.path + "" + item.url,
+                            name: item.name,
+                            className: 'object-contain md:object-cover ketan'
+                        }
+
+                        return (
+                            <SwiperSlide className=" py-5 grid text-center items-center justify-center">
+                                <ImageCont {...updatedData} />
+                            </SwiperSlide>
+                        )
+                    })}
+                </Swiper>
+            </>
+        )
+    }
+
+    const SwiperForm = () =>{
+        return(
+            <>
+        <h2 className="text-base/7 font-semibold text-gray-900">Swiper Setting:</h2>
+        <p className="mt-1 text-sm/6 ">This information will be update Swiper.</p>
+        <h2 className="text-base/7 font-semibold text-gray-900 py-4 border-b-2 border-gray-200 dark:border-zinc-800">Images</h2>
+        {swiperData.data.length > 0?(
+            <>
+                {/* <ListImages setEditObj={setEditObj} mainData={swiperData} setData={setSwiperData}/> */}
+                <SorTableList className="my-5" setEditObj={setEditObj} items={swiperData.data} onReorder={handleReorder} setData={setSwiperData} />
+            </>
+        ):(
+            <div className="align-middle text-center py-5 my-2 text-xs text-red-500">No images available. Please add image</div>
+        )}
+        <AccordionWithComp items={AccordionData} />
+            </>
+        )
+    }
+
     return (
         <section className='p-5 '>
             <h2 className='text-2xl'>Swiper: </h2>
             <Link to={`/`} className='text-[14px] text-red-500' >Back to Dashboard</Link>
-            <div className='grid md:grid-cols-2 gap-5'>
+            <SubPageTemplate>
+            <SubPageTemplate.Left>
                 <div className='p-5 '>
-                    <h2 className="text-base/7 font-semibold text-gray-900">Swiper </h2>
-                    <Swiper
-                        className="grid gap-5"
-                        // install Swiper modules
-                        modules={selectedModules}
-                        spaceBetween={advSettings.spaceBetween}
-                        slidesPerView={advSettings.slidesPerView}
-                        navigation={advSettings.modules.find(m => m.name === "Navigation")?.flag}
-                        pagination={
-                            advSettings.modules.find(m => m.name === "Pagination")?.flag
-                                ? { clickable: true }
-                                : { clickable: false }
-                        }
-                        scrollbar={
-                            advSettings.modules.find(m => m.name === "Scrollbar")?.flag
-                                ? { draggable: true }
-                                : { draggable: false }}
-                        onSwiper={(swiper: any) => console.log("swiper:", swiper)}
-                        onSlideChange={() => console.log('slide change')}
-                    >
-                        {swiperData.data && swiperData.data.map((item) => {
-                            let updatedData = {
-                                id: item.id,
-                                url: swiperData.path + "" + item.url,
-                                name: item.name,
-                                className: 'object-contain md:object-cover ketan'
-                            }
-
-                            return (
-                                <SwiperSlide className=" py-5 grid text-center items-center justify-center">
-                                    <ImageCont {...updatedData} />
-                                </SwiperSlide>
-                            )
-                        })}
-                    </Swiper>
-
+                    <SwiperControler />
                 </div>
-                <div className='p-5'>
-                    <h2 className="text-base/7 font-semibold text-gray-900">Swiper Setting:</h2>
-                    <p className="mt-1 text-sm/6 ">This information will be update Swiper.</p>
-                    <h2 className="text-base/7 font-semibold text-gray-900 py-4 border-b-2 border-gray-200 dark:border-zinc-800">Images</h2>
-                    {swiperData.data.length > 0?(
-                        <>
-                            {/* <ListImages setEditObj={setEditObj} mainData={swiperData} setData={setSwiperData}/> */}
-                            <SorTableList className="my-5" setEditObj={setEditObj} items={swiperData.data} onReorder={handleReorder} setData={setSwiperData} />
-                        </>
-                    ):(
-                        <div className="align-middle text-center py-5 my-2 text-xs text-red-500">No images available. Please add image</div>
-                    )}
-                    <AccordionWithComp items={AccordionData} />
-
-                </div>
-            </div>
+            </SubPageTemplate.Left>
+            <SubPageTemplate.Right>
+                < SwiperForm />
+            </SubPageTemplate.Right>
+        </SubPageTemplate>
         </section>
     )
 }
