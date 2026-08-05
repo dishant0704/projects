@@ -27,8 +27,15 @@
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  -moz-osx-font-smoothing: grayscale; 
 
+  /* tab */
+  --tab-border: #9f9fa9;
+  --tab-text: #9f9fa9;
+  
+  --tab-hover-border: var(--monochrome-1-light-5) ;
+  --tab-hover-text: var(--monochrome-1-light-5)
+  
   @media (max-width: 1024px) {
     font-size: 16px;
   }
@@ -56,35 +63,6 @@
     --input-bg-color: #2e2e2e;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-borderColor: #181818;
-    --text: #d8d8d8;
-    --text-h: #f3f4f6;
-    --bg: #181818;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --primary-4-light-5: #efff0d;
-    --primary-5-light-5: #ff0d76;
-    --primary-6-light-5: #1dffcf;
-    --secondary-1-light-5: #0d70ff;
-    --monochrome-1-light-5: #0d0d0d;
-    --link-btn: var(--primary-6-light-5);
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-
-    --input-text-color: #d8d8d8;
-    --input-bg-color: #2e2e2e;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
-}
-
 @layer components {
 
   /* Input style */
@@ -95,6 +73,21 @@
     background-color: var(--input-bg-color);
     color: var(--input-text-color);
   };
+
+  /* Tab */
+  .tab{
+    border-bottom: transparent;
+    color:var(--tab-text)
+  }
+.tabActive{
+  border-bottom: var(--tab-border-b);
+  color:var(--tab-border-b);
+  pointer-events: none;}
+
+  .tab:hover{
+  border-bottom: transparent;;
+  color: var(--tab-hover-text)
+}
 
   /* Label style */
   label {

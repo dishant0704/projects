@@ -54,11 +54,10 @@ const AddData = ({ ...pros }: addDataProps): React.JSX.Element => {
 
     return (
         <div>
-            <p className="mt-1 text-sm/6">Add Image to Swiper.</p>
+            <p className="my-2 text-sm/6">Add Image to Swiper.</p>
             <form name="addData" onSubmit={addImageHandler}>
-                <div className="flex gap-2">
-                    <div>
-                        <label className="">Name(alt):</label>
+                <div className="grid  lg:grid-cols-2 gap-2">
+                    <div>                        
                         <input
                             value={formData?.name ?? ""}
                             onChange={(e) => setFormData((pre) => ({ ...pre, name: e.target.value }))}
@@ -68,8 +67,7 @@ const AddData = ({ ...pros }: addDataProps): React.JSX.Element => {
                             aria-required="true"
                             className="form-input" />
                     </div>
-                    <div>
-                        <label className="">Image name extension( like .jpg, .png ... )</label>
+                    <div>                        
                         <input
                             value={formData?.url ?? ""}
                             onChange={(e) => setFormData((pre) => ({ ...pre, url: e.target.value }))}
@@ -80,7 +78,7 @@ const AddData = ({ ...pros }: addDataProps): React.JSX.Element => {
                             className="form-input"  />
                     </div>
                     <div>                        
-                        <button type='submit' className="btn rounded-sm my-6">{flag ? "Save" : "Add Data"} </button>
+                        <button type='submit' className="btn rounded-sm my-2">{flag ? "Save" : "Add Data"} </button>
                     </div>
                 </div>
             </form>

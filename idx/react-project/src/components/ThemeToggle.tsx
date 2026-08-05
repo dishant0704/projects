@@ -16,6 +16,7 @@ const ThemeToggle:React.FC<Props> = ({className}) => {
     const systemDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
     const root = document.documentElement;
 
+
     useEffect(() => {       
 
         // Remove old classes
@@ -40,6 +41,7 @@ const ThemeToggle:React.FC<Props> = ({className}) => {
     }, [theme]);
     useEffect(()=>{
         if(systemDarkMode){
+            setTheme("dark");
             root.classList.add("dark");
             localStorage.setItem("theme", "dark");
         }else{

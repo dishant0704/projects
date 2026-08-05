@@ -5,7 +5,7 @@ interface Props {
 
 const TabPanel = ({children}:Props) => {
   return (
-    <div className="p-5 border border-t-0 border-gray-300 rounded-b-lg">
+    <div className="p-5">
       {children}
     </div>
   )
