@@ -23,6 +23,8 @@ import "@fontsource/inter/700.css";
 import "@fontsource/jetbrains-mono/400.css";
 import "@fontsource/jetbrains-mono/500.css";
 
+import { PageProvider } from "./context/PageContext.tsx";
+
 // this json object for routing:
 const router = createBrowserRouter([
   {
@@ -57,8 +59,10 @@ const router = createBrowserRouter([
 const root = document.getElementById('root')
 
 ReactDOM.createRoot(root!).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
+  <PageProvider>
+    <React.StrictMode>
+      <RouterProvider router={router} />
+    </React.StrictMode>
+  </PageProvider>
 )
 

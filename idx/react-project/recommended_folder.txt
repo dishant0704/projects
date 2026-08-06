@@ -1,0 +1,28 @@
+src/
+│
+├── app/
+│   ├── providers/
+│   │   ├── AppProvider.tsx
+│   │   └── PageProvider.tsx
+│   │
+│   └── hooks/
+│       ├── usePage.ts
+│       └── useApp.ts
+│
+├── services/
+│   └── pageService.ts
+│
+├── context/
+│   ├── PageContext.tsx
+│   └── AppContext.tsx
+│
+├── types/
+│   └── page.ts
+│
+├── components/
+│
+├── pages/
+│
+└── App.tsx
+
+Notice that services are separate from context. Later, Redux Toolkit will simply call the same service functions.
