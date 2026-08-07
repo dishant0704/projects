@@ -79,6 +79,10 @@
     border-bottom: transparent;
     color:var(--tab-text)
   }
+.disableContainer{
+  opacity: 0.4;
+  cursor: default;
+}
 .tabActive{
   border-bottom: var(--tab-border-b);
   color:var(--tab-border-b);

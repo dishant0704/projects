@@ -33,8 +33,7 @@ const AccordionWithComp:React.FC<DynamicAccordionProps> = ({ items, allowMultipl
                 items.map((item) => {                    
                     const { id,  component, props} = item                    
                     const Component = component;
-                    console.log("Component: ",Component);
-                    console.log("props: ",props);
+                    
                     const isOpen = checkIsOpen(id);
                     // const isLast = index === items.length - 1;
                     return (

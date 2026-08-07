@@ -3,9 +3,8 @@ import { Link } from 'react-router'
 import Tabs from '../UiComponents/Tabs';
 
 import ReguralAccordion from './ReguralAccordion';
-import DynamicAccordion from './DynamicAccordion';
-
-
+import DynamicAccordion from './DynamicAccordion';  
+import { useAppDispatch, useAppSelector } from '../../app/hooks/reducHooks';
 
 const tabs = [
     {
@@ -29,8 +28,16 @@ const tabs = [
 
 
 const AccordionRoot = () => {
+
+const dispatch = useAppDispatch();
+
+const pages = useAppSelector(
+  (state) => state.pages.pages
+);
+
+console.log("pages:", pages)
   return (
-    <section className='p-5 '>
+    <section className={`p-5`}>
       <h1 >Accordion: </h1>
       <Link to={`/`} className='text-[14px] text-primary-6-light-6' >Back to Dashboard</Link>
       <div className="w-full">

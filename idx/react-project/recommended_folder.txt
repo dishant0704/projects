@@ -26,3 +26,37 @@ src/
 └── App.tsx
 
 Notice that services are separate from context. Later, Redux Toolkit will simply call the same service functions.
+
+If you are planning a large React project
+
+Since you've mentioned before that you're building reusable UI components (Accordion, Tabs, Swiper, etc.), I'd organize it like this:
+
+src/
+│
+├── app/
+│   ├── providers/
+│   ├── routes/
+│   └── store/          ← Redux Toolkit will go here later
+│
+├── components/
+│   ├── ui/
+│   ├── layout/
+│   └── common/
+│
+├── context/
+│
+├── hooks/
+│
+├── services/
+│
+├── types/
+│
+├── utils/
+│
+├── pages/
+│
+└── assets/
+
+This structure aligns well with React best practices and makes adding Redux Toolkit, React Query/TanStack Query, or other state management solutions straightforward without reorganizing the project.
+
+Given your experience level and your goal of building a production-quality React component library, this is the architecture I'd recommend over keeping all fetching logic directly inside Context.

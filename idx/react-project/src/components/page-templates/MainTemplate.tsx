@@ -1,30 +1,24 @@
-import { useEffect } from "react"
 import { Outlet } from "react-router"
 import Header from "./Header"
 import Footer from "./Footer"
 
+import { useAppDispatch, useAppSelector } from "../../app/hooks/reducHooks"
+
+import { loadPages } from "../../app/features/pageSlice"
+
 const MainTemplate = () => {
-  const fetchData = async () => {
-    try {
-      const response = await fetch('/data/pageData.json')
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`)
-
-      }
-      const responce = await response.json();
-      console.log("responce: ", responce.pages)
-
-    } catch (error) {
-      console.error('Error loading JSON:', error)
-    }
-    
+  const dispatch = useAppDispatch();
+  
+  const {pages, loading, error} =  useAppSelector((state)=>state.pages);
+   if (loading) {
+    return <div>Loading...</div>;
   }
 
-  useEffect(() => {
-    // Files in the public folder are served at the root URL '/'
-    fetchData()
+  if (error) {
+    return <div>{error}</div>;
+  }
 
-  }, [])
+  console.log("Pages:", pages);
   return (
     <div className=" h-screen py-5">
       <div className="container  mx-auto shadow-md  bg-white dark:bg-zinc-950 p-5 rounded-md">
