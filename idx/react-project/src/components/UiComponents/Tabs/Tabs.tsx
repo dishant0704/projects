@@ -11,7 +11,7 @@ const Tabs:React.FC<TabsProps> = (props) => {
     const activeContent = items.find((item)=> item.id === activeTab)
     const Component = activeContent?.component
     const componentProps = activeContent?.props;
-
+    console.log("activeTab:", activeTab)
   return (
     <div className={`w-full ${className}`}>
         {/* Tab Buttons */}

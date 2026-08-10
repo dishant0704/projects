@@ -3,26 +3,26 @@ import SubPageTemplate from '../page-templates/SubPageTemplate'
 import Accordion from '../UiComponents/accordion/Accordion'
 import type { AccordionItemData } from '../UiComponents/accordion/type'
 
-// const Accordion_a: AccordionItemData[] = [
-//   {
-//     id: 1,
-//     title: "What is Tailwind CSS?",
-//     content: "Text"
-//   },
-//   {
-//     id: 2,
-//     title: "Why use TypeScript with React?",
-//     content: "TypeScript adds static type definitions to Javascript. It helps catch errors early, offers better autocompletion in your IDE, and makes your component contracts highly predictable."
-//   },
-//   {
-//     id: 3,
-//     title: "How does the animation work?",
-//     content: "Instead of mapping max-height (which causes jumpy layout flashes), this component uses Tailwind's grid-rows properties grid-rows-[0fr] and grid-rows-[1fr] combined with transition-all to create a perfectly fluid height transition."
-//   }
-// ];
+const Accordion_a: AccordionItemData[] = [
+  {
+    id: 1,
+    title: "What is Tailwind CSS?",
+    content: "Tailwind CSS is a utility-first CSS framework used to build custom user interfaces quickly by applying pre-defined, low-level classes directly into HTML markup."
+  },
+  {
+    id: 2,
+    title: "Why use TypeScript with React?",
+    content: "TypeScript adds static type definitions to Javascript. It helps catch errors early, offers better autocompletion in your IDE, and makes your component contracts highly predictable."
+  },
+  {
+    id: 3,
+    title: "How does the animation work?",
+    content: "Instead of mapping max-height (which causes jumpy layout flashes), this component uses Tailwind's grid-rows properties grid-rows-[0fr] and grid-rows-[1fr] combined with transition-all to create a perfectly fluid height transition."
+  }
+];
 
 const ReguralAccordion = () => {
-    const [accData, setAccData] = useState<AccordionItemData[]>([])
+    const [accData, setAccData] = useState<AccordionItemData[]>(Accordion_a)
     const [formData, setFormData] = useState<AccordionItemData>({ id: 0, title: "", content: "" })
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -61,7 +61,7 @@ const ReguralAccordion = () => {
         <section className=''>
             <SubPageTemplate>
                 <SubPageTemplate.Left>
-                    <Accordion items={accData} />
+                    <Accordion items={accData} defaultActiveTab={0} />
                 </SubPageTemplate.Left>
                 <SubPageTemplate.Right>
                     <AccordionForm />

@@ -1,53 +1,62 @@
-import { Link } from 'react-router'
+import { Link } from "react-router";
 
-import Tabs from '../UiComponents/Tabs';
+import Tabs from "../UiComponents/Tabs";
 
-import ReguralAccordion from './ReguralAccordion';
-import DynamicAccordion from './DynamicAccordion';  
-import { useAppDispatch, useAppSelector } from '../../app/hooks/reducHooks';
+import ReguralAccordion from "./ReguralAccordion";
+import DynamicAccordion from "./DynamicAccordion";
+import {useAppSelector } from "../../app/hooks/reducHooks";
+import { useEffect, useState} from "react";
+import type { TabItem} from "../UiComponents/Tabs/types";
 
-const tabs = [
-    {
-      id: "regAcc",
-      label: "Regural Accordion",
-      component: ReguralAccordion ,
-      props: {},
-    },
-    {
-      id: "dynAcc",
-      label: "Dynamic Accordion",
-      component: DynamicAccordion,
-      props: {},
-    },
-    // {
-    //   id: "settings",
-    //   label: "Settings",
-    //   content: <div>Settings Content</div>,
-    // },
-  ];
-
+const componentRegistry: Record<string, React.ComponentType<any>> = {
+  regAcc: ReguralAccordion,
+  dynAcc: DynamicAccordion,
+};
 
 const AccordionRoot = () => {
+  const [tabs, setTabs] = useState<TabItem[]>([]);
+  const { pages, loading} = useAppSelector((state) => state.pages);
 
-const dispatch = useAppDispatch();
+  const currpage = pages.find((page) => page.name === "accordion");
 
-const pages = useAppSelector(
-  (state) => state.pages.pages
-);
+  useEffect(() => {
+    if (!currpage) {
+      return;
+    }
 
-console.log("pages:", pages)
+    // const tabs:TabItem = currpage.data as TabsProps["items"];
+    const tabItems: TabItem[] = currpage.data.map((tab:any) => {
+      const{ id, label, props, } = tab;
+      const Component = componentRegistry[id];
+
+      return {
+        id: id,
+        label: label,
+
+        component:
+          Component ?? (() => <div>Component "{id}" not found</div>),
+
+        props: props ?? {},
+      };
+    });
+
+    setTabs(tabItems);
+  }, [currpage]);
+
+  console.log("currpage:", currpage);
+  console.log("tabs:", tabs);
+
   return (
-    <section className={`p-5`}>
-      <h1 >Accordion: </h1>
-      <Link to={`/`} className='text-[14px] text-primary-6-light-6' >Back to Dashboard</Link>
+    <section className={`${loading ? "disableContainer" : "p-5"}`}>
+      <h1>Accordion: </h1>
+      <Link to={`/`} className="text-[14px] text-primary-6-light-6">
+        Back to Dashboard
+      </Link>
       <div className="w-full">
-      <Tabs
-        items={tabs}
-        defaultActiveTab="regAcc"
-      />
-    </div>
+        <Tabs items={tabs} defaultActiveTab="regAcc" />
+      </div>
     </section>
-  )
-}
+  );
+};
 
-export default AccordionRoot
+export default AccordionRoot;

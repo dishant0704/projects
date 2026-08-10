@@ -10,11 +10,12 @@ export const store = configureStore({
 
 store.subscribe(() => {
   const state = store.getState();
-
+  console.log("Store state changed:", state);
   if (
     !state.pages.loading &&
     state.pages.pages.length > 0
   ) {
+  
     localStorage.setItem(
       "idx-component-demo",
       JSON.stringify(state.pages.pages)

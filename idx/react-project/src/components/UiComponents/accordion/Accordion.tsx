@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react'
 
 import type { AccordionProps } from './type'
 
-const Accordion: React.FC<AccordionProps> = ({ index, items, allowMultiple = false }) => {
+const Accordion: React.FC<AccordionProps> = ({ index, items, allowMultiple = false, defaultActiveTab = 0 }) => {
     // Track open state: array of IDs if multiple allowed, single ID or null if not
     const [openIds, setOpenIds] = useState<(string | number)[]>([]);
-    const [openId, setOpenId] = useState<string | number | null>(null);    
+    const [openId, setOpenId] = useState<string | number | null>(defaultActiveTab | 0);    
 
     useEffect(() => {
         if (index) {

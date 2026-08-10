@@ -1,5 +1,27 @@
 import type { SetStateAction } from "react";
 
+export interface AccordionItemData {
+  id?: number;
+  title: string;
+  content?: string;
+}
+
+//Dynamic Accordion Item Data
+export interface DynamicAccordionItemData {
+  id: number;
+  title: string;
+  component: React.ComponentType<any>;
+  props?: Record<string, unknown>;
+}
+
+export interface ComponentData {
+  id: string;
+  label: string;
+  component: null;
+  props: Record<string, unknown> | null;
+  data?: AccordionItemData[] | DynamicAccordionItemData[];
+}
+
 // Accordion
 export interface AccordionData{
     component: null,
@@ -10,7 +32,7 @@ export interface AccordionData{
 export interface Page {
   name: string;
   advSettings: Record<string, unknown>;
-  data: unknown[];
+  data: ComponentData[];
 }
 
 export interface PageContextType{

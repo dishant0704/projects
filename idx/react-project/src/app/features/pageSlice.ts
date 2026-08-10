@@ -23,7 +23,10 @@ export const loadPages = createAsyncThunk<
   async (_, { rejectWithValue }) => {
     try {
       const localData = localStorage.getItem(STORAGE_KEY);
-
+      console.log(
+        "localData:",
+        localData
+      );
       // 1. Use localStorage if available
       if (localData) {
         const parsedData: Page[] = JSON.parse(localData);
@@ -38,7 +41,6 @@ export const loadPages = createAsyncThunk<
 
       // 2. Otherwise load default JSON
       const data = await getPages();
-
       console.log(
         "Loaded from JSON:",
         data.pages
