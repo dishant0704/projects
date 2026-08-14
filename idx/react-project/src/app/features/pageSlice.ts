@@ -1,10 +1,13 @@
 import {
   createAsyncThunk,
   createSlice,
+  type PayloadAction,
 } from "@reduxjs/toolkit";
 
 import { getPages } from "../../services/pageService";
 import type { Page, PageState } from "../../types/pageTypes";
+import type { AccordionItemData } from "../../components/UiComponents/accordion/type";
+import type { RootState } from "../store/store";
 
 const STORAGE_KEY = "idx-component-demo";
 
@@ -13,6 +16,43 @@ const initialState: PageState = {
   loading: false,
   error: null,
 };
+
+export const addAccordionItemAndSave = createAsyncThunk<
+  void,
+  {
+    pageName: string;
+    tabId: string;
+    item: AccordionItemData;
+  },
+  { state: RootState }
+>(
+  "pages/addAccordionItemAndSave",
+  async (
+    { pageName, tabId, item },
+    { dispatch, getState }
+  ) => {
+
+    // Update Redux
+    dispatch(
+      addAccordionItem({
+        pageName,
+        tabId,
+        item,
+      })
+    );
+
+    // Get updated Redux state
+    const state = getState();
+
+    const pages = state.pages.pages;
+
+    // Save updated pages
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(pages)
+    );
+  }
+);
 
 export const loadPages = createAsyncThunk<
   Page[],
@@ -46,7 +86,14 @@ export const loadPages = createAsyncThunk<
         data.pages
       );
 
-      return data.pages;
+       // 3. Save default data to localStorage
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(data.pages)
+      );
+
+      return data;
+
     } catch (error) {
       console.error(error);
 
@@ -59,14 +106,46 @@ export const loadPages = createAsyncThunk<
 
 const pageSlice = createSlice({
   name: "pages",
-
   initialState,
 
   reducers: {
-    setPages: (state, action) => {
-      state.pages = action.payload;
-    },
+  setPages: (state, action) => {
+    state.pages = action.payload;
   },
+
+  addAccordionItem: (
+    state,
+    action: PayloadAction<{
+      pageName: string;
+      tabId: string;
+      item: AccordionItemData;
+    }>
+  ) => {
+    const { pageName, tabId, item } = action.payload;
+
+    const page = state.pages.find(
+      (page) => page.name === pageName
+    );
+
+    if (!page) {
+      return;
+    }
+
+    const tab = page.data.find(
+      (tab) => tab.id === tabId
+    );
+
+    if (!tab) {
+      return;
+    }
+
+    if (!tab.data) {
+      tab.data = [];
+    }
+
+    tab.data.push(item);
+  },
+},
 
   extraReducers: (builder) => {
     builder
@@ -88,6 +167,8 @@ const pageSlice = createSlice({
   },
 });
 
-export const { setPages } = pageSlice.actions;
+export const {
+  setPages,
+  addAccordionItem, } = pageSlice.actions;
 
 export default pageSlice.reducer;

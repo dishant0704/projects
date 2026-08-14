@@ -7,7 +7,7 @@ import Tab from './Tab'
 const Tabs:React.FC<TabsProps> = (props) => {
     const{items, defaultActiveTab, className} = props;
     const[activeTab, setActiveTab] = useState(defaultActiveTab || items[0]?.id)
-
+    console.log("items:",items)
     const activeContent = items.find((item)=> item.id === activeTab)
     const Component = activeContent?.component
     const componentProps = activeContent?.props;
