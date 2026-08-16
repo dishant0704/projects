@@ -4,9 +4,9 @@ import Tabs from "../UiComponents/Tabs";
 
 import ReguralAccordion from "./ReguralAccordion";
 import DynamicAccordion from "./DynamicAccordion";
-import {useAppSelector } from "../../app/hooks/reducHooks";
-import { useEffect, useState} from "react";
-import type { TabItem} from "../UiComponents/Tabs/types";
+import { useAppSelector } from "../../app/hooks/reducHooks";
+import { useEffect, useState } from "react";
+import type { TabItem } from "../UiComponents/Tabs/types";
 
 const componentRegistry: Record<string, React.ComponentType<any>> = {
   regAcc: ReguralAccordion,
@@ -15,7 +15,7 @@ const componentRegistry: Record<string, React.ComponentType<any>> = {
 
 const AccordionRoot = () => {
   const [tabs, setTabs] = useState<TabItem[]>([]);
-  const { pages, loading} = useAppSelector((state) => state.pages);
+  const { pages, loading } = useAppSelector((state) => state.pages);
 
   const currpage = pages.find((page) => page.name === "accordion");
 
@@ -25,18 +25,21 @@ const AccordionRoot = () => {
     }
 
     // const tabs:TabItem = currpage.data as TabsProps["items"];
-    const tabItems: TabItem[] = currpage.data.map((tab:any) => {
-      const{ id, label, props, } = tab;
+    const tabItems: TabItem[] = currpage.data.map((tab) => {
+      const { id, label, props, data } = tab;
+
       const Component = componentRegistry[id];
 
       return {
-        id: id,
-        label: label,
+        id,
+        label,
 
-        component:
-          Component ?? (() => <div>Component "{id}" not found</div>),
+        component: Component ?? (() => <div>Component "{id}" not found</div>),
 
-        props: props ?? {},
+        props: {
+          ...(props ?? {}),
+          data: data ?? [],
+        },
       };
     });
 
