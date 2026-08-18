@@ -1,13 +1,17 @@
-// swiper Types:
+// swiper.ts
+
 export interface SwiperItem {
   id: number;
   name: string;
   url: string;
 }
 
-export type imageData = SwiperItem[]
+export type imageData = SwiperItem[];
 
-export type EditObject = { inx: number | null; flag: boolean; }
+export type EditObject = {
+  inx: number | null;
+  flag: boolean;
+};
 
 export interface SwiperData {
   path: string;
@@ -15,27 +19,27 @@ export interface SwiperData {
 }
 
 export interface SwiperModule {
-  name: SwiperModuleName,
-  flag: boolean
+  name: SwiperModuleName;
+  flag: boolean;
 }
 
-export type ModulesArray = SwiperModule[]
+export type ModulesArray = SwiperModule[];
 
 export interface SwiperAdvSettings {
-    spaceBetween:number,
-    slidesPerView:number,
-    modules: ModulesArray
+  spaceBetween: number;
+  slidesPerView: number;
+  modules: ModulesArray;
 }
 
 export type SwiperModuleName =
-| "Navigation"
-| "Pagination"
-| "Scrollbar"
-| "A11y"
-| "Autoplay"
-| "Keyboard"
-| "Zoom"
-| "EffectFade"
-| "EffectCube"
-| "EffectFlip"
-| "EffectCards"
+  | "Navigation"
+  | "Pagination"
+  | "Scrollbar"
+  | "A11y"
+  | "Autoplay"
+  | "Keyboard"
+  | "Zoom"
+  | "EffectFade"
+  | "EffectCube"
+  | "EffectFlip"
+  | "EffectCards";

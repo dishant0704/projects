@@ -1,4 +1,5 @@
 import React from "react";
+
 import {
   closestCenter,
   DndContext,
@@ -21,71 +22,71 @@ import {
 import { CSS } from "@dnd-kit/utilities";
 
 import type {
-  EditObject,
-  imageData,
-  SwiperData,
-  SwiperItem,
-} from "../../../types/swiper";
+  SortableItem,
+  SortableListProps,
+} from "../../../types/sortable";
 
 import ListWrapper from "./ListWrapper";
-import Item from "./Item";
 
-interface Props {
-  className?: string;
-  items: SwiperItem[];
-  onReorder: (items: imageData) => void;
-  setData: React.Dispatch<React.SetStateAction<SwiperData>>;
-  setEditObj: React.Dispatch<React.SetStateAction<EditObject>>;
-}
-
-const SorTableList: React.FC<Props> = ({
+const SorTableList = <T extends SortableItem>({
   className,
   items,
   onReorder,
-  setEditObj,
-  setData,
-}) => {
+  onEdit,
+  onDelete,
+  renderItem,
+}: SortableListProps<T>) => {
+
   const DraggableItem = ({
     id,
-    inx,
+    index,
   }: {
-    id: SwiperItem["id"];
-    inx: number;
+    id: T["id"];
+    index: number;
   }) => {
-    const { attributes, listeners, setNodeRef, transform, transition } =
-      useSortable({ id });
+
+    const {
+      attributes,
+      listeners,
+      setNodeRef,
+      transform,
+      transition,
+    } = useSortable({
+      id,
+    });
 
     const style = {
       transform: CSS.Transform.toString(transform),
       transition,
     };
 
-    const editHandler = (i: number) => {
-      setEditObj({ inx: i, flag: true });
+    const item = items.find(
+      (currentItem) => currentItem.id === id
+    );
+
+    if (!item) {
+      return null;
+    }
+
+    const handleEdit = () => {
+      onEdit?.(item, index);
     };
 
-    const deleteHandler = (id: number | null) => {
-      const newData = items.filter((item) => item.id !== id);
-      console.log("newData:", newData);
-      setData((pre) => ({
-        ...pre,
-        data: newData,
-      }));
+    const handleDelete = () => {
+      onDelete?.(item, index);
     };
-
-    const item = items.find((item) => item.id === id);
-
-    if (!item || item.id === null) return null;
 
     return (
-      <div ref={setNodeRef} style={style} {...attributes}>
+      <div
+        ref={setNodeRef}
+        style={style}
+        {...attributes}
+      >
         <ListWrapper dragHandleProps={listeners}>
-          <Item
-            inx={inx}
-            item={item}
-            editBtn={editHandler}
-            deleteBtn={deleteHandler}
-          />
+          {renderItem(item, index, {
+            onEdit: handleEdit,
+            onDelete: handleDelete,
+          })}
         </ListWrapper>
       </div>
     );
@@ -94,26 +95,41 @@ const SorTableList: React.FC<Props> = ({
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
 
-    if (!over || active.id === over.id) return;
+    if (!over || active.id === over.id) {
+      return;
+    }
 
-    const oldIndex = items.findIndex((item) => item.id === active.id);
+    const oldIndex = items.findIndex(
+      (item) => item.id === active.id
+    );
 
-    const newIndex = items.findIndex((item) => item.id === over.id);
+    const newIndex = items.findIndex(
+      (item) => item.id === over.id
+    );
 
-    onReorder(arrayMove(items, oldIndex, newIndex));
+    if (oldIndex === -1 || newIndex === -1) {
+      return;
+    }
+
+    const reorderedItems = arrayMove(
+      items,
+      oldIndex,
+      newIndex
+    );
+
+    onReorder(reorderedItems);
   };
 
-  //keyboard, mouse and touch sensors
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(TouchSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
-    }),
+    })
   );
 
   return (
-    <div className={className ? className : ""}>
+    <div className={className ?? ""}>
       <DndContext
         sensors={sensors}
         collisionDetection={closestCenter}
@@ -123,8 +139,12 @@ const SorTableList: React.FC<Props> = ({
           items={items.map((item) => item.id)}
           strategy={verticalListSortingStrategy}
         >
-          {items.map((item, inx) => (
-            <DraggableItem inx={inx} key={item.id} id={item.id} />
+          {items.map((item, index) => (
+            <DraggableItem
+              key={item.id}
+              id={item.id}
+              index={index}
+            />
           ))}
         </SortableContext>
       </DndContext>
