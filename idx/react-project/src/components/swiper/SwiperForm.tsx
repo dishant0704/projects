@@ -26,7 +26,7 @@ const SwiperForm:React.FC<Props> = (props) => {
                   <SorTableList<SwiperItem>
                       items={data}
                       onReorder={handleReorder}
-                      onEdit={(item, index) => {
+                      onEdit={(_, index) => {
                           setEditObj({
                               inx: index,
                               flag: true,

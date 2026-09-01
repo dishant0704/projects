@@ -1,7 +1,7 @@
 // Define structure for the accordion data
 
 export interface AccordionItemData {
-  id?: number;
+  id: number;
   title: string;
   content?: string;
 }

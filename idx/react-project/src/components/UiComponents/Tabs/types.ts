@@ -19,8 +19,10 @@ export interface PageTabItem {
 export interface TabItem {
   id: string;
   label: string;
+  componentName?:string;
   component: React.ComponentType<any>;
   props?: Record<string, unknown>;
+  data?: unknown[]
   disabled?: boolean;
 }
 
