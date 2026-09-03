@@ -70,7 +70,13 @@ const AccordionList = () => {
   if (loading) {
     return <div>Loading...</div>;
   }
-
+  const editHandler = (i: number) => {
+    // setEditObj({inx:i, flag:true})
+  }
+  const deleteHandler = (id: number | null) => {
+    //  const newData = accordionData.filter((item)=>item.id !== id);
+    //  setAccordionData((pre)=>({ }))
+  }
   return (
     <div>
 
@@ -99,19 +105,15 @@ const AccordionList = () => {
               <h3 className="font-medium">
                 {item.title}
               </h3>
-
-              <p className="text-sm text-gray-600">
-                {item.content}
-              </p>
             </div>
-
-            {/* Use handlers here if SorTableList provides them */}
-            {/* 
             <div>
-              ...
-            </div>
-            */}
-
+              <button
+                onClick={() => editHandler(index)}
+                className="bg-orange-400 px-3 py-1 text-base block rounded-md text-white cursor-pointer">Edit</button></div>
+            <div>
+              <button
+                onClick={() => deleteHandler(item.id)}
+                className="bg-red-400 px-3 py-1 text-base block rounded-md text-white cursor-pointer">Delete</button></div>
           </div>
         )}
       />
