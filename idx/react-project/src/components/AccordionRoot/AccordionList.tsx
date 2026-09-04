@@ -99,9 +99,9 @@ const AccordionList = () => {
           index,
           handlers
         ) => (
-          <div className="flex items-center justify-between w-full p-3">
+          <div className="items-center justify-between w-full p-3 grid grid-cols-5 gap-x-5 gap-y-8 sm:grid-cols-5 flex-1">
 
-            <div>
+            <div className="col-span-3 align-middle">
               <h3 className="font-medium">
                 {item.title}
               </h3>
