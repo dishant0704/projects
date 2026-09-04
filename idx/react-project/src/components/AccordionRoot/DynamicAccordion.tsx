@@ -8,7 +8,7 @@ import DemoB from '../demo/DemoB'
 
 const DynamicAccordion = () => {
     const [accData, setAccData] = useState<AccordionItemData[]>([])
-    const [formData, setFormData] = useState<AccordionItemData>({ id: 0, title: "", content: "" })
+    const [formData, setFormData] = useState<AccordionItemData>({ id: 0, title: "", content: "", index: 0 })
     const [demoAValue, setDemoAValue] = useState("Demo A");
     const [demoBValue, setDemoBValue] = useState("Demo B")
     const AccordionData: DynamicAccordionItemData[] = [
@@ -46,6 +46,7 @@ const DynamicAccordion = () => {
             id: 0,
             title: "",
             content: "",
+            index: 0,
         });
     };
 

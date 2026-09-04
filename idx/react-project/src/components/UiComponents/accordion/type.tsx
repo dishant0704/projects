@@ -4,6 +4,7 @@ export interface AccordionItemData {
   id: number;
   title: string;
   content?: string;
+  index: number;
 }
 
 export interface AccordionProps{

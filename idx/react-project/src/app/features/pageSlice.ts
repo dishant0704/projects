@@ -27,18 +27,14 @@ export const addAccordionItemAndSave = createAsyncThunk<
   { state: RootState }
 >(
   "pages/addAccordionItemAndSave",
-  async (
-    { pageName, tabId, item },
-    { dispatch, getState }
-  ) => {
-
+  async ({ pageName, tabId, item }, { dispatch, getState }) => {
     // Update Redux
     dispatch(
       addAccordionItem({
         pageName,
         tabId,
         item,
-      })
+      }),
     );
 
     // Get updated Redux state
@@ -47,105 +43,107 @@ export const addAccordionItemAndSave = createAsyncThunk<
     const pages = state.pages.pages;
 
     // Save updated pages
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify(pages)
-    );
-  }
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(pages));
+  },
 );
 
 export const loadPages = createAsyncThunk<
   Page[],
   void,
   { rejectValue: string }
->(
-  "pages/loadPages",
-  async (_, { rejectWithValue }) => {
-    try {
-      const localData = localStorage.getItem(STORAGE_KEY);
-      console.log(
-        "localData:",
-        localData
-      );
-      // 1. Use localStorage if available
-      if (localData) {
-        const parsedData: Page[] = JSON.parse(localData);
+>("pages/loadPages", async (_, { rejectWithValue }) => {
+  try {
+    const localData = localStorage.getItem(STORAGE_KEY);
+    console.log("localData:", localData);
+    // 1. Use localStorage if available
+    if (localData) {
+      const parsedData: Page[] = JSON.parse(localData);
 
-        console.log(
-          "Loaded from localStorage:",
-          parsedData
-        );
+      console.log("Loaded from localStorage:", parsedData);
 
-        return parsedData;
-      }
-
-      // 2. Otherwise load default JSON
-      const data = await getPages();
-      console.log(
-        "Loaded from JSON:",
-        data.pages
-      );
-
-       // 3. Save default data to localStorage
-      localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify(data.pages)
-      );
-
-      return data;
-
-    } catch (error) {
-      console.error(error);
-
-      return rejectWithValue(
-        "Failed to load page data"
-      );
+      return parsedData;
     }
+
+    // 2. Otherwise load default JSON
+    const data = await getPages();
+    console.log("Loaded from JSON:", data.pages);
+
+    // 3. Save default data to localStorage
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data.pages));
+
+    return data.pages;
+  } catch (error) {
+    console.error(error);
+
+    return rejectWithValue("Failed to load page data");
   }
-);
+});
 
 const pageSlice = createSlice({
   name: "pages",
   initialState,
 
   reducers: {
-  setPages: (state, action) => {
-    state.pages = action.payload;
+    setPages: (state, action) => {
+      state.pages = action.payload;
+    },
+
+    addAccordionItem: (
+      state,
+      action: PayloadAction<{
+        pageName: string;
+        tabId: string;
+        item: AccordionItemData;
+      }>,
+    ) => {
+      const { pageName, tabId, item } = action.payload;
+
+      const page = state.pages.find((page) => page.name === pageName);
+
+      if (!page) {
+        return;
+      }
+
+      const tab = page.data.find((tab) => tab.id === tabId);
+
+      if (!tab) {
+        return;
+      }
+
+      if (!tab.data) {
+        tab.data = [];
+      }
+
+      tab.data.push(item);
+    },
+    reorderAccordionItems: (
+      state,
+      action: PayloadAction<{
+        pageName: string;
+        tabId: string;
+        items: AccordionItemData[];
+      }>,
+    ) => {
+      const { pageName, tabId, items } = action.payload;
+
+      const page = state.pages.find((page) => page.name === pageName);
+
+      if (!page) {
+        return;
+      }
+
+      const tab = page.data.find((tab) => tab.id === tabId);
+
+      if (!tab) {
+        return;
+      }
+
+      tab.data = items.map((item, index) => ({
+        ...item,
+        index,
+      }));
+    },
   },
-
-  addAccordionItem: (
-    state,
-    action: PayloadAction<{
-      pageName: string;
-      tabId: string;
-      item: AccordionItemData;
-    }>
-  ) => {
-    const { pageName, tabId, item } = action.payload;
-
-    const page = state.pages.find(
-      (page) => page.name === pageName
-    );
-
-    if (!page) {
-      return;
-    }
-
-    const tab = page.data.find(
-      (tab) => tab.id === tabId
-    );
-
-    if (!tab) {
-      return;
-    }
-
-    if (!tab.data) {
-      tab.data = [];
-    }
-
-    tab.data.push(item);
-  },
-},
 
   extraReducers: (builder) => {
     builder
@@ -161,14 +159,11 @@ const pageSlice = createSlice({
 
       .addCase(loadPages.rejected, (state, action) => {
         state.loading = false;
-        state.error =
-          action.payload ?? "Something went wrong";
+        state.error = action.payload ?? "Something went wrong";
       });
   },
 });
 
-export const {
-  setPages,
-  addAccordionItem, } = pageSlice.actions;
+export const { setPages, addAccordionItem, reorderAccordionItems } = pageSlice.actions;
 
 export default pageSlice.reducer;

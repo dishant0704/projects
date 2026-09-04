@@ -4,11 +4,13 @@ import SorTableList from "../UiComponents/dragAndDrop/SorTableList";
 
 import {
   useAppSelector,
+  useAppDispatch,
 } from "../../app/hooks/reducHooks";
 
 import type { AccordionItemData } from "../UiComponents/accordion/type";
 
 import type { EditObject } from "../../types/swiper";
+import { reorderAccordionItems } from "../../app/features/pageSlice";
 
 const AccordionList = () => {
 
@@ -45,6 +47,8 @@ const AccordionList = () => {
     flag: false,
   });
 
+  const dispatch = useAppDispatch();
+
   // Update local state when Redux data changes
   useEffect(() => {
     setAccordionData(data);
@@ -53,7 +57,17 @@ const AccordionList = () => {
   const handleReorder = (
     items: AccordionItemData[]
   ) => {
-    setAccordionData(items);
+    const updatedItems = items.map((item, index) => ({ ...item, index }));
+
+    // Update local state
+    setAccordionData(updatedItems);
+    
+     // Update Redux state
+    dispatch(reorderAccordionItems({
+      pageName: "accordion",
+      tabId: "regAcc",
+      items: updatedItems
+    }));
   };
 
   const handleDelete = (
