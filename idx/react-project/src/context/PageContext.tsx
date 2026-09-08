@@ -12,7 +12,7 @@ export const PageConttext = createContext<PageContextType | null >(null);
 export const PageProvider= ({children}:Props) => {
     const [pages, setPages] = useState<Page[]>([])
     const [loading, setLoading] = useState(true)
-    const STORAGE_KEY = "idx-component-demo";
+    const STORAGE_KEY = "idx-component-demo:accordion";
 
     const loadPage = async () =>{
         

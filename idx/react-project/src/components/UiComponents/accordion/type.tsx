@@ -1,21 +1,53 @@
-// Define structure for the accordion data
+import type React from "react";
+
+// =====================================================
+// Actual Accordion Item
+// =====================================================
 
 export interface AccordionItemData {
   id: number;
   title: string;
-  content?: string;
-  index: number;
+  content: string;
+  index?: number;
 }
 
-export interface AccordionProps{
-    index?:number;
-    items: AccordionItemData[];
-    isOpenId?: number
-    allowMultiple?: boolean // If true, multiple sections can be open at once
-    defaultActiveTab?: number // If provided, the accordion will open the section with this index by default
+// =====================================================
+// Page Component
+// =====================================================
+
+export interface AccordionComponentData {
+  id: string;
+  label: string;
+  component: string;
+  props?: Record<string, unknown>;
+  items?: AccordionItemData[];
 }
 
-//Dynamic Accordion Item Data
+// =====================================================
+// Accordion Page
+// =====================================================
+
+export interface AccordionData {
+  name: string;
+  advSettings: Record<string, unknown>;
+  items: AccordionComponentData[];
+}
+
+// =====================================================
+// Accordion Props
+// =====================================================
+
+export interface AccordionProps {
+  items: AccordionItemData[];
+  isOpenId?: number;
+  allowMultiple?: boolean;
+  defaultActiveTab?: number;
+}
+
+// =====================================================
+// Dynamic Accordion
+// =====================================================
+
 export interface DynamicAccordionItemData {
   id: number;
   title: string;
@@ -23,7 +55,7 @@ export interface DynamicAccordionItemData {
   props?: Record<string, unknown>;
 }
 
-export interface DynamicAccordionProps{
-    items: DynamicAccordionItemData[];
-    allowMultiple?: boolean // If true, multiple sections can be open at once
+export interface DynamicAccordionProps {
+  items: DynamicAccordionItemData[];
+  allowMultiple?: boolean;
 }

@@ -30,12 +30,12 @@ import ListWrapper from "./ListWrapper";
 
 const SorTableList = <T extends SortableItem>({
   className,
-  items,
+  items = [],
   onReorder,
   onEdit,
   onDelete,
   renderItem,
-}: SortableListProps<T>) => {
+}: SortableListProps<T>) => {  
 
   const DraggableItem = ({
     id,

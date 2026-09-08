@@ -2,26 +2,21 @@ import React, { useState } from "react";
 
 import type { AccordionItemData } from "../UiComponents/accordion/type";
 
-import {
-  useAppDispatch,
-} from "../../app/hooks/reducHooks";
+import { useAppDispatch } from "../../app/hooks/reducHooks"; //reducHooks
 
-import { addAccordionItemAndSave } from "../../app/features/pageSlice";
+import { addAccordionItem } from "../../app/features/accordion/accordionSlice";
 
 const AccordionForm = () => {
-
   const dispatch = useAppDispatch();
 
-  const [formData, setFormData] =
-    useState<AccordionItemData>({
-      id: 0,
-      title: "",
-      content: "",
-    });
+  const [formData, setFormData] = useState<AccordionItemData>({
+    id: 0,
+    title: "",
+    content: "",
+    index: 0,
+  });
 
-  const handleSubmit = (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const newItem: AccordionItemData = {
@@ -29,18 +24,13 @@ const AccordionForm = () => {
       id: Date.now(),
     };
 
-    dispatch(
-      addAccordionItemAndSave({
-        pageName: "accordion",
-        tabId: "regAcc",
-        item: newItem,
-      })
-    );
+    dispatch(addAccordionItem(newItem));
 
     setFormData({
       id: 0,
       title: "",
       content: "",
+      index: 0,
     });
   };
 
@@ -54,11 +44,10 @@ const AccordionForm = () => {
 
       <form onSubmit={handleSubmit}>
         <div className="grid gap-5 my-5">
-
           <input
             value={formData.title}
             onChange={(e) =>
-              setFormData((prev) => ({
+              setFormData((prev: any) => ({
                 ...prev,
                 title: e.target.value,
               }))
@@ -84,14 +73,10 @@ const AccordionForm = () => {
           />
 
           <div className="grid justify-items-end">
-            <button
-              type="submit"
-              className="btn"
-            >
+            <button type="submit" className="btn">
               Save
             </button>
           </div>
-
         </div>
       </form>
     </div>

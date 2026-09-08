@@ -1,62 +1,122 @@
 import { Link } from "react-router";
+import { useEffect, useMemo } from "react";
 
 import Tabs from "../UiComponents/Tabs";
 
 import ReguralAccordion from "./ReguralAccordion";
 import DynamicAccordion from "./DynamicAccordion";
-import { useAppSelector } from "../../app/hooks/reducHooks";
-import { useEffect, useState } from "react";
+
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "../../app/hooks/reducHooks";
+
+import {
+  loadAccordionPage,
+} from "../../app/features/accordion/accordionSlice";
+
 import type { TabItem } from "../UiComponents/Tabs/types";
 
-const componentRegistry: Record<string, React.ComponentType<any>> = {
-  regAcc: ReguralAccordion,
-  dynAcc: DynamicAccordion,
+const componentRegistry: Record<
+  string,
+  React.ComponentType<any>
+> = {
+  ReguralAccordion,
+  DynamicAccordion,
 };
 
 const AccordionRoot = () => {
-  const [tabs, setTabs] = useState<TabItem[]>([]);
-  const { pages, loading } = useAppSelector((state) => state.pages);
+  const dispatch = useAppDispatch();
 
-  const currpage = pages.find((page) => page.name === "accordion");
+  const {
+    page,
+    loading,
+    error,
+  } = useAppSelector(
+    (state) => state.accordion
+  );
+
+  console.log("AccordionRoot page:", page);
+  console.log("AccordionRoot loading:", loading);
+  console.log("AccordionRoot error:", error);
 
   useEffect(() => {
-    if (!currpage) {
-      return;
+    dispatch(loadAccordionPage())
+    .unwrap()
+    .then((pageData) => {
+      console.log(
+        "Accordion page loaded successfully:",
+        pageData
+      );
+    })
+    .catch((err) => {
+      console.error(
+        "Failed to load accordion page:",
+        err
+      );
+    });
+  }, [dispatch]);
+
+  const tabs: TabItem[] = useMemo(() => {
+    if (!page?.items) {
+      return [];
     }
 
-    // const tabs:TabItem = currpage.data as TabsProps["items"];
-    const tabItems: TabItem[] = currpage.data.map((tab) => {
-      const { id, label, props, data } = tab;
-
-      const Component = componentRegistry[id];
+    return page.items.map((tab) => {
+      const Component = componentRegistry[tab.component];
 
       return {
-        id,
-        label,
+        id: tab.id,
+        label: tab.label,
 
-        component: Component ?? (() => <div>Component "{id}" not found</div>),
+        component:
+          Component ?? (() => <div>Component "{tab.component}" not found</div>),
 
         props: {
-          ...(props ?? {}),
-          data: data ?? [],
+          ...(tab.props ?? {}),
+          data: tab.items ?? [],
         },
       };
     });
+  }, [page]);
 
-    setTabs(tabItems);
-  }, [currpage]);
+  if (loading) {
+    return <div className="p-5">Loading Accordion...</div>;
+  }
 
-  console.log("currpage:", currpage);
-  console.log("tabs:", tabs);
+  if (error) {
+    return (
+      <div className="p-5 text-red-500">
+        Error: {error}
+      </div>
+    );
+  }
+
+  if (!page) {
+    return (
+      <div className="p-5">
+        <h1>Accordion</h1>
+        <p>Accordion page configuration was not loaded.</p>
+      </div>
+    );
+  }
 
   return (
-    <section className={`${loading ? "disableContainer" : "p-5"}`}>
-      <h1>Accordion: </h1>
-      <Link to={`/`} className="text-[14px] text-primary-6-light-6">
+    <section className="p-5">
+      <h1>Accordion:</h1>
+
+      <Link
+        to="/"
+        className="text-[14px] text-primary-6-light-6"
+      >
         Back to Dashboard
       </Link>
+
       <div className="w-full">
-        <Tabs items={tabs} defaultActiveTab="regAcc" />
+        <Tabs
+          items={tabs}
+          defaultActiveTab="regAcc"
+        />
       </div>
     </section>
   );
