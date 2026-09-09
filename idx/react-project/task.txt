@@ -1,4 +1,4 @@
 #1. sorting order dynami arrange - done
-#2. edite button for accordion
-#3. delete bytton for accordion
+#2. edite button for accordion - in-progress
+#3. delete bytton for accordion - done
 #4. use icon to tab like setting and list
