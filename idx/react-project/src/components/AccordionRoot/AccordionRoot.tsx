@@ -36,9 +36,9 @@ const AccordionRoot = () => {
     (state) => state.accordion
   );
 
-  console.log("AccordionRoot page:", page);
-  console.log("AccordionRoot loading:", loading);
-  console.log("AccordionRoot error:", error);
+  // console.log("AccordionRoot page:", page);
+  // console.log("AccordionRoot loading:", loading);
+  // console.log("AccordionRoot error:", error);
 
   useEffect(() => {
     dispatch(loadAccordionPage())

@@ -30,4 +30,6 @@ export interface TabsProps {
   items: TabItem[];
   defaultActiveTab?: string;
   className?: string;
+  activeTabId?: string;  
+  onTabChange?:(tabId:string)=>void
 }

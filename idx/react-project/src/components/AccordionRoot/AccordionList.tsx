@@ -1,3 +1,4 @@
+import type React from "react";
 import SorTableList from "../UiComponents/dragAndDrop/SorTableList";
 
 import {
@@ -14,9 +15,20 @@ import {
 import type {
   AccordionItemData,
 } from "../UiComponents/accordion/type";
+import { useEffect } from "react";
 
-const AccordionList = () => {
+type EditState = {
+  flag: boolean;
+  inx: number | null;
+};
+
+interface AccordionListProps {
+  setEdit: (value: EditState) => void;
+}
+
+const AccordionList:React.FC<AccordionListProps> = ({setEdit}) => {
   const dispatch = useAppDispatch();
+  useEffect(()=>setEdit({flag:false,inx:null}),[])
 
   const {
     page,
@@ -73,7 +85,7 @@ const AccordionList = () => {
           );
         }}
 
-        renderItem={(item) => (
+        renderItem={(item, inx) => (
           <div className="items-center justify-between w-full p-3 grid grid-cols-5 gap-x-5 gap-y-8 sm:grid-cols-5 flex-1">
 
             <div className="col-span-3 align-middle">
@@ -86,9 +98,10 @@ const AccordionList = () => {
               <button
                 type="button"
                 onClick={() =>
-                  dispatch(
-                    setEditingAccordionItem(item)
-                  )
+                  setEdit({flag:true, inx:inx})
+                  // dispatch(
+                  //   setEditingAccordionItem(item)
+                  // )
                 }
                 className="bg-orange-400 px-3 py-1 text-base block rounded-md text-white cursor-pointer"
               >

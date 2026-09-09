@@ -1,120 +1,72 @@
-import SorTableList from "../UiComponents/dragAndDrop/SorTableList";
+import React, { useState } from "react";
+import type { TabsProps } from "./types";
 
-import {
-  useAppSelector,
-  useAppDispatch,
-} from "../../app/hooks/reducHooks";
+import TabPanel from "./TabPanel";
+import Tab from "./Tab";
 
-import {
-  reorderAccordionItems,
-  deleteAccordionItem,
-  setEditingAccordionItem,
-} from "../../app/features/accordion/accordionSlice";
-
-import type {
-  AccordionItemData,
-} from "../UiComponents/accordion/type";
-
-const AccordionList = () => {
-  const dispatch = useAppDispatch();
-
+const Tabs: React.FC<TabsProps> = (props) => {
   const {
-    page,
-    loading,
-    error,
-  } = useAppSelector(
-    (state) => state.accordion
+    items,
+    defaultActiveTab,
+    activeTabId,
+    onTabChange,
+    className,
+  } = props;
+
+  const [internalActiveTab, setInternalActiveTab] = useState(
+    defaultActiveTab || items[0]?.id
   );
 
-  /*
-   * New structure:
-   *
-   * page
-   *  └── items
-   *       ├── regAcc
-   *       │    └── items[]
-   *       └── dynAcc
-   *
-   * We need the items belonging to regAcc.
-   */
-  const accordionData: AccordionItemData[] =
-    page?.items?.find(
-      (item) => item.id === "regAcc"
-    )?.items ?? [];
+  // If activeTabId is provided, Tabs is controlled
+  // Otherwise it uses its own internal state
+  const activeTab = activeTabId ?? internalActiveTab;
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  const handleTabChange = (tabId: string) => {
+    // Update internal state
+    setInternalActiveTab(tabId);
 
-  if (error) {
-    return <div>{error}</div>;
-  }
+    // Notify parent if callback exists
+    onTabChange?.(tabId);
+  };
+
+  const activeContent = items.find(
+    (item) => item.id === activeTab
+  );
+
+  const Component = activeContent?.component;
+  const componentProps = activeContent?.props;
+
+  console.log("activeTab:", activeTab);
 
   return (
-    <div>
-      <SorTableList<AccordionItemData>
-        items={accordionData}
+    <div className={`w-full ${className ?? ""}`}>
 
-        onReorder={(items) => {
-          dispatch(
-            reorderAccordionItems(items)
+      {/* Tab Buttons */}
+      <div
+        className="flex border-b border-gray-300 dark:border-zinc-700"
+        role="tablist"
+      >
+        {items.map((tabItem) => {
+          const { id } = tabItem;
+
+          return (
+            <Tab
+              key={id}
+              item={tabItem}
+              active={activeTab === id}
+              onClick={() => handleTabChange(id)}
+            />
           );
-        }}
+        })}
+      </div>
 
-        onEdit={(item) => {
-          dispatch(
-            setEditingAccordionItem(item)
-          );
-        }}
+      {/* Content */}
+      <TabPanel>
+        {Component && <Component {...componentProps} />}
+      </TabPanel>
 
-        onDelete={(item) => {
-          dispatch(
-            deleteAccordionItem(item.id)
-          );
-        }}
-
-        renderItem={(item) => (
-          <div className="items-center justify-between w-full p-3 grid grid-cols-5 gap-x-5 gap-y-8 sm:grid-cols-5 flex-1">
-
-            <div className="col-span-3 align-middle">
-              <h3 className="font-medium">
-                {item.title}
-              </h3>
-            </div>
-
-            <div>
-              <button
-                type="button"
-                onClick={() =>
-                  dispatch(
-                    setEditingAccordionItem(item)
-                  )
-                }
-                className="bg-orange-400 px-3 py-1 text-base block rounded-md text-white cursor-pointer"
-              >
-                Edit
-              </button>
-            </div>
-
-            <div>
-              <button
-                type="button"
-                onClick={() =>
-                  dispatch(
-                    deleteAccordionItem(item.id)
-                  )
-                }
-                className="bg-red-400 px-3 py-1 text-base block rounded-md text-white cursor-pointer"
-              >
-                Delete
-              </button>
-            </div>
-
-          </div>
-        )}
-      />
     </div>
   );
 };
 
-export default AccordionList;
+export default Tabs;

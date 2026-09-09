@@ -5,10 +5,14 @@ import type { AccordionItemData } from "../UiComponents/accordion/type";
 import { useAppDispatch } from "../../app/hooks/reducHooks"; //reducHooks
 
 import { addAccordionItem } from "../../app/features/accordion/accordionSlice";
+interface AccordionFormProps {
+  setTabId: (tabId: string) => void;
+}
 
-const AccordionForm = () => {
+const AccordionForm:React.FC<AccordionFormProps>= (props) => {
   const dispatch = useAppDispatch();
-
+  const{setTabId} = props
+  
   const [formData, setFormData] = useState<AccordionItemData>({
     id: 0,
     title: "",
@@ -32,6 +36,7 @@ const AccordionForm = () => {
       content: "",
       index: 0,
     });
+    setTabId("accList")
   };
 
   return (

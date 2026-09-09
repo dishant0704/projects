@@ -20,21 +20,29 @@ const ReguralAccordion = ({
   data = [],
 }: ReguralAccordionProps) => {
   const [tabs, setTabs] = useState<TabItem[]>([]);
+  const [tabId, setTabId] = useState("accList");
+  const [edit, setEdit] = useState({ flag: false, inx: null })
 
   const tabsData = [
     {
       id: "accList",
       componentName: "accordion-list",
       label: "Accordion List",
-      props: {},
+      props: { setEdit },
     },
     {
       id: "accForm",
       componentName: "accordion-form",
       label: "Accordion Form",
-      props: {},
+      props: { setTabId },
     },
   ];
+  useEffect(() => {
+    if (edit.flag) {
+      setTabId("accForm")
+    }
+
+  }, [edit.flag])
 
   useEffect(() => {
     const safeData = Array.isArray(data) ? data : [];
@@ -76,6 +84,8 @@ const ReguralAccordion = ({
     ? data
     : [];
 
+  console.log("TabId", tabId)
+
   return (
     <section>
       <SubPageTemplate>
@@ -89,7 +99,9 @@ const ReguralAccordion = ({
         <SubPageTemplate.Right>
           <Tabs
             items={tabs}
-            defaultActiveTab="accList"
+            activeTabId={tabId}
+            onTabChange={setTabId}
+            defaultActiveTab={tabId}
           />
         </SubPageTemplate.Right>
       </SubPageTemplate>
