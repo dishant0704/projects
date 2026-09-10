@@ -12,7 +12,6 @@ interface AccordionState {
   page: AccordionData | null;
   loading: boolean;
   error: string | null;
-  editingItem: AccordionItemData | null;
   editObject: EditState
 }
 
@@ -20,8 +19,7 @@ const initialState: AccordionState = {
   page: null,
   loading: false,
   error: null,
-  editingItem: null,
-  editObject:{flag:false, inx: null}
+  editObject: { flag: false, inx: null }
 };
 
 /**
@@ -106,9 +104,9 @@ const accordionSlice = createSlice({
   initialState,
 
   reducers: {
-     // --------------------------------------------------
+    // --------------------------------------------------
     //  Replace the complete accordion page.
-     // --------------------------------------------------
+    // --------------------------------------------------
     setAccordionPage: (
       state,
       action: PayloadAction<AccordionData>
@@ -121,9 +119,9 @@ const accordionSlice = createSlice({
       );
     },
 
-     // --------------------------------------------------
-     //  Add a new accordion item to Regular Accordion.
-     // --------------------------------------------------
+    // --------------------------------------------------
+    //  Add a new accordion item to Regular Accordion.
+    // --------------------------------------------------
     addAccordionItem: (
       state,
       action: PayloadAction<AccordionItemData>
@@ -152,9 +150,46 @@ const accordionSlice = createSlice({
       );
     },
 
-     // --------------------------------------------------
-     //  Delete an accordion item from Regular Accordion.
-     // --------------------------------------------------
+    // --------------------------------------------------
+    //  Update an accordion item from Regular Accordion.
+    // --------------------------------------------------
+    updateAccordionItem: (
+      state,
+      action: PayloadAction<{
+        index: number,
+        item: AccordionItemData
+      }>
+    ) => {
+
+      if (!state.page) {
+        return;
+      }
+
+      const regularAccordion = state.page.items.find((item) => item.id === "regAcc");
+
+      if (!regularAccordion || !Array.isArray(regularAccordion.items)) {
+        return;
+      }
+
+      const { index, item } = action.payload;
+
+      if (index < 0 || index >= regularAccordion.items.length) {
+        return;
+      }
+
+      // Replace the item at the requested index
+      regularAccordion.items[index] = item;
+
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(state.page)
+      );
+
+    },
+
+    // --------------------------------------------------
+    //  Delete an accordion item from Regular Accordion.
+    // --------------------------------------------------
     deleteAccordionItem: (
       state,
       action: PayloadAction<number>
@@ -211,21 +246,11 @@ const accordionSlice = createSlice({
     // --------------------------------------------------
     //  Store the edite object.
     // --------------------------------------------------
-    setEditObject:(
+    setEditObject: (
       state,
       action: PayloadAction<EditState>
-    )=>{
-      state.editObject = action.payload;
-    },
-
-    // --------------------------------------------------
-    //  Store the item currently being edited.
-    // --------------------------------------------------
-    setEditingAccordionItem: (
-      state,
-      action: PayloadAction<AccordionItemData | null>
     ) => {
-      state.editingItem = action.payload;
+      state.editObject = action.payload;
     },
   },
 
@@ -261,10 +286,10 @@ const accordionSlice = createSlice({
 export const {
   setAccordionPage,
   addAccordionItem,
+  updateAccordionItem,
   deleteAccordionItem,
   reorderAccordionItems,
   setEditObject,
-  setEditingAccordionItem,
 } = accordionSlice.actions;
 
 export default accordionSlice.reducer;
