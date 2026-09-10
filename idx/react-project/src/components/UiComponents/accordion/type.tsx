@@ -24,6 +24,15 @@ export interface AccordionComponentData {
 }
 
 // =====================================================
+// Accordion Page Edit Button Object
+// =====================================================
+
+export type EditState = {
+  flag: boolean;
+  inx: number | null;
+};
+
+// =====================================================
 // Accordion Page
 // =====================================================
 

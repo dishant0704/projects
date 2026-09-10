@@ -11,6 +11,7 @@ import type { TabItem } from "../UiComponents/Tabs/types";
 
 import { ComponentRegistry } from "../ComponentRegistry";
 import Tabs from "../UiComponents/Tabs";
+import { useAppSelector } from "../../app/hooks/reducHooks";
 
 interface ReguralAccordionProps {
   data?: AccordionItemData[];
@@ -21,14 +22,15 @@ const ReguralAccordion = ({
 }: ReguralAccordionProps) => {
   const [tabs, setTabs] = useState<TabItem[]>([]);
   const [tabId, setTabId] = useState("accList");
-  const [edit, setEdit] = useState({ flag: false, inx: null })
+  // const [edit, setEdit] = useState({ flag: false, inx: null })
+  const {editObject}=useAppSelector((state)=> state.accordion)
 
   const tabsData = [
     {
       id: "accList",
       componentName: "accordion-list",
       label: "Accordion List",
-      props: { setEdit },
+      props: {},
     },
     {
       id: "accForm",
@@ -38,11 +40,11 @@ const ReguralAccordion = ({
     },
   ];
   useEffect(() => {
-    if (edit.flag) {
+    if (editObject.flag) {
       setTabId("accForm")
     }
 
-  }, [edit.flag])
+  }, [editObject.flag])
 
   useEffect(() => {
     const safeData = Array.isArray(data) ? data : [];

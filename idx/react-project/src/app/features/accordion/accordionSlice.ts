@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice, type PayloadAction } from "@reduxjs/tool
 import type {
   AccordionData,
   AccordionItemData,
+  EditState
 } from "../../../components/UiComponents/accordion/type";
 
 const STORAGE_KEY = "idx-component-demo:accordion";
@@ -12,6 +13,7 @@ interface AccordionState {
   loading: boolean;
   error: string | null;
   editingItem: AccordionItemData | null;
+  editObject: EditState
 }
 
 const initialState: AccordionState = {
@@ -19,6 +21,7 @@ const initialState: AccordionState = {
   loading: false,
   error: null,
   editingItem: null,
+  editObject:{flag:false, inx: null}
 };
 
 /**
@@ -206,6 +209,16 @@ const accordionSlice = createSlice({
     },
 
     // --------------------------------------------------
+    //  Store the edite object.
+    // --------------------------------------------------
+    setEditObject:(
+      state,
+      action: PayloadAction<EditState>
+    )=>{
+      state.editObject = action.payload;
+    },
+
+    // --------------------------------------------------
     //  Store the item currently being edited.
     // --------------------------------------------------
     setEditingAccordionItem: (
@@ -250,6 +263,7 @@ export const {
   addAccordionItem,
   deleteAccordionItem,
   reorderAccordionItems,
+  setEditObject,
   setEditingAccordionItem,
 } = accordionSlice.actions;
 

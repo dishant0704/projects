@@ -1,42 +1,26 @@
-import type React from "react";
+import { useEffect } from "react";
 import SorTableList from "../UiComponents/dragAndDrop/SorTableList";
 
-import {
-  useAppSelector,
-  useAppDispatch,
-} from "../../app/hooks/reducHooks";
+import { useAppSelector, useAppDispatch } from "../../app/hooks/reducHooks";
 
 import {
   reorderAccordionItems,
   deleteAccordionItem,
   setEditingAccordionItem,
+  setEditObject,
 } from "../../app/features/accordion/accordionSlice";
 
 import type {
   AccordionItemData,
 } from "../UiComponents/accordion/type";
-import { useEffect } from "react";
 
-type EditState = {
-  flag: boolean;
-  inx: number | null;
-};
-
-interface AccordionListProps {
-  setEdit: (value: EditState) => void;
-}
-
-const AccordionList:React.FC<AccordionListProps> = ({setEdit}) => {
+const AccordionList = () => {
   const dispatch = useAppDispatch();
-  useEffect(()=>setEdit({flag:false,inx:null}),[])
+  useEffect(() => {
+    dispatch(setEditObject({ flag: false, inx: null }));
+  }, [dispatch]);
 
-  const {
-    page,
-    loading,
-    error,
-  } = useAppSelector(
-    (state) => state.accordion
-  );
+  const { page, loading, error } = useAppSelector((state) => state.accordion);
 
   /*
    * New structure:
@@ -50,9 +34,7 @@ const AccordionList:React.FC<AccordionListProps> = ({setEdit}) => {
    * We need the items belonging to regAcc.
    */
   const accordionData: AccordionItemData[] =
-    page?.items?.find(
-      (item) => item.id === "regAcc"
-    )?.items ?? [];
+    page?.items?.find((item) => item.id === "regAcc")?.items ?? [];
 
   if (loading) {
     return <div>Loading...</div>;
@@ -66,42 +48,26 @@ const AccordionList:React.FC<AccordionListProps> = ({setEdit}) => {
     <div>
       <SorTableList<AccordionItemData>
         items={accordionData}
-
         onReorder={(items) => {
-          dispatch(
-            reorderAccordionItems(items)
-          );
+          dispatch(reorderAccordionItems(items));
         }}
-
         onEdit={(item) => {
-          dispatch(
-            setEditingAccordionItem(item)
-          );
+          dispatch(setEditingAccordionItem(item));
         }}
-
         onDelete={(item) => {
-          dispatch(
-            deleteAccordionItem(item.id)
-          );
+          dispatch(deleteAccordionItem(item.id));
         }}
-
         renderItem={(item, inx) => (
           <div className="items-center justify-between w-full p-3 grid grid-cols-5 gap-x-5 gap-y-8 sm:grid-cols-5 flex-1">
-
             <div className="col-span-3 align-middle">
-              <h3 className="font-medium">
-                {item.title}
-              </h3>
+              <h3 className="font-medium">{item.title}</h3>
             </div>
 
             <div>
               <button
                 type="button"
                 onClick={() =>
-                  setEdit({flag:true, inx:inx})
-                  // dispatch(
-                  //   setEditingAccordionItem(item)
-                  // )
+                  dispatch(setEditObject({ flag: true, inx: inx }))
                 }
                 className="bg-orange-400 px-3 py-1 text-base block rounded-md text-white cursor-pointer"
               >
@@ -112,17 +78,12 @@ const AccordionList:React.FC<AccordionListProps> = ({setEdit}) => {
             <div>
               <button
                 type="button"
-                onClick={() =>
-                  dispatch(
-                    deleteAccordionItem(item.id)
-                  )
-                }
+                onClick={() => dispatch(deleteAccordionItem(item.id))}
                 className="bg-red-400 px-3 py-1 text-base block rounded-md text-white cursor-pointer"
               >
                 Delete
               </button>
             </div>
-
           </div>
         )}
       />
