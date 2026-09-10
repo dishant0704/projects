@@ -36,7 +36,7 @@ const Tabs: React.FC<TabsProps> = (props) => {
   const Component = activeContent?.component;
   const componentProps = activeContent?.props;
 
-  console.log("activeTab:", activeTab);
+  // console.log("activeTab:", activeTab);
 
   return (
     <div className={`w-full ${className ?? ""}`}>

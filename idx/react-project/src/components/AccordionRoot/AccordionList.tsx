@@ -6,7 +6,6 @@ import { useAppSelector, useAppDispatch } from "../../app/hooks/reducHooks";
 import {
   reorderAccordionItems,
   deleteAccordionItem,
-  setEditingAccordionItem,
   setEditObject,
 } from "../../app/features/accordion/accordionSlice";
 
@@ -52,10 +51,10 @@ const AccordionList = () => {
           dispatch(reorderAccordionItems(items));
         }}
         onEdit={(item) => {
-          dispatch(setEditingAccordionItem(item));
+          // dispatch(setEditingAccordionItem(item));
         }}
         onDelete={(item) => {
-          dispatch(deleteAccordionItem(item.id));
+          // dispatch(deleteAccordionItem(item.id));
         }}
         renderItem={(item, inx) => (
           <div className="items-center justify-between w-full p-3 grid grid-cols-5 gap-x-5 gap-y-8 sm:grid-cols-5 flex-1">
