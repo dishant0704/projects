@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import SubPageTemplate from "../page-templates/SubPageTemplate";
 import Accordion from "../UiComponents/accordion/Accordion";
@@ -20,9 +20,12 @@ interface ReguralAccordionProps {
 const ReguralAccordion = ({
   data = [],
 }: ReguralAccordionProps) => {
-  const [tabs, setTabs] = useState<TabItem[]>([]);
+  // const [tabs, setTabs] = useState<TabItem[]>([]);
   const [tabId, setTabId] = useState("accList");
   const {editObject, loading}=useAppSelector((state)=> state.accordion)
+
+  const tabs = useMemo<TabItem[]>(() => {
+  const safeData = Array.isArray(data) ? data : [];
 
   const tabsData = [
     {
@@ -35,52 +38,34 @@ const ReguralAccordion = ({
       id: "accForm",
       componentName: "accordion-form",
       label: "Accordion Form",
-      props: { setTabId },
+      props: {
+        setTabId,
+      },
     },
   ];
-  useEffect(() => {
-    if (editObject.flag) {
-      setTabId("accForm")
-    }else{
-       setTabId("accList")
-    }
-  }, [editObject.flag])
 
-  useEffect(() => {
-    const safeData = Array.isArray(data) ? data : [];
+  return tabsData.map((tab) => {
+    const Component = ComponentRegistry[tab.componentName];
 
-    const tabItems: TabItem[] = tabsData.map((tab) => {
-      const {
-        id,
-        label,
-        props,
-        componentName,
-      } = tab;
+    return {
+      id: tab.id,
+      label: tab.label,
 
-      const Component =
-        ComponentRegistry[componentName];
+      component:
+        Component ??
+        (() => (
+          <div>
+            Component "{tab.componentName}" not found
+          </div>
+        )),
 
-      return {
-        id,
-        label,
-
-        component:
-          Component ??
-          (() => (
-            <div>
-              Component "{componentName}" not found
-            </div>
-          )),
-
-        props: {
-          ...(props ?? {}),
-          data: safeData,
-        },
-      };
-    });
-
-    setTabs(tabItems);
-  }, [data]);
+      props: {
+        ...tab.props,
+        data: safeData,
+      },
+    };
+  });
+}, [data]);
 
   const accordionItems = Array.isArray(data)
     ? data
@@ -90,7 +75,7 @@ const ReguralAccordion = ({
 
   return (
     <section>
-      {loading}
+      Loading :{loading}
       <SubPageTemplate>
         <SubPageTemplate.Left>
           <Accordion
