@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import SorTableList from "../UiComponents/dragAndDrop/SorTableList";
 
 import { useAppSelector, useAppDispatch } from "../../app/hooks/reducHooks";
@@ -13,36 +13,42 @@ import type {
   AccordionItemData,
 } from "../UiComponents/accordion/type";
 
-const AccordionList = () => {
+interface AccordionFormProps {
+  setTabId: (tabId: string) => void;
+}
+
+const AccordionList:React.FC<AccordionFormProps>= (props) => {
   const dispatch = useAppDispatch();
+  const{setTabId} = props
+
   useEffect(() => {
     dispatch(setEditObject({ flag: false, inx: null }));
   }, [dispatch]);
 
-  const { page, loading, error } = useAppSelector((state) => state.accordion);
+  const { page} = useAppSelector((state) => state.accordion);
 
-  /*
-   * New structure:
-   *
-   * page
-   *  └── items
-   *       ├── regAcc
-   *       │    └── items[]
-   *       └── dynAcc
-   *
-   * We need the items belonging to regAcc.
-   */
   const accordionData: AccordionItemData[] =
     page?.items?.find((item) => item.id === "regAcc")?.items ?? [];
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  const handleEdit = useCallback(
+    (index: number) => {
+      dispatch(
+        setEditObject({
+          flag: true,
+          inx: index,
+        })
+      );
+      setTabId("accForm")
+    },
+    [dispatch]
+  );
 
-  if (error) {
-    return <div>{error}</div>;
-  }
-
+const handleDelete = useCallback(
+  (item: AccordionItemData) => {
+    dispatch(deleteAccordionItem(item.id));
+  },
+  [dispatch]
+);
   return (
     <div>
       <SorTableList<AccordionItemData>
@@ -65,9 +71,7 @@ const AccordionList = () => {
             <div>
               <button
                 type="button"
-                onClick={() =>
-                  dispatch(setEditObject({ flag: true, inx: inx }))
-                }
+                onClick={()=>handleEdit(inx)}
                 className="bg-orange-400 px-3 py-1 text-base block rounded-md text-white cursor-pointer"
               >
                 Edit
@@ -77,7 +81,7 @@ const AccordionList = () => {
             <div>
               <button
                 type="button"
-                onClick={() => dispatch(deleteAccordionItem(item.id))}
+                onClick={() => handleDelete(item)}
                 className="bg-red-400 px-3 py-1 text-base block rounded-md text-white cursor-pointer"
               >
                 Delete

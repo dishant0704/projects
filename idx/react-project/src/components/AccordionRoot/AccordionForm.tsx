@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import type { AccordionItemData } from "../UiComponents/accordion/type";
+import type { AccordionData, AccordionItemData } from "../UiComponents/accordion/type";
 
 import { useAppDispatch, useAppSelector } from "../../app/hooks/reducHooks"; //reducHooks
 
@@ -9,7 +9,6 @@ import { addAccordionItem, setAccordionPage, setEditObject } from "../../app/fea
 interface AccordionFormProps {
   setTabId: (tabId: string) => void;
 }
-
 const AccordionForm: React.FC<AccordionFormProps> = (props) => {
   const dispatch = useAppDispatch();
   const { setTabId } = props
@@ -55,67 +54,87 @@ const AccordionForm: React.FC<AccordionFormProps> = (props) => {
 
   }, [flag, inx, page]);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = (
+  e: React.FormEvent<HTMLFormElement>
+) => {
+  e.preventDefault();
 
-    const regularAccordion = getPageData();
+  if (!page) {
+    return;
+  }
 
-    if (!regularAccordion) {
+  const regularAccordion = page.items.find(
+    (item) => item.id === "regAcc"
+  );
+
+  if (!regularAccordion) {
+    return;
+  }
+
+  const currentItems = regularAccordion.items ?? [];
+
+  if (flag) {
+    // -----------------------------
+    // EDIT
+    // -----------------------------
+    if (typeof inx !== "number") {
       return;
     }
 
-    const currentItems = regularAccordion?.items ?? []
-
-    if (flag) {
-      // -----------------------------
-      // EDIT
-      // -----------------------------
-      if (typeof inx !== "number") {
-        return;
-      }
-
-      if (inx < 0 || inx >= currentItems.length) {
-        return;
-      }
-
-      //cron array 
-      const updatedItems = [...currentItems];
-      updatedItems[inx] = { ...formData, index: inx }
-
-      //update pagedata
-      const updatedPage = {
-        ...page,
-        items: page?.items.map((item) => item.id === "regAcc" ? { ...item, items: updatedItems } : item)
-      }
-
-      //Dishpatch for update data;
-      dispatch(setAccordionPage(updatedPage));
-
-      // Clear edit mode
-      dispatch(
-        setEditObject({
-          flag: false,
-          inx: null,
-        })
-      );
-
-    } else {
-
-      const newItem: AccordionItemData = {
-        ...formData,
-        id: Date.now(),
-      };
-      dispatch(addAccordionItem(newItem));
+    if (inx < 0 || inx >= currentItems.length) {
+      return;
     }
 
-    setFormData({
-      id: 0,
-      title: "",
-      content: "",
-      index: 0,
-    });
-    setTabId("accList")
-  };
+    const updatedItems = [...currentItems];
+
+    updatedItems[inx] = {
+      ...formData,
+      index: inx,
+    };
+
+    const updatedPage: AccordionData = {
+      ...page,
+
+      items: page.items.map((item) =>
+        item.id === "regAcc"
+          ? {
+              ...item,
+              items: updatedItems,
+            }
+          : item
+      ),
+    };
+
+    dispatch(setAccordionPage(updatedPage));
+
+    dispatch(
+      setEditObject({
+        flag: false,
+        inx: null,
+      })
+    );
+  } else {
+    // -----------------------------
+    // ADD
+    // -----------------------------
+    dispatch(
+      addAccordionItem({
+        ...formData,
+        id: Date.now(),
+        index: currentItems.length,
+      })
+    );
+  }
+
+  setFormData({
+    id: 0,
+    title: "",
+    content: "",
+    index: 0,
+  });
+
+  setTabId("accList");
+};
 
   return (
     <div className="p-5">

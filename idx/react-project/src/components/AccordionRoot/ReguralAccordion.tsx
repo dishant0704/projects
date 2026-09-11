@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import {useMemo, useState } from "react";
 
 import SubPageTemplate from "../page-templates/SubPageTemplate";
 import Accordion from "../UiComponents/accordion/Accordion";
@@ -11,8 +11,6 @@ import type { TabItem } from "../UiComponents/Tabs/types";
 
 import { ComponentRegistry } from "../ComponentRegistry";
 import Tabs from "../UiComponents/Tabs";
-import { useAppSelector } from "../../app/hooks/reducHooks";
-
 interface ReguralAccordionProps {
   data?: AccordionItemData[];
 }
@@ -22,7 +20,6 @@ const ReguralAccordion = ({
 }: ReguralAccordionProps) => {
   // const [tabs, setTabs] = useState<TabItem[]>([]);
   const [tabId, setTabId] = useState("accList");
-  const {editObject, loading}=useAppSelector((state)=> state.accordion)
 
   const tabs = useMemo<TabItem[]>(() => {
   const safeData = Array.isArray(data) ? data : [];
@@ -32,7 +29,7 @@ const ReguralAccordion = ({
       id: "accList",
       componentName: "accordion-list",
       label: "Accordion List",
-      props: {},
+      props: {setTabId},
     },
     {
       id: "accForm",
@@ -74,8 +71,7 @@ const ReguralAccordion = ({
   // console.log("TabId", tabId)
 
   return (
-    <section>
-      Loading :{loading}
+    <section>     
       <SubPageTemplate>
         <SubPageTemplate.Left>
           <Accordion
