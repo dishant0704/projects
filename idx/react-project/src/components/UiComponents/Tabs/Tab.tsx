@@ -14,10 +14,12 @@ const Tab: React.FC<Props> = (Props) => {
     active,
     onClick,
   } = Props;
-  
+
   return (
     <button
       role="tab"
+      aria-label={label}
+      title={label}
       disabled={active || disabled}
       onClick={onClick}
       className={`
