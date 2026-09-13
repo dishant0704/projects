@@ -3,7 +3,7 @@ interface Props {
 }
 
 const SubPageTemplate = ({ children }: Props) => (
-  <section className="p-5">
+  <section className="py-2">
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
       {children}
     </div>
@@ -11,11 +11,11 @@ const SubPageTemplate = ({ children }: Props) => (
 );
 
 const Left = ({ children }: Props) => (
-  <div className="p-5">{children}</div>
+  <div className="py-5">{children}</div>
 );
 
 const Right = ({ children }: Props) => (
-  <div className="p-5">{children}</div>
+  <div className="py-5">{children}</div>
 );
 
 SubPageTemplate.Left = Left;

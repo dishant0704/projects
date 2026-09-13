@@ -47,6 +47,7 @@ export interface AccordionData {
 // =====================================================
 
 export interface AccordionProps {
+  index?:number;
   items: AccordionItemData[];
   isOpenId?: number;
   allowMultiple?: boolean;

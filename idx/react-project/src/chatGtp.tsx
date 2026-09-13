@@ -1,72 +1,41 @@
-import React, { useState } from "react";
-import type { TabsProps } from "./types";
+import React from "react";
+import type { TabItem } from "./types";
 
-import TabPanel from "./TabPanel";
-import Tab from "./Tab";
+interface Props {
+  item: TabItem;
+  active: boolean;
+  onClick: () => void;
+}
 
-const Tabs: React.FC<TabsProps> = (props) => {
-  const {
-    items,
-    defaultActiveTab,
-    activeTabId,
-    onTabChange,
-    className,
-  } = props;
-
-  const [internalActiveTab, setInternalActiveTab] = useState(
-    defaultActiveTab || items[0]?.id
-  );
-
-  // If activeTabId is provided, Tabs is controlled
-  // Otherwise it uses its own internal state
-  const activeTab = activeTabId ?? internalActiveTab;
-
-  const handleTabChange = (tabId: string) => {
-    // Update internal state
-    setInternalActiveTab(tabId);
-
-    // Notify parent if callback exists
-    onTabChange?.(tabId);
-  };
-
-  const activeContent = items.find(
-    (item) => item.id === activeTab
-  );
-
-  const Component = activeContent?.component;
-  const componentProps = activeContent?.props;
-
-  console.log("activeTab:", activeTab);
-
+const Tab: React.FC<Props> = ({
+  item: { label, icon: Icon, disabled },
+  active,
+  onClick,
+}) => {
   return (
-    <div className={`w-full ${className ?? ""}`}>
-
-      {/* Tab Buttons */}
-      <div
-        className="flex border-b border-gray-300 dark:border-zinc-700"
-        role="tablist"
-      >
-        {items.map((tabItem) => {
-          const { id } = tabItem;
-
-          return (
-            <Tab
-              key={id}
-              item={tabItem}
-              active={activeTab === id}
-              onClick={() => handleTabChange(id)}
-            />
-          );
-        })}
-      </div>
-
-      {/* Content */}
-      <TabPanel>
-        {Component && <Component {...componentProps} />}
-      </TabPanel>
-
-    </div>
+    <button
+      role="tab"
+      disabled={active || disabled}
+      onClick={onClick}
+      className={`
+        px-5
+        py-3
+        font-medium
+        transition-colors
+        border-b-2
+        -mb-px
+        ${active ? "tabActive" : "tab"}
+        ${
+          disabled
+            ? "opacity-40 cursor-not-allowed"
+            : "cursor-pointer"
+        }
+      `}
+    >
+      {Icon && <Icon />}
+      {label}
+    </button>
   );
 };
 
-export default Tabs;
+export default Tab;

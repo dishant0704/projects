@@ -36,18 +36,14 @@ const AccordionRoot = () => {
     (state) => state.accordion
   );
 
-  // console.log("AccordionRoot page:", page);
-  // console.log("AccordionRoot loading:", loading);
-  // console.log("AccordionRoot error:", error);
-
   useEffect(() => {
     dispatch(loadAccordionPage())
     .unwrap()
     .then((pageData) => {
-      console.log(
-        "Accordion page loaded successfully:",
-        pageData
-      );
+      // console.log(
+      //   "Accordion page loaded successfully:",
+      //   pageData
+      // );
     })
     .catch((err) => {
       console.error(

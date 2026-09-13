@@ -30,7 +30,7 @@ const Accordion: React.FC<AccordionProps> = ({ index, items, allowMultiple = fal
     };
 
     return (
-        <div className="w-full max-w-2xl mx-auto ">
+        <div className="py-2 w-full max-w-2xl">
             {
                 items.map((item,inx) => {
                     const { id, content } = item

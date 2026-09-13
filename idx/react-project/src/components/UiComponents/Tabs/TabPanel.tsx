@@ -5,7 +5,7 @@ interface Props {
 
 const TabPanel = ({children}:Props) => {
   return (
-    <div className="p-5">
+    <div className="py-2">
       {children}
     </div>
   )

@@ -11,6 +11,7 @@ const Tabs: React.FC<TabsProps> = (props) => {
     activeTabId,
     onTabChange,
     className,
+    align
   } = props;
 
   const [internalActiveTab, setInternalActiveTab] = useState(
@@ -43,7 +44,7 @@ const Tabs: React.FC<TabsProps> = (props) => {
 
       {/* Tab Buttons */}
       <div
-        className="flex border-b border-gray-300 dark:border-zinc-700"
+        className={`flex ${align === "right" ? "justify-end":""} border-b border-gray-300 dark:border-zinc-700 gap-4`}
         role="tablist"
       >
         {items.map((tabItem) => {

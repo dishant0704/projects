@@ -92,6 +92,9 @@
   border-bottom: transparent;;
   color: var(--tab-hover-text)
 }
+.iconActiveTab{
+  border: none !important
+}
 
   /* Label style */
   label {

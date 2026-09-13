@@ -1,2 +1,2 @@
-#1. edite button for accordion - edit from need to complite in-progress
-#2. use icon to tab like setting and list
+#1. use icon to tab like setting and list //import { component, list } from 'lucide-react'
+#2. create two component and theyer props as a demo component 

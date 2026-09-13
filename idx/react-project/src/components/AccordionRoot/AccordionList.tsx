@@ -13,6 +13,8 @@ import type {
   AccordionItemData,
 } from "../UiComponents/accordion/type";
 
+import { Trash2Icon, PencilIcon } from "lucide-react";
+
 interface AccordionFormProps {
   setTabId: (tabId: string) => void;
 }
@@ -63,8 +65,8 @@ const handleDelete = useCallback(
           // dispatch(deleteAccordionItem(item.id));
         }}
         renderItem={(item, inx) => (
-          <div className="items-center justify-between w-full p-3 grid grid-cols-5 gap-x-5 gap-y-8 sm:grid-cols-5 flex-1">
-            <div className="col-span-3 align-middle">
+          <div className="items-center justify-between w-full grid grid-cols-5 gap-5 sm:grid-cols-7 flex-1">
+            <div className="col-span-5 align-middle">
               <h3 className="font-medium">{item.title}</h3>
             </div>
 
@@ -72,9 +74,9 @@ const handleDelete = useCallback(
               <button
                 type="button"
                 onClick={()=>handleEdit(inx)}
-                className="bg-orange-400 px-3 py-1 text-base block rounded-md text-white cursor-pointer"
+                className="p-2 text-base block text-orange-400 cursor-pointer"
               >
-                Edit
+                <PencilIcon />
               </button>
             </div>
 
@@ -82,9 +84,9 @@ const handleDelete = useCallback(
               <button
                 type="button"
                 onClick={() => handleDelete(item)}
-                className="bg-red-400 px-3 py-1 text-base block rounded-md text-white cursor-pointer"
+                className="p-2 text-base block text-red-400 cursor-pointer"
               >
-                Delete
+                <Trash2Icon/>
               </button>
             </div>
           </div>
