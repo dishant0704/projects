@@ -30,7 +30,26 @@
       "label": "Dynamic Accordion",
       "component": "DynamicAccordion",
       "props": {},
-      "items": []
+      "items": [
+        {
+          "id": 1,
+          "title": "Component Demo A",
+          "component": "demo_a",
+          "props": {}
+        },
+        {
+          "id": 2,
+          "title": "Component Demo B",
+          "component": "demo_b",
+          "props": {}
+        },
+        {
+          "id": 3,
+          "title": "Component Demo C",
+          "component": "demo_c",
+          "props": {}
+        }
+      ]
     }
   ]
 }

@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, type PayloadAction } from "@reduxjs/tool
 
 import type {
   AccordionData,
+  AccordionDynamicItemData,
   AccordionItemData,
   EditState
 } from "../../../components/UiComponents/accordion/type";
@@ -207,6 +208,27 @@ const accordionSlice = createSlice({
     },
 
     // --------------------------------------------------
+    reorderAccordionDynamicItems: (
+      state,
+      action: PayloadAction<AccordionDynamicItemData[]>
+    ) => {
+      if (!state.page) return;
+
+      const dynamicAccordion = state.page.items.find(
+        (item) => item.id === "dynAcc"
+      );
+
+      if (!dynamicAccordion) return;
+
+      dynamicAccordion.items = action.payload;
+
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(state.page)
+      );
+    },
+
+    // --------------------------------------------------
     //  Store the edite object.
     // --------------------------------------------------
     setEditObject: (
@@ -251,6 +273,7 @@ export const {
   addAccordionItem,
   deleteAccordionItem,
   reorderAccordionItems,
+  reorderAccordionDynamicItems,
   setEditObject,
 } = accordionSlice.actions;
 

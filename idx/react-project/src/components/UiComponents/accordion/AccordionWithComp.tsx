@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import type { DynamicAccordionProps } from "./type";
+import { ComponentRegistry } from "../../ComponentRegistry";
 
 
 const AccordionWithComp:React.FC<DynamicAccordionProps> = ({ items, allowMultiple = false }) => {
@@ -32,8 +33,7 @@ const AccordionWithComp:React.FC<DynamicAccordionProps> = ({ items, allowMultipl
             {
                 items.map((item) => {                    
                     const { id,  component, props} = item                    
-                    const Component = component;
-                    
+                    const Component:React.FC<any> = ComponentRegistry[component];                    
                     const isOpen = checkIsOpen(id);
                     // const isLast = index === items.length - 1;
                     return (

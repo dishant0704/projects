@@ -1,7 +1,7 @@
 import type React from "react";
 
 // =====================================================
-// Actual Accordion Item
+// Regular Accordion Item
 // =====================================================
 
 export interface AccordionItemData {
@@ -12,11 +12,23 @@ export interface AccordionItemData {
 }
 
 // =====================================================
-// Page Component
+// Dynamic Accordion Item (JSON / Redux data)
 // =====================================================
 
-export interface AccordionComponentData {
-  id: string;
+export interface AccordionDynamicItemData {
+  id: number;
+  title: string;
+  component: string;
+  props?: Record<string, unknown>;
+  index?: number;
+}
+
+// =====================================================
+// Regular Accordion Component
+// =====================================================
+
+export interface RegularAccordionComponentData {
+  id: "regAcc";
   label: string;
   component: string;
   props?: Record<string, unknown>;
@@ -24,7 +36,27 @@ export interface AccordionComponentData {
 }
 
 // =====================================================
-// Accordion Page Edit Button Object
+// Dynamic Accordion Component
+// =====================================================
+
+export interface DynamicAccordionComponentData {
+  id: "dynAcc";
+  label: string;
+  component: string;
+  props?: Record<string, unknown>;
+  items?: AccordionDynamicItemData[];
+}
+
+// =====================================================
+// Page Component
+// =====================================================
+
+export type AccordionComponentData =
+  | RegularAccordionComponentData
+  | DynamicAccordionComponentData;
+
+// =====================================================
+// Edit State
 // =====================================================
 
 export type EditState = {
@@ -43,11 +75,11 @@ export interface AccordionData {
 }
 
 // =====================================================
-// Accordion Props
+// Regular Accordion Props
 // =====================================================
 
 export interface AccordionProps {
-  index?:number;
+  index?: number;
   items: AccordionItemData[];
   isOpenId?: number;
   allowMultiple?: boolean;
@@ -55,7 +87,7 @@ export interface AccordionProps {
 }
 
 // =====================================================
-// Dynamic Accordion
+// Runtime Dynamic Accordion Item
 // =====================================================
 
 export interface DynamicAccordionItemData {

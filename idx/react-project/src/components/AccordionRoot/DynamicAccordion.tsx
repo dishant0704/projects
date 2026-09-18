@@ -1,80 +1,91 @@
-import React, { useState } from 'react'
+import { useMemo, useState } from 'react'
 import SubPageTemplate from '../page-templates/SubPageTemplate'
 import AccordionWithComp from '../UiComponents/accordion/AccordionWithComp'
-import type { AccordionItemData, DynamicAccordionItemData } from '../UiComponents/accordion/type'
+import type { AccordionDynamicItemData, AccordionItemData} from '../UiComponents/accordion/type'
 
-import DemoA from '../demo/DemoA'
-import DemoB from '../demo/DemoB'
+import Tabs from '../UiComponents/Tabs'
+import type { TabItem } from '../UiComponents/Tabs/types'
+import { ComponentRegistry, IconRegistry } from '../ComponentRegistry'
+import { useAppSelector } from '../../app/hooks/reducHooks'
 
-const DynamicAccordion = () => {
-    const [accData, setAccData] = useState<AccordionItemData[]>([])
-    const [formData, setFormData] = useState<AccordionItemData>({ id: 0, title: "", content: "", index: 0 })
-    const [demoAValue, setDemoAValue] = useState("Demo A");
-    const [demoBValue, setDemoBValue] = useState("Demo B")
-    const AccordionData: DynamicAccordionItemData[] = [
-        {
-            id: 0,
-            title: "Demo A",
-            component: DemoA,
-            props: {
-                value: demoAValue,
-                setEditObj:setDemoAValue,
-            }
+interface DynamicAccordionProps{
+    data?:AccordionItemData[]
+}
+
+interface TabConfig{
+    id: string;
+  componentName: string;
+  icon?: string;
+  iconWithText?: boolean;
+  label: string;
+  props?: Record<string, unknown>;
+}
+
+const DynamicAccordion = ({data = []}:DynamicAccordionProps) => {    
+    const [tabId, setTabId] = useState("accList");
+
+    const tabs = useMemo<TabItem[]>(() => {
+        const safeData = Array.isArray(data)? data : [];
+        const tabsData:TabConfig[] = [
+            {
+        id: "accList",
+        componentName: "accordion-dynamic-list",
+        icon: "list",
+        label: "List",
+        props: { setTabId },
+      },
+      {
+        id: "accForm",
+        componentName: "accordion-form",
+        icon: "form",
+        label: "Add Data",
+        props: {
+          setTabId,
         },
-        {
-            id: 1,
-            title: "Demo B",
-            component: DemoB,
-            props: {
-                value: demoBValue,
-                setEditObj:setDemoBValue,
+      },
+        ]
+
+        return tabsData.map((tab) => {
+            const{componentName, icon, id, label, iconWithText, props}=tab
+            const Component = ComponentRegistry[componentName];
+            const Icon = icon ? IconRegistry[icon] : undefined;
+            const tabData = {
+                id: id,
+                label: label,
+                icon: Icon,
+                iconWithText: iconWithText,
+                component:
+                    Component ??
+                    (() => <div>Component "{componentName}" not found</div>),
+                props: {
+                    ...props,
+                    data: safeData,
+                },
             }
-        }
-    ];
+            return tabData
+        })
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    },[data])
 
-        const newItem: AccordionItemData = {
-            ...formData,
-            id: Date.now(),
-        };
-
-        setAccData(prev => [...prev, newItem]);
-
-        setFormData({
-            id: 0,
-            title: "",
-            content: "",
-            index: 0,
-        });
-    };
-
-    const AccordionForm = () => {
-        return (
-            <div className='p-5 '>
-                <h2>Accordion Setting:</h2>
-                <p className="mt-1 text-sm/6 text-gray-600">This information will be update Accordion.</p>
-                <form onSubmit={handleSubmit}>
-                    <div className='grid gap-5 my-5'>
-                        <input value={formData.title} onChange={(e) => setFormData((pre) => ({ ...pre, title: e.target.value }))} type='text' className='w-auto' placeholder='Title' required />
-                        <textarea value={formData.content} onChange={(e) => setFormData((pre) => ({ ...pre, content: e.target.value }))} rows={5} cols={6} placeholder='Description' required ></textarea>
-                        <div className='grid justify-items-end'><button type='submit' className='btn'>Save</button></div>
-                    </div>
-                </form>
-            </div>
-        )
-    }
+    const {page} = useAppSelector((state) => state.accordion);   
+        const accordionDynamicData: AccordionDynamicItemData[] =  page?.items?.find((item) => item.id === "dynAcc")?.items ?? [];    
+   
     return (
         <section className=''>
             <SubPageTemplate>
                 <SubPageTemplate.Left>
                      <h1 className="py-4 border-b border-gray-300 dark:border-zinc-700">Client</h1>
-                    <AccordionWithComp items={AccordionData} />
+                    <AccordionWithComp items={accordionDynamicData} />
                 </SubPageTemplate.Left>
                 <SubPageTemplate.Right>
                     <h1 className="py-4 border-b border-gray-300 dark:border-zinc-700">Admin</h1>
-                    <AccordionForm />
+                    <Tabs
+                        items={tabs}
+                        activeTabId={tabId}
+                        onTabChange={setTabId}
+                        defaultActiveTab={tabId}
+                        align="right"
+                    />
                 </SubPageTemplate.Right>
             </SubPageTemplate>
         </section>

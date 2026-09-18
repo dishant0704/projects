@@ -1,41 +1,103 @@
-import React from "react";
-import type { TabItem } from "./types";
+import type React from "react";
 
-interface Props {
-  item: TabItem;
-  active: boolean;
-  onClick: () => void;
+// =====================================================
+// Regular Accordion Item
+// =====================================================
+
+export interface AccordionItemData {
+  id: number;
+  title: string;
+  content: string;
+  index?: number;
 }
 
-const Tab: React.FC<Props> = ({
-  item: { label, icon: Icon, disabled },
-  active,
-  onClick,
-}) => {
-  return (
-    <button
-      role="tab"
-      disabled={active || disabled}
-      onClick={onClick}
-      className={`
-        px-5
-        py-3
-        font-medium
-        transition-colors
-        border-b-2
-        -mb-px
-        ${active ? "tabActive" : "tab"}
-        ${
-          disabled
-            ? "opacity-40 cursor-not-allowed"
-            : "cursor-pointer"
-        }
-      `}
-    >
-      {Icon && <Icon />}
-      {label}
-    </button>
-  );
+// =====================================================
+// Dynamic Accordion Item (JSON / Redux data)
+// =====================================================
+
+export interface AccordionDynamicItemData {
+  id: number;
+  title: string;
+  component: string;
+  props?: Record<string, unknown>;
+  index?: number;
+}
+
+// =====================================================
+// Regular Accordion Component
+// =====================================================
+
+export interface RegularAccordionComponentData {
+  id: "regAcc";
+  label: string;
+  component: string;
+  props?: Record<string, unknown>;
+  items?: AccordionItemData[];
+}
+
+// =====================================================
+// Dynamic Accordion Component
+// =====================================================
+
+export interface DynamicAccordionComponentData {
+  id: "dynAcc";
+  label: string;
+  component: string;
+  props?: Record<string, unknown>;
+  items?: AccordionDynamicItemData[];
+}
+
+// =====================================================
+// Page Component
+// =====================================================
+
+export type AccordionComponentData =
+  | RegularAccordionComponentData
+  | DynamicAccordionComponentData;
+
+// =====================================================
+// Edit State
+// =====================================================
+
+export type EditState = {
+  flag: boolean;
+  inx: number | null;
 };
 
-export default Tab;
+// =====================================================
+// Accordion Page
+// =====================================================
+
+export interface AccordionData {
+  name: string;
+  advSettings: Record<string, unknown>;
+  items: AccordionComponentData[];
+}
+
+// =====================================================
+// Regular Accordion Props
+// =====================================================
+
+export interface AccordionProps {
+  index?: number;
+  items: AccordionItemData[];
+  isOpenId?: number;
+  allowMultiple?: boolean;
+  defaultActiveTab?: number;
+}
+
+// =====================================================
+// Runtime Dynamic Accordion Item
+// =====================================================
+
+export interface DynamicAccordionItemData {
+  id: number;
+  title: string;
+  component: React.ComponentType<any>;
+  props?: Record<string, unknown>;
+}
+
+export interface DynamicAccordionProps {
+  items: DynamicAccordionItemData[];
+  allowMultiple?: boolean;
+}
