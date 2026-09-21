@@ -1,103 +1,57 @@
-import type React from "react";
+import React from "react";
+import style from "./demo.module.css";
 
-// =====================================================
-// Regular Accordion Item
-// =====================================================
-
-export interface AccordionItemData {
-  id: number;
-  title: string;
-  content: string;
-  index?: number;
-}
-
-// =====================================================
-// Dynamic Accordion Item (JSON / Redux data)
-// =====================================================
-
-export interface AccordionDynamicItemData {
-  id: number;
-  title: string;
-  component: string;
-  props?: Record<string, unknown>;
-  index?: number;
-}
-
-// =====================================================
-// Regular Accordion Component
-// =====================================================
-
-export interface RegularAccordionComponentData {
-  id: "regAcc";
-  label: string;
-  component: string;
-  props?: Record<string, unknown>;
-  items?: AccordionItemData[];
-}
-
-// =====================================================
-// Dynamic Accordion Component
-// =====================================================
-
-export interface DynamicAccordionComponentData {
-  id: "dynAcc";
-  label: string;
-  component: string;
-  props?: Record<string, unknown>;
-  items?: AccordionDynamicItemData[];
-}
-
-// =====================================================
-// Page Component
-// =====================================================
-
-export type AccordionComponentData =
-  | RegularAccordionComponentData
-  | DynamicAccordionComponentData;
-
-// =====================================================
-// Edit State
-// =====================================================
-
-export type EditState = {
-  flag: boolean;
-  inx: number | null;
+type DemoAPropsObj = {
+  discription: string;
+  conRev: boolean;
+  image?: {
+    name: string;
+    img: string;
+  };
 };
 
-// =====================================================
-// Accordion Page
-// =====================================================
+const DemoA: React.FC<DemoAPropsObj> = ({
+  discription,
+  conRev,
+  image,
+}) => {
+  const { componentWrapper } = style;
 
-export interface AccordionData {
-  name: string;
-  advSettings: Record<string, unknown>;
-  items: AccordionComponentData[];
-}
+   if (!image?.img) {
+    return (
+      <div className={`${componentWrapper} py-4`}>
+        <p>Image data is missing.</p>
+        <p>{discription}</p>
+      </div>
+    );
+  }
 
-// =====================================================
-// Regular Accordion Props
-// =====================================================
+  // Build the public image URL
+  const imageSrc = `/images/carousel-images/${image.img}`;
 
-export interface AccordionProps {
-  index?: number;
-  items: AccordionItemData[];
-  isOpenId?: number;
-  allowMultiple?: boolean;
-  defaultActiveTab?: number;
-}
+  return (
+    <div className={`${componentWrapper} py-4`}>
+      <div
+        className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4 align-items-start dark:bg-zinc-800 bg-zinc-700 p-4 text-stone-100"
+        dir={conRev ? "rtl" : "ltr"}
+      >
+        <div>
+          <div className="bg-white p-2">
+            <img
+              src={imageSrc}
+              className="d-block w-100"
+              alt={image.name}
+            />
+          </div>
+        </div>
 
-// =====================================================
-// Runtime Dynamic Accordion Item
-// =====================================================
+        <div className="v-aligh-center text-left">
+          <h1>First slide label</h1>
+          <p>{discription}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
 
-export interface DynamicAccordionItemData {
-  id: number;
-  title: string;
-  component: React.ComponentType<any>;
-  props?: Record<string, unknown>;
-}
-
-export interface DynamicAccordionProps {
-  items: DynamicAccordionItemData[];
-  allowMultiple?: boolean;
-}
+export default DemoA;

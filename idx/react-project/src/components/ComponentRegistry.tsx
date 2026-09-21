@@ -1,41 +1,187 @@
 import type React from "react";
+
 import AccordionForm from "./AccordionRoot/AccordionForm";
 import AccordionList from "./AccordionRoot/AccordionList";
 import AccordionDynamicList from "./AccordionRoot/AccordionDynamicList";
 import Accordion from "./UiComponents/accordion/Accordion";
+import AccordionDynamicForm from "./AccordionRoot/AccordionDynamicForm";
 import SorTableList from "./UiComponents/dragAndDrop/SorTableList";
 
-import DemoA from './demo/DemoA'
-import DemoB from './demo/DemoB'
-import DemoC from './demo/DemoC'
+import DemoA from "./demo/DemoA";
+import DemoB from "./demo/DemoB";
+import DemoC from "./demo/DemoC";
 
-//Icom
-import { 
+// Icons
+import {
   ListIcon,
   ComponentIcon,
   FormIcon,
   PencilIcon,
   SettingsIcon,
-  Trash2Icon
+  Trash2Icon,
 } from "lucide-react";
 
+// -------------------------------------
+// Component Props
+// -------------------------------------
 
-export const ComponentRegistry: Record<string, React.ComponentType<any>> = {
-  "accordion": Accordion,
-  "accordion-list": AccordionList,
-  "accordion-dynamic-list": AccordionDynamicList,
-  "accordion-form": AccordionForm,
-  "sor-table-list": SorTableList,
-  "demo_a": DemoA,
-  "demo_b": DemoB,
-  "demo_c": DemoC,
+export type DemoComponentProps = {
+  title: string;
+  discription: string;
+  conRev: boolean;
+  image: {
+    name: string;
+    img: string;
+  };
 };
 
-export const IconRegistry: Record<string,React.ComponentType<any>> = {
-  "list": ListIcon,
-  "component": ComponentIcon,
-  "form":FormIcon,
-  "edit": PencilIcon,
-  "setting": SettingsIcon,
-  "delete": Trash2Icon
+// -------------------------------------
+// Registry Types
+// -------------------------------------
+
+export type FieldType =
+  | "text"
+  | "textarea"
+  | "boolean"
+  | "number";
+
+export interface FieldSchema {
+  type: FieldType;
+  label?: string;
+  required?: boolean;
 }
+
+export interface ArraySchema {
+  type: "array";
+
+  items: {
+    type: "object";
+
+    properties: Record<string, FieldSchema>;
+  };
+}
+
+
+export interface RegistryComponentProps {
+  component: React.ComponentType<any>;
+  props: Record<string, unknown>;
+  propSchema?: Record<
+    string,
+    FieldSchema | ArraySchema
+  >;
+}
+
+// -------------------------------------
+// Component Registry
+// -------------------------------------
+
+export const ComponentRegistry: Record<string, RegistryComponentProps> = {
+  accordion: {
+    component: Accordion,
+    props: {},
+  },
+
+  "accordion-list": {
+    component: AccordionList,
+    props: {},
+  },
+
+  "accordion-dynamic-list": {
+    component: AccordionDynamicList,
+    props: {},
+  },
+
+  "accordion-form": {
+    component: AccordionForm,
+    props: {},
+  },
+
+  "accordion-dynamic-form": {
+    component: AccordionDynamicForm,
+    props: {},
+  },
+
+  "sor-table-list": {
+    component: SorTableList,
+    props: {},
+  },
+
+  demo_a: {
+    component: DemoA,
+    props: {
+      title: "",
+      discription: "",
+      conRev: false,
+      images: [
+        {
+          imgName: "",
+          fileName: "",
+        },
+      ],
+      propSchema: {
+        title: {
+          type: "text",
+          label: "Title",
+          required: true,
+        },
+        discription: {
+          type: "textarea",
+          label: "Description",
+        },
+        conRev: {
+          type: "boolean",
+          label: "Show Content",
+        },
+        images: {
+          type: "array",
+          items: {
+            type: "object",
+            properties: {
+              imgName: {
+                type: "text",
+                label: "Image Name",
+                required: true,
+              },
+              fileName: {
+                type: "text",
+                label: "File Name",
+                required: true,
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+
+  demo_b: {
+    component: DemoB,
+    props: {},
+  },
+
+  demo_c: {
+    component: DemoC,
+    props: {
+      title: "",
+      discription: "",
+      conRev: false,
+      image: {
+        name: "",
+        img: "",
+      },
+    },
+  },
+};
+
+// -------------------------------------
+// Icon Registry
+// -------------------------------------
+
+export const IconRegistry: Record<string, React.ComponentType<any>> = {
+  list: ListIcon,
+  component: ComponentIcon,
+  form: FormIcon,
+  edit: PencilIcon,
+  setting: SettingsIcon,
+  delete: Trash2Icon,
+};

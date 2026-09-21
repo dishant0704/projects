@@ -50,23 +50,29 @@ const ReguralAccordion = ({ data = [] }: ReguralAccordionProps) => {
     ];
 
     return tabsData.map((tab) => {
-      const{componentName, icon, id, label, iconWithText, props}=tab
-      const Component = ComponentRegistry[componentName];
+      const { componentName, icon, id, label, iconWithText, props } = tab;
+      const registryItem = ComponentRegistry[componentName];
+      if (!registryItem) {
+        return <div>Component not found: {componentName}</div>;
+      }
+      const defaultProps = registryItem.props;
+
+      const Component = registryItem.component;     
       
        const Icon = icon
       ? IconRegistry[icon]
       : undefined;
       
-      const tabData =  {
+      const tabData = {
         id: id,
         label: label,
         icon: Icon,
         iconWithText: iconWithText,
         component:
-          Component ??
-          (() => <div>Component "{componentName}" not found</div>),
+          Component ?? (() => <div>Component "{componentName}" not found</div>),
 
         props: {
+          ...defaultProps,
           ...props,
           data: safeData,
         },

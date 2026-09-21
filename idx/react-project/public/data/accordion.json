@@ -35,13 +35,23 @@
           "id": 1,
           "title": "Component Demo A",
           "component": "demo_a",
-          "props": {}
+          "props": {
+            "title":"First slide label",
+            "discription":"Some representative placeholder content for the first slide. Some representative placeholder content for the first slide.vSome representative placeholder content for the first slide.",
+            "conRev":false,
+            "image": {"name": "Image 01", "img": "img_01.jpg"}
+          }
         },
         {
           "id": 2,
           "title": "Component Demo B",
-          "component": "demo_b",
-          "props": {}
+          "component": "demo_a",
+          "props": {
+            "title":"Second slide label",
+            "discription":"Some representative placeholder content for the first slide. Some representative placeholder content for the first slide.vSome representative placeholder content for the first slide.",
+            "conRev":true,
+            "image": {"name": "Image 02", "img": "img_02.jpg"}
+          }
         },
         {
           "id": 3,

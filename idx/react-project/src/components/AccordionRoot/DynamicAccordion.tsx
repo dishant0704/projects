@@ -36,7 +36,7 @@ const DynamicAccordion = ({data = []}:DynamicAccordionProps) => {
       },
       {
         id: "accForm",
-        componentName: "accordion-form",
+        componentName: "accordion-dynamic-form",
         icon: "form",
         label: "Add Data",
         props: {
@@ -47,7 +47,13 @@ const DynamicAccordion = ({data = []}:DynamicAccordionProps) => {
 
         return tabsData.map((tab) => {
             const{componentName, icon, id, label, iconWithText, props}=tab
-            const Component = ComponentRegistry[componentName];
+            const registryItem = ComponentRegistry[componentName];
+            if (!registryItem) {
+              return <div>Component not found: {componentName}</div>;
+            }
+            const defaultProps = registryItem.props;
+
+            const Component = registryItem.component;
             const Icon = icon ? IconRegistry[icon] : undefined;
             const tabData = {
                 id: id,
@@ -58,6 +64,7 @@ const DynamicAccordion = ({data = []}:DynamicAccordionProps) => {
                     Component ??
                     (() => <div>Component "{componentName}" not found</div>),
                 props: {
+                    ...defaultProps,
                     ...props,
                     data: safeData,
                 },
