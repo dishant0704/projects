@@ -101,3 +101,19 @@ export interface DynamicAccordionProps {
   items: DynamicAccordionItemData[];
   allowMultiple?: boolean;
 }
+
+// =====================================================
+// Runtime Dynamic Form
+// =====================================================
+
+export interface DynamicImage {
+  imgName: string;
+  fileName: string;
+}
+
+export interface DynamicProps {
+  title: string;
+  discription: string;
+  conRev: boolean;
+  images: DynamicImage[];
+}

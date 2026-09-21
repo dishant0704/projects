@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
-import type { AccordionData, AccordionDynamicItemData} from "../UiComponents/accordion/type";
-
-import { useAppDispatch, useAppSelector } from "../../app/hooks/reducHooks"; //reducHooks
-
-import { addAccordionItem, setAccordionPage, setEditObject } from "../../app/features/accordion/accordionSlice";
+import { useAppSelector } from "../../app/hooks/reducHooks"; //reducHooks
+import DynamicForm from "./DynamicForm";
+import { ComponentRegistry } from "../ComponentRegistry";
 
 interface AccordionDynamicFormProps {
   setTabId: (tabId: string) => void;
 }
 const AccordionDynamicForm:React.FC<AccordionDynamicFormProps>= (props) => {
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
+  const config = ComponentRegistry["demo_a"];
   const { setTabId } = props
 
   const {
@@ -20,12 +19,6 @@ const AccordionDynamicForm:React.FC<AccordionDynamicFormProps>= (props) => {
     (state) => state.accordion
   );
   const { flag, inx } = editObject
-  const [formData, setFormData] = useState<AccordionDynamicItemData>({
-    id: 0,
-    title: "",
-    component: "",
-    index: 0,
-  });
 
   const getPageData = () => {
     if (!page) return
@@ -44,12 +37,7 @@ const AccordionDynamicForm:React.FC<AccordionDynamicFormProps>= (props) => {
     if (!currentItem) {
       return;
     }
-    setFormData({
-      id: currentItem.id,
-      title: currentItem.title,
-      component: currentItem.component,
-      index: inx,
-    });
+   
     console.log("currentItem: ", currentItem);
 
   }, [flag, inx, page]);
@@ -69,69 +57,7 @@ const AccordionDynamicForm:React.FC<AccordionDynamicFormProps>= (props) => {
 
   if (!regularAccordion) {
     return;
-  }
-
-  const currentItems = regularAccordion.items ?? [];
-
-  if (flag) {
-    // -----------------------------
-    // EDIT
-    // -----------------------------
-    if (typeof inx !== "number") {
-      return;
-    }
-
-    if (inx < 0 || inx >= currentItems.length) {
-      return;
-    }
-
-    const updatedItems = [...currentItems];
-
-    updatedItems[inx] = {
-      ...formData,
-      index: inx,
-    };
-
-    const updatedPage: AccordionData = {
-      ...page,
-
-      items: page.items.map((item) =>
-        item.id === "dynAcc"
-          ? {
-              ...item,
-              items: updatedItems,
-            }
-          : item
-      ),
-    };
-
-    dispatch(setAccordionPage(updatedPage));
-
-    dispatch(
-      setEditObject({
-        flag: false,
-        inx: null,
-      })
-    );
-  } else {
-    // -----------------------------
-    // ADD
-    // -----------------------------
-    dispatch(
-      addAccordionItem({
-        ...formData,
-        id: Date.now(),
-        index: currentItems.length,
-      })
-    );
-  }
-
-  setFormData({
-    id: 0,
-    title: "",
-    content: "",
-    index: 0,
-  });
+  }  
 
   setTabId("accList");
 };
@@ -143,9 +69,14 @@ const AccordionDynamicForm:React.FC<AccordionDynamicFormProps>= (props) => {
       <p className="mt-1 text-sm/6 text-gray-600">
         This information will update Accordion.
       </p>
-      <form onSubmit={handleSubmit}>
-        <div className="grid gap-5 my-5">
-          <input
+      <DynamicForm 
+      config={config}
+      onSubmit={(data) => {
+        console.log("Demo A Form Data:", data);
+      }}/>
+      {/* <form onSubmit={handleSubmit}>
+        <div className="grid gap-5 my-5"> */}
+          {/* <input
             value={formData.title}
             onChange={(e) =>
               setFormData((prev: any) => ({
@@ -171,15 +102,15 @@ const AccordionDynamicForm:React.FC<AccordionDynamicFormProps>= (props) => {
             cols={6}
             placeholder="Description"
             required
-          />
+          /> */}
 
-          <div className="grid justify-items-end">
+          {/* <div className="grid justify-items-end">
             <button type="submit" className="btn">
               {flag ? "Save Data" : "Add Data"}
             </button>
           </div>
         </div>
-      </form>
+      </form> */}
     </div>
   );
 };

@@ -51,23 +51,12 @@ export interface FieldSchema {
   required?: boolean;
 }
 
-export interface ArraySchema {
-  type: "array";
-
-  items: {
-    type: "object";
-
-    properties: Record<string, FieldSchema>;
-  };
-}
-
-
 export interface RegistryComponentProps {
   component: React.ComponentType<any>;
   props: Record<string, unknown>;
   propSchema?: Record<
     string,
-    FieldSchema | ArraySchema
+    FieldSchema | FieldSchema[]
   >;
 }
 
@@ -118,39 +107,33 @@ export const ComponentRegistry: Record<string, RegistryComponentProps> = {
           fileName: "",
         },
       ],
-      propSchema: {
-        title: {
+    },
+    propSchema: {
+      title: {
+        type: "text",
+        label: "Title",
+        required: true,
+      },
+      discription: {
+        type: "textarea",
+        label: "Description",
+      },
+      conRev: {
+        type: "boolean",
+        label: "Show Content",
+      },
+      images: [
+        {
           type: "text",
-          label: "Title",
+          label: "Image Name",
           required: true,
         },
-        discription: {
-          type: "textarea",
-          label: "Description",
+        {
+          type: "text",
+          label: "File Name",
+          required: true,
         },
-        conRev: {
-          type: "boolean",
-          label: "Show Content",
-        },
-        images: {
-          type: "array",
-          items: {
-            type: "object",
-            properties: {
-              imgName: {
-                type: "text",
-                label: "Image Name",
-                required: true,
-              },
-              fileName: {
-                type: "text",
-                label: "File Name",
-                required: true,
-              },
-            },
-          },
-        },
-      },
+      ],
     },
   },
 
