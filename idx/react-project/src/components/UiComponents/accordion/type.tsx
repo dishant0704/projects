@@ -17,7 +17,7 @@ export interface AccordionItemData {
 
 export interface AccordionDynamicItemData {
   id: number;
-  title: string;
+  title?: string;
   component: string;
   props?: Record<string, unknown>;
   index?: number;

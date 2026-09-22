@@ -9,19 +9,19 @@ const AccordionWithComp:React.FC<DynamicAccordionProps> = ({ items, allowMultipl
     const [openId, setOpenId] = useState<string | number | null>(null);
 
     useEffect(() => {
-    setOpenId(items[0]?.id ?? null);
-}, [items]);
+      setOpenId(items[0]?.id ?? null);
+    }, [items]);
 
     const handleToggle = (id: string | number) => {
-        if (allowMultiple) {
-            if (openIds.includes(id)) {
-                setOpenIds(openIds.filter((itemIds) => itemIds !== id));
-            } else {
-                setOpenIds([...openIds, id]);
-            }
+      if (allowMultiple) {
+        if (openIds.includes(id)) {
+          setOpenIds(openIds.filter((itemIds) => itemIds !== id));
         } else {
-            setOpenId(openId === id ? null : id);
+          setOpenIds([...openIds, id]);
         }
+      } else {
+        setOpenId(openId === id ? null : id);
+      }
     };
 
     const checkIsOpen = (id: string | number): boolean => {
