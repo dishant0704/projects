@@ -4,10 +4,11 @@ import type { DynamicProps } from '../UiComponents/accordion/type'
 
 interface DynamicFormProps {
   config: RegistryComponentProps,
-  onSubmit: (data: DynamicProps) => void
+  onSubmit: (data: DynamicProps) => void,
+  onChangeImage:()=>{}
 }
 
-const DynamicForm: React.FC<DynamicFormProps> = ({ config, onSubmit }) => {
+const DynamicForm: React.FC<DynamicFormProps> = ({ config, onSubmit, onChangeImage}) => {
   const [formData, setFormData] = useState<DynamicProps>(
     config.props as unknown as DynamicProps
   );
@@ -29,6 +30,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ config, onSubmit }) => {
               return (
                 <div>
                   <h3 className="capitalize">{fieldName}</h3>
+                  <button className='btn' type='button' onClick={onChangeImage}>Change Image</button>
 
                 </div>
               );

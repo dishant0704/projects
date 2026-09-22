@@ -93,13 +93,19 @@ export interface AccordionProps {
 export interface DynamicAccordionItemData {
   id: number;
   title: string;
-  component: React.ComponentType<any>;
+  component: string | React.ComponentType<any>;
   props?: Record<string, unknown>;
 }
 
 export interface DynamicAccordionProps {
   items: DynamicAccordionItemData[];
   allowMultiple?: boolean;
+  headerButtonObj?: {
+    flag: boolean;
+    id: string | number | null
+  };
+  openId?: string | number | null;
+  onOpenIdChange?: (id: string | number | null) => void;
 }
 
 // =====================================================
