@@ -51,12 +51,16 @@ export interface FieldSchema {
   required?: boolean;
 }
 
+interface ObjectSchema {
+  [key: string]: FieldSchema;
+}
+
 export interface RegistryComponentProps {
   component: React.ComponentType<any>;
   props: Record<string, unknown>;
   propSchema?: Record<
-    string,
-    FieldSchema | FieldSchema[]
+  string,
+  FieldSchema | ObjectSchema[] | FieldSchema[]
   >;
 }
 
@@ -120,7 +124,7 @@ export const ComponentRegistry: Record<string, RegistryComponentProps> = {
       },
       conRev: {
         type: "boolean",
-        label: "Show Content",
+        label: "Align Content from Right",
       },
       images: [
         {
