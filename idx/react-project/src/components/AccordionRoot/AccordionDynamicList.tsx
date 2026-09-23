@@ -19,7 +19,7 @@ const AccordionDynamicList:React.FC<AccordionDynamicListProps> = (props) => {
     const handleEdit = () =>{}
 
     const handleDelete = () =>{}
-    console.log("accordionDynamicData: ", accordionDynamicData)
+    
   return (
     <div>
         <SorTableList<AccordionDynamicItemData> items={accordionDynamicData} onReorder={(items) => {

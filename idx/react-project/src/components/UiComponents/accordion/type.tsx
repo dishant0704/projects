@@ -1,5 +1,12 @@
 import type React from "react";
 
+export interface BaseAccordionItemData {
+  id: number;
+  title: string;
+  props?: Record<string, unknown>;
+  showHeader?: boolean;
+}
+
 // =====================================================
 // Regular Accordion Item
 // =====================================================
@@ -15,15 +22,11 @@ export interface AccordionItemData {
 // Dynamic Accordion Item (JSON / Redux data)
 // =====================================================
 
-export interface AccordionDynamicItemData {
-  id: number;
-  title?: string;
+export interface AccordionDynamicItemData
+  extends BaseAccordionItemData {
   component: string;
-  showHeader:boolean
-  props?: Record<string, unknown>;
   index?: number;
 }
-
 // =====================================================
 // Regular Accordion Component
 // =====================================================
@@ -91,12 +94,9 @@ export interface AccordionProps {
 // Runtime Dynamic Accordion Item
 // =====================================================
 
-export interface DynamicAccordionItemData {
-  id: number;
-  title: string;
+export interface DynamicAccordionItemData
+  extends BaseAccordionItemData {
   component: string | React.ComponentType<any>;
-  props?: Record<string, unknown>;
-  showHeader?: boolean;
 }
 
 export interface DynamicAccordionProps {

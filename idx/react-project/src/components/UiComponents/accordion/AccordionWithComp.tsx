@@ -61,7 +61,7 @@ const AccordionWithComp: React.FC<DynamicAccordionProps> = ({
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto">
+    <div className="py-2 w-full max-w-2xl">
       {items.map((item) => {
         const { id, component, props } = item;
 
@@ -84,10 +84,19 @@ const AccordionWithComp: React.FC<DynamicAccordionProps> = ({
                 type="button"
                 onClick={() => handleToggle(id)}
                 aria-expanded={isOpen}
-                className="flex justify-between items-center w-full py-2 text-left font-medium"
+                className={`flex justify-between items-center w-full py-2 text-left font-medium text-slate-700 dark:text-slate-300 hover:border-gray-400 ${!isOpen ? 'border-b' : 'border-0'} dark:hover:border-zinc-800 border-b-transparent transition-colors duration-200 `}
               >
                 <h3>{item.title}</h3>
-                <span>{isOpen ? "▲" : "▼"}</span>
+                                {/* Chevron Icon with Rotation Animation */}
+                                <svg
+                                    className={`w-5 h-5 text-slate-500 transform transition-transform duration-300 ${isOpen ? 'rotate-180' : ''
+                                        }`}
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                </svg>
               </button>
             )}
 

@@ -82,7 +82,7 @@ const DynamicAccordion = ({data = []}:DynamicAccordionProps) => {
             <SubPageTemplate>
                 <SubPageTemplate.Left>
                      <h1 className="py-4 border-b border-gray-300 dark:border-zinc-700">Client</h1>
-                    <AccordionWithComp items={accordionDynamicData} />
+                    <AccordionWithComp items={accordionDynamicData} defaultActiveTab={0}/>
                 </SubPageTemplate.Left>
                 <SubPageTemplate.Right>
                     <h1 className="py-4 border-b border-gray-300 dark:border-zinc-700">Admin</h1>

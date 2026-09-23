@@ -34,7 +34,7 @@
         {
           "id": 1,
           "title": "Component Demo A",
-          "component": "demo_a",
+          "component": "image-text-component",
           "props": {
             "title":"First slide label",
             "discription":"Some representative placeholder content for the first slide. Some representative placeholder content for the first slide.vSome representative placeholder content for the first slide.",
@@ -45,7 +45,7 @@
         {
           "id": 2,
           "title": "Component Demo B",
-          "component": "demo_a",
+          "component": "image-text-component",
           "props": {
             "title":"Second slide label",
             "discription":"Some representative placeholder content for the first slide. Some representative placeholder content for the first slide.vSome representative placeholder content for the first slide.",

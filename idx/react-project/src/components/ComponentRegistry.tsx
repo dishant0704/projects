@@ -116,7 +116,7 @@ export const ComponentRegistry: Record<string, RegistryComponentProps> = {
     props: {},
   },
 
-  demo_a: {
+  "image-text-component": {
     component: DemoA,
     props: {
       title: "",

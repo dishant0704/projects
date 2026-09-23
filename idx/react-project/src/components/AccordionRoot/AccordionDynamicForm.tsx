@@ -19,7 +19,7 @@ interface AccordionDynamicFormProps {
 const AccordionDynamicForm: React.FC<AccordionDynamicFormProps> = ({
   setTabId,
 }) => {
-  const config = ComponentRegistry["demo_a"];
+  const config = ComponentRegistry["image-text-component"];
 
   const [openId, setOpenId] = useState<string | number>(0);
   const [component, setComponent] = useState<string>()
