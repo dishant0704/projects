@@ -9,21 +9,19 @@ const AccordionWithComp: React.FC<DynamicAccordionProps> = ({
   openId: controlledOpenId,
   onOpenIdChange,
 }) => {
-  const [internalOpenIds, setInternalOpenIds] = useState<
-    (string | number)[]
-  >([]);
+  const [internalOpenIds, setInternalOpenIds] = useState<(string | number)[]>(
+    [],
+  );
 
-  const [internalOpenId, setInternalOpenId] = useState<
-    string | number | null
-  >(null);
+  const [internalOpenId, setInternalOpenId] = useState<string | number | null>(
+    null,
+  );
 
-  const { flag, id: initialId } = headerButtonObj;
+  const { flag, id: initialId } = headerButtonObj;  
 
   const isControlled = controlledOpenId !== undefined;
 
-  const currentOpenId = isControlled
-    ? controlledOpenId
-    : internalOpenId;
+  const currentOpenId = isControlled ? controlledOpenId : internalOpenId;
 
   // Set initial accordion only when the items or initial ID changes.
   useEffect(() => {
@@ -43,7 +41,7 @@ const AccordionWithComp: React.FC<DynamicAccordionProps> = ({
       setInternalOpenIds((previousIds) =>
         previousIds.includes(id)
           ? previousIds.filter((itemId) => itemId !== id)
-          : [...previousIds, id]
+          : [...previousIds, id],
       );
 
       return;
@@ -59,9 +57,7 @@ const AccordionWithComp: React.FC<DynamicAccordionProps> = ({
   };
 
   const checkIsOpen = (id: string | number): boolean => {
-    return allowMultiple
-      ? internalOpenIds.includes(id)
-      : currentOpenId === id;
+    return allowMultiple ? internalOpenIds.includes(id) : currentOpenId === id;
   };
 
   return (
@@ -71,47 +67,27 @@ const AccordionWithComp: React.FC<DynamicAccordionProps> = ({
 
         const registryItem = ComponentRegistry[component];
 
-        // Check before accessing registryItem.props
         if (!registryItem) {
-          return (
-            <div key={id}>
-              Component not found: {component}
-            </div>
-          );
+          return <div key={id}>Component not found: {component}</div>;
         }
 
         const Component = registryItem.component;
         const defaultProps = registryItem.props ?? {};
         const isOpen = checkIsOpen(id);
 
+        const showHeader = item.showHeader ?? flag;
+
         return (
           <div key={id}>
-            {flag && (
+            {showHeader && (
               <button
                 type="button"
-                className={`flex justify-between items-center w-full py-2 text-left font-medium text-slate-700 dark:text-slate-300 ${
-                  !isOpen ? "border-b" : "border-0"
-                } border-b-transparent transition-colors duration-200`}
                 onClick={() => handleToggle(id)}
                 aria-expanded={isOpen}
+                className="flex justify-between items-center w-full py-2 text-left font-medium"
               >
                 <h3>{item.title}</h3>
-
-                <svg
-                  className={`w-5 h-5 text-slate-500 transform transition-transform duration-300 ${
-                    isOpen ? "rotate-180" : ""
-                  }`}
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
+                <span>{isOpen ? "▲" : "▼"}</span>
               </button>
             )}
 
@@ -122,14 +98,9 @@ const AccordionWithComp: React.FC<DynamicAccordionProps> = ({
                   : "grid-rows-[0fr] opacity-0"
               }`}
             >
-              <div className="min-h-0 border-t border-t-gray-200 dark:border-t-zinc-800">
+              <div className="min-h-0">
                 <div className="py-5 text-sm leading-relaxed">
-                  {isOpen && (
-                    <Component
-                      {...defaultProps}
-                      {...(props ?? {})}
-                    />
-                  )}
+                  {isOpen && <Component {...defaultProps} {...(props ?? {})} />}
                 </div>
               </div>
             </div>

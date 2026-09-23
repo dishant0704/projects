@@ -3,6 +3,14 @@ import { useState } from "react";
 import { ComponentRegistry } from "../ComponentRegistry";
 import AccordionWithComp from "../UiComponents/accordion/AccordionWithComp";
 import type { AccordionDynamicItemData } from "../UiComponents/accordion/type";
+import type { ImageData } from "../../types/types";
+
+type FormData = {
+  title: string;
+  description: string;
+  conRev: boolean;
+  image?: ImageData;
+};
 
 interface AccordionDynamicFormProps {
   setTabId: (tabId: string) => void;
@@ -15,7 +23,7 @@ const AccordionDynamicForm: React.FC<AccordionDynamicFormProps> = ({
 
   const [openId, setOpenId] = useState<string | number>(0);
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     title: "",
     description: "",
     conRev: false,
@@ -26,10 +34,7 @@ const AccordionDynamicForm: React.FC<AccordionDynamicFormProps> = ({
     setOpenId(1);
   };
 
-  const handleImageSelect = (selectedImage: {
-    name: string;
-    img: string;
-  }) => {
+  const handleImageSelect = (selectedImage: ImageData) => {
     setFormData((previousData) => ({
       ...previousData,
       image: selectedImage,
@@ -44,6 +49,7 @@ const AccordionDynamicForm: React.FC<AccordionDynamicFormProps> = ({
       id: 0,
       title: "Form",
       component: "dynamic-form",
+      showHeader: false,
       props: {
         config,
         formData,
@@ -58,6 +64,7 @@ const AccordionDynamicForm: React.FC<AccordionDynamicFormProps> = ({
       id: 1,
       title: "Image list",
       component: "image-list",
+      showHeader: false,
       props: {
         onSelectImage: handleImageSelect,
       },
@@ -76,7 +83,7 @@ const AccordionDynamicForm: React.FC<AccordionDynamicFormProps> = ({
         items={accordionData}
         openId={openId}
         onOpenIdChange={(nextId) => {
-          setOpenId(nextId ?? 0);
+          setOpenId(nextId);
         }}
       />
     </div>

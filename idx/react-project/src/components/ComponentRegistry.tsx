@@ -7,7 +7,7 @@ import Accordion from "./UiComponents/accordion/Accordion";
 import AccordionDynamicForm from "./AccordionRoot/AccordionDynamicForm";
 import SorTableList from "./UiComponents/dragAndDrop/SorTableList";
 import DynamicForm from "./AccordionRoot/DynamicForm";
-import ImagesList from "./UiComponents/Images/imagesList";
+import ImagesList from "./UiComponents/Images/ImagesList";
 
 import DemoA from "./demo/DemoA";
 import DemoB from "./demo/DemoB";

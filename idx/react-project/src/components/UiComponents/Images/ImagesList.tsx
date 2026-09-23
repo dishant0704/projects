@@ -1,9 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
+import type{ ImageData } from '../../../types/types'
 
-const ImagesList:React.FC = () => {
+interface ImagesListProps { 
+  onSelectImage:(data:ImageData)=>{}
+}
+
+const ImagesList:React.FC<ImagesListProps> = ({onSelectImage}) => {
+  const [image, setImage] = useState({
+  name: "Image 01",
+  img: "img_01.jpg",
+})
+ 
   return (
     <div>
-      Images list
+      <button className='btn' type='button' onClick={()=>onSelectImage(image)}>Save image</button>
     </div>
   )
 }

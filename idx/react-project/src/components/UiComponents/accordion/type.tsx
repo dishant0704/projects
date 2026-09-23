@@ -19,6 +19,7 @@ export interface AccordionDynamicItemData {
   id: number;
   title?: string;
   component: string;
+  showHeader:boolean
   props?: Record<string, unknown>;
   index?: number;
 }
@@ -95,6 +96,7 @@ export interface DynamicAccordionItemData {
   title: string;
   component: string | React.ComponentType<any>;
   props?: Record<string, unknown>;
+  showHeader?: boolean;
 }
 
 export interface DynamicAccordionProps {

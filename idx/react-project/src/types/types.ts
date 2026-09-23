@@ -20,3 +20,8 @@ export interface PageContextType{
     loading:boolean;
     setPages:React.Dispatch<SetStateAction<Page[]>>
 }
+
+export type ImageData = {
+  name: string;
+  img: string;
+};
