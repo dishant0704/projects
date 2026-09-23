@@ -6,8 +6,9 @@ import AccordionDynamicList from "./AccordionRoot/AccordionDynamicList";
 import Accordion from "./UiComponents/accordion/Accordion";
 import AccordionDynamicForm from "./AccordionRoot/AccordionDynamicForm";
 import SorTableList from "./UiComponents/dragAndDrop/SorTableList";
-import DynamicForm from "./AccordionRoot/DynamicForm";
+import DynamicForm from "./DynamicForm/DynamicForm";
 import ImagesList from "./UiComponents/Images/ImagesList";
+import ComponentLayoutData from "./DynamicForm/ComponentLayoutData";
 
 import DemoA from "./demo/DemoA";
 import DemoB from "./demo/DemoB";
@@ -106,6 +107,10 @@ export const ComponentRegistry: Record<string, RegistryComponentProps> = {
     props: {},
   },
 
+  "component-layout-list": {
+    component: ComponentLayoutData,
+    props: {},
+  },
   "sor-table-list": {
     component: SorTableList,
     props: {},

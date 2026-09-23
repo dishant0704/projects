@@ -22,6 +22,7 @@ const AccordionDynamicForm: React.FC<AccordionDynamicFormProps> = ({
   const config = ComponentRegistry["demo_a"];
 
   const [openId, setOpenId] = useState<string | number>(0);
+  const [component, setComponent] = useState<string>()
 
   const [formData, setFormData] = useState<FormData>({
     title: "",
@@ -47,6 +48,15 @@ const AccordionDynamicForm: React.FC<AccordionDynamicFormProps> = ({
   const accordionData: AccordionDynamicItemData[] = [
     {
       id: 0,
+      title: "component layout list",
+      component: "component-layout-list",
+      showHeader: false,
+      props: {
+        setCom: setComponent,
+      },
+    },
+    {
+      id: 1,
       title: "Form",
       component: "dynamic-form",
       showHeader: false,
@@ -61,7 +71,7 @@ const AccordionDynamicForm: React.FC<AccordionDynamicFormProps> = ({
       },
     },
     {
-      id: 1,
+      id: 2,
       title: "Image list",
       component: "image-list",
       showHeader: false,

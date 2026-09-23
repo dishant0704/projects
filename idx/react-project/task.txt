@@ -1,3 +1,3 @@
-#1. create two Demo component for Dynamic Accordion
-#2. image rajestri 
-#3. remove all typescript error
+#1. Complite Coponent list component
+#2. Complite Coponent rajestri component with UI
+#3. Send data to redux

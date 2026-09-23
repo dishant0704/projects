@@ -10,7 +10,7 @@ const ImagesList:React.FC<ImagesListProps> = ({onSelectImage}) => {
   name: "Image 01",
   img: "img_01.jpg",
 })
- 
+ // create json object for the same
   return (
     <div>
       <button className='btn' type='button' onClick={()=>onSelectImage(image)}>Save image</button>
