@@ -4,7 +4,7 @@ import AccordionForm from "./AccordionRoot/AccordionForm";
 import AccordionList from "./AccordionRoot/AccordionList";
 import AccordionDynamicList from "./AccordionRoot/AccordionDynamicList";
 import Accordion from "./UiComponents/accordion/Accordion";
-import AccordionDynamicForm from "./AccordionRoot/AccordionDynamicForm";
+import MainDynamicForm from "./DynamicForm/MainDynamicForm";
 import SorTableList from "./UiComponents/dragAndDrop/SorTableList";
 import DynamicForm from "./DynamicForm/DynamicForm";
 import ImagesList from "./UiComponents/Images/ImagesList";
@@ -93,7 +93,7 @@ export const ComponentRegistry: Record<string, RegistryComponentProps> = {
   },
 
   "accordion-dynamic-form": {
-    component: AccordionDynamicForm,
+    component: MainDynamicForm,
     props: {},
   },
 

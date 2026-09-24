@@ -16,13 +16,17 @@ interface AccordionDynamicFormProps {
   setTabId: (tabId: string) => void;
 }
 
-const AccordionDynamicForm: React.FC<AccordionDynamicFormProps> = ({
+const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({
   setTabId,
 }) => {
   const config = ComponentRegistry["image-text-component"];
 
   const [openId, setOpenId] = useState<string | number>(0);
-  const [component, setComponent] = useState<string>()
+  const [component, setComponent] = useState<string>(); // TODO: setComponent form Componentlist
+  const [subBtnFlag, setSubBtnFlag] = useState<boolean>(true); // TODO: After validation make it false
+
+  //TODO: change once get data from local storage
+   const editObject = { flag:false, inx:null } 
 
   const [formData, setFormData] = useState<FormData>({
     title: "",
@@ -31,8 +35,12 @@ const AccordionDynamicForm: React.FC<AccordionDynamicFormProps> = ({
     image: undefined,
   });
 
-  const handleOpenImageList = () => {
+  const handleComponentSelect = () =>{
     setOpenId(1);
+  }
+
+  const handleOpenImageList = () => {
+    setOpenId(2);
   };
 
   const handleImageSelect = (selectedImage: ImageData) => {
@@ -42,8 +50,14 @@ const AccordionDynamicForm: React.FC<AccordionDynamicFormProps> = ({
     }));
 
     // Close image list and reopen form
-    setOpenId(0);
+    setOpenId(1);
   };
+
+  const handleSubmit = ( e: React.FormEvent<HTMLFormElement>) =>{
+    e.preventDefault();
+    setOpenId(0);
+    setSubBtnFlag(true)
+  }
 
   const accordionData: AccordionDynamicItemData[] = [
     {
@@ -52,7 +66,7 @@ const AccordionDynamicForm: React.FC<AccordionDynamicFormProps> = ({
       component: "component-layout-list",
       showHeader: false,
       props: {
-        setCom: setComponent,
+        setCom: handleComponentSelect,
       },
     },
     {
@@ -63,10 +77,7 @@ const AccordionDynamicForm: React.FC<AccordionDynamicFormProps> = ({
       props: {
         config,
         formData,
-        setFormData,
-        onSubmit: () => {
-          console.log("Demo A Form Data:", formData);
-        },
+        setFormData,       
         onChangeImage: handleOpenImageList,
       },
     },
@@ -88,7 +99,7 @@ const AccordionDynamicForm: React.FC<AccordionDynamicFormProps> = ({
       <p className="mt-1 text-sm/6 text-gray-600">
         This information will update Accordion.
       </p>
-
+      <form onSubmit={handleSubmit}>
       <AccordionWithComp
         items={accordionData}
         openId={openId}
@@ -96,8 +107,15 @@ const AccordionDynamicForm: React.FC<AccordionDynamicFormProps> = ({
           setOpenId(nextId);
         }}
       />
+      <div className="grid justify-items-end">
+        {/* TODO: Check all fild are fill then disabled = false */}
+            <button type="submit" className={`btn ${subBtnFlag?"disabled:opacity-50 disabled:bg-gray-400 disabled:cursor-not-allowed":""}`} disabled={subBtnFlag}> 
+              {editObject.flag ? "Save Data" : "Add Data"}
+            </button>
+          </div>
+      </form>
     </div>
   );
 };
 
-export default AccordionDynamicForm;
+export default MainDynamicForm;

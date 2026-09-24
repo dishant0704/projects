@@ -1,12 +1,11 @@
-export const getPages = async () =>{
-     try {
-      const response = await fetch('/data/pageData.json');
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`)
+export const getPages = async () => {
+  const response = await fetch("/data/pageData.json");
 
-      }            
-      return await response.json();
-    } catch (error) {
-      console.error('Error loading JSON:', error)
-    }
-}
+  if (!response.ok) {
+    throw new Error(
+      `Failed to load pageData.json: ${response.status}`
+    );
+  }
+
+  return response.json();
+};

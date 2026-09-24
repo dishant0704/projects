@@ -1,5 +1,6 @@
 import React from "react";
 import style from "./demo.module.css";
+import { getCarouselImageSrc } from "../../utils/imageUtils";
 
 type DemoAPropsObj = {
   title:string;
@@ -12,20 +13,25 @@ type DemoAPropsObj = {
 };
 
 const DemoA: React.FC<DemoAPropsObj> = ({title, discription, conRev, image }) => {
-  const { componentWrapper } = style;
-  
-  let imageSrc;
+const { componentWrapper } = style;
 
-  if (!image?.img) {
-    return (
-      <div className={`${componentWrapper} py-4`}>
-        <p className="error">Image data is missing.</p>
-        <p>{discription}</p>
-      </div>
-    );
-  } else {
-    imageSrc = `/images/carousel-images/${image.img}`;
-  }
+const imageSrc = getCarouselImageSrc({
+  folder: "carousel-images",
+  image:image?.img,
+});
+  
+  // let imageSrc;
+
+  // if (!image?.img) {
+  //   return (
+  //     <div className={`${componentWrapper} py-4`}>
+  //       <p className="error">Image data is missing.</p>
+  //       <p>{discription}</p>
+  //     </div>
+  //   );
+  // } else {
+  //   imageSrc = `/images/carousel-images/${image.img}`;
+  // }
 
   // Build the public image URL
   return (

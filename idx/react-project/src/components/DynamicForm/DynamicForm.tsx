@@ -4,13 +4,11 @@ import type { DynamicProps } from "../UiComponents/accordion/type";
 
 interface DynamicFormProps {
   config: RegistryComponentProps;
-  onSubmit: (data: DynamicProps) => void;
   onChangeImage: () => {};
 }
 
 const DynamicForm: React.FC<DynamicFormProps> = ({
   config,
-  onSubmit,
   onChangeImage,
 }) => {
   const [formData, setFormData] = useState<DynamicProps>(
@@ -32,7 +30,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
   console.log("formData: ", formData);
   return (
     <div>
-      <form onSubmit={() => null}>
+      
         <div className="grid gap-5 my-5">
           {Object.entries(schema).map(([fieldName, fieldSchema], i) => {
             // ----------------------------
@@ -116,9 +114,8 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                 );
               } else if (fieldSchema.type === "boolean") {
                 return (
-                  <div className="flex gap-2 justify-items-start">
-                    <input
-                      key={`${fieldName}_${i}`}
+                  <div key={`${fieldName}_${i}`} className="flex gap-2 justify-items-start">
+                    <input                     
                       type="checkbox"
                       checked={Boolean(
                         formData[fieldName as keyof DynamicProps],
@@ -142,10 +139,8 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                 );
               }
             }
-          })}
-          {/* TODO: Submit button will here */}
+          })}          
         </div>
-      </form>
     </div>
   );
 };

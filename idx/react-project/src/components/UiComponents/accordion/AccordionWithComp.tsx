@@ -108,7 +108,7 @@ const AccordionWithComp: React.FC<DynamicAccordionProps> = ({
               }`}
             >
               <div className="min-h-0">
-                <div className="py-5 text-sm leading-relaxed">
+                <div className="py-2 text-sm leading-relaxed">
                   {isOpen && <Component {...defaultProps} {...(props ?? {})} />}
                 </div>
               </div>
