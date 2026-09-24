@@ -1,9 +1,9 @@
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import { getComponentMapData } from "../../services/componentService";
 import { ComponentRegistry } from "../ComponentRegistry";
 import AccordionWithComp from "../UiComponents/accordion/AccordionWithComp";
 import type { AccordionDynamicItemData } from "../UiComponents/accordion/type";
-import type { ImageData } from "../../types/types";
+import type { ComponentListData, ImageData } from "../../types/types";
 
 type FormData = {
   title: string;
@@ -19,10 +19,11 @@ interface AccordionDynamicFormProps {
 const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({
   setTabId,
 }) => {
-  const config = ComponentRegistry["image-text-component"];
+  // const config = ComponentRegistry["image-text-component"];
 
   const [openId, setOpenId] = useState<string | number>(0);
-  const [component, setComponent] = useState<string>(); // TODO: setComponent form Componentlist
+  const [data, setData] = useState<ComponentListData[]>([]);
+  const [component, setComponent] = useState<string | undefined>();// TODO: setComponent form Componentlist
   const [subBtnFlag, setSubBtnFlag] = useState<boolean>(true); // TODO: After validation make it false
 
   //TODO: change once get data from local storage
@@ -35,7 +36,8 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({
     image: undefined,
   });
 
-  const handleComponentSelect = () =>{
+  const handleComponentSelect = (id) =>{
+    setComponent(id)
     setOpenId(1);
   }
 
@@ -57,7 +59,27 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({
     e.preventDefault();
     setOpenId(0);
     setSubBtnFlag(true)
-  }
+  }  
+    const [loading, setLoading] = useState(true);   
+
+    const config = component
+  ? ComponentRegistry[component]
+  : null;
+  
+    useEffect(() => {
+      const loadData = async () => {
+        try {
+          const result = await getComponentMapData();
+          setData(result);
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setLoading(false);
+        }
+      };
+  
+      loadData();
+    }, []);
 
   const accordionData: AccordionDynamicItemData[] = [
     {
@@ -67,6 +89,8 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({
       showHeader: false,
       props: {
         setCom: handleComponentSelect,
+        data,
+        loading,
       },
     },
     {
@@ -91,7 +115,7 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({
       },
     },
   ];
-
+console.log("component: ",component)
   return (
     <div className="p-5">
       <h2>Accordion Setting:</h2>

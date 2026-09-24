@@ -9,6 +9,13 @@ export interface ComponentData {
   data?: AccordionItemData[] | DynamicAccordionItemData[];
 }
 
+export interface ComponentListData {
+  id: string;
+  layout: string;
+  name: string;
+  discription: string;
+}
+
 export interface Page {
   name: string;
   advSettings: Record<string, unknown>;

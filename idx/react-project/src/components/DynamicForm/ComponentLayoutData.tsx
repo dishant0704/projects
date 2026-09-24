@@ -1,39 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-import { getComponentMapData } from "../../services/componentService";
 import { getCarouselImageSrc } from "../../utils/imageUtils";
+import type { ComponentListData } from "../../types/types";
 
 interface ComponentLayoutDataProps {
   setCom: (data: string) => void;
+  data:ComponentListData[];
+  loading:boolean
 }
 
-interface ComponentData {
-  id: string;
-  layout: string;
-  name: string;
-  discription: string;
-}
 
 const ComponentLayoutData: React.FC<ComponentLayoutDataProps> = ({
   setCom,
-}) => {
-  const [data, setData] = useState<ComponentData[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        const result = await getComponentMapData();
-        setData(result);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadData();
-  }, []);
+  data,
+  loading
+}) => {  
 
   return (
     <div>
@@ -62,6 +43,7 @@ const ComponentLayoutData: React.FC<ComponentLayoutDataProps> = ({
                     type="radio"
                     name="componentSelected"
                     value={id}
+                    onChange={()=>setCom(id)}
                   />
                 </div>
 
