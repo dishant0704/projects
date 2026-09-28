@@ -37,11 +37,12 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
     <div>
 
       <div className="grid gap-5 my-5">
-        {Object.entries(schema).map(([fieldName, fieldSchema], i) => {
+        {Object.entries(schema).map(([fieldName, fieldSchema], i) => {          
           // ----------------------------
           // Images Fields
           // ----------------------------
-          if (Array.isArray(fieldSchema)) {
+          console.log("fieldSchema: ", fieldSchema)
+          if (fieldSchema === true) {
             return (
               <div
                 key={`${fieldName}_${i}`}
@@ -83,6 +84,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
               return (
                 <input
                   key={`${fieldName}_${i}`}
+                  name={fieldName}
                   value={String(
                     formData[fieldName as keyof DynamicProps] ?? "",
                   )}
@@ -102,6 +104,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
               return (
                 <textarea
                   key={`${fieldName}_${i}`}
+                  name={fieldName}
                   value={String(
                     formData[fieldName as keyof DynamicProps] ?? "",
                   )}
@@ -113,7 +116,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                   }
                   rows={5}
                   cols={6}
-                  placeholder="Description"
+                  placeholder="Content"
                   required
                 />
               );

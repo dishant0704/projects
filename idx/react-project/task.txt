@@ -1,3 +1,2 @@
-#1. Complite Coponent list component
-#2. Complite Coponent rajestri component with UI
-#3. Send data to redux
+#1. create list image data as well as component to choose image from the same in dynamic form
+#2. Send data to redux

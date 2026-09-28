@@ -33,7 +33,7 @@
       "items": [
         {
           "id": 1,
-          "title": "Component Demo A",
+          "title": "Image Text Component",
           "component": "image-text-component",
           "props": {
             "title":"First slide label",
@@ -44,8 +44,8 @@
         },
         {
           "id": 2,
-          "title": "Component Demo B",
-          "component": "image-text-component",
+          "title": "Image Text Component",
+          "component": "profile-picture-component",
           "props": {
             "title":"Second slide label",
             "discription":"Some representative placeholder content for the first slide. Some representative placeholder content for the first slide.vSome representative placeholder content for the first slide.",

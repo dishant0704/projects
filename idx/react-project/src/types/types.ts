@@ -10,7 +10,7 @@ export interface ComponentData {
 }
 
 export interface ComponentListData {
-  id: string;
+  form: string;
   layout: string;
   name: string;
   discription: string;

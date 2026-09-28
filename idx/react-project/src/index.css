@@ -1,15 +1,37 @@
 @import "tailwindcss";
+
 @custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-text: var(--text);
+  --color-text-h: var(--text-h);
+  --color-bg: var(--bg);
+
+  --color-primary-4-light-5: var(--primary-4-light-5);
+  --color-primary-5-light-5: var(--primary-5-light-5);
+  --color-primary-6-light-5: var(--primary-6-light-5);
+
+  --color-secondary-1-light-5: var(--secondary-1-light-5);
+  --color-monochrome-1-light-5: var(--monochrome-1-light-5);
+
+  --color-border: var(--border);
+  --color-code-bg: var(--code-bg);
+
+  --color-tab-border: var(--tab-border);
+  --color-tab-text: var(--tab-text);
+  --color-tab-hover-border: var(--tab-hover-border);
+  --color-tab-hover-text: var(--tab-hover-text);
+}
 :root {
   --text: #1d1d1d;
   --text-h: #08060d;
   --bg: #b6b6b6;
   --primary-4-light-5: #efff0d;
-  --primary-5-light-5: #ff0d76;
-  --primary-6-light-5: #1dffcf;
+  --primary-5-light-5: #1dffcf;
+  --primary-6-light-5: #ff0d76;   
   --secondary-1-light-5: #0d70ff;
   --monochrome-1-light-5: #0d0d0d;
-  --link-btn: var(--primary-5-light-5);
+  --link-btn: var(--primary-6-light-5);
   --border: #e5e4e7;
   --code-bg: #f4f3ec; 
   --shadow:
@@ -34,7 +56,7 @@
   --tab-text: #9f9fa9;
   
   --tab-hover-border: var(--monochrome-1-light-5) ;
-  --tab-hover-text: var(--monochrome-1-light-5)
+  --tab-hover-text: var(--monochrome-1-light-5);
   
   @media (max-width: 1024px) {
     font-size: 16px;
@@ -51,7 +73,7 @@
     --primary-5-light-5: #ff0d76;
     --primary-6-light-5: #1dffcf;
     --secondary-1-light-5: #0d70ff;
-    --monochrome-1-light-5: #0d0d0d;
+    --monochrome-1-light-5: #f3f4f6;
     --link-btn: var(--primary-6-light-5);
     --accent-bg: rgba(192, 132, 252, 0.15);
     --accent-border: rgba(192, 132, 252, 0.5);
@@ -77,19 +99,19 @@
   /* Tab */
   .tab{
     border-bottom: transparent;
-    color:var(--tab-text)
+    color:var(--tab-text);
   }
 .disableContainer{
   opacity: 0.4;
   cursor: default;
 }
 .tabActive{
-  border-bottom: var(--tab-border-b);
+  border-bottom: 1px solid var(--tab-border);
   color:var(--tab-border-b);
   pointer-events: none;}
 
   .tab:hover{
-  border-bottom: transparent;;
+  border-bottom: 1px solid transparent;
   color: var(--tab-hover-text)
 }
 .iconActiveTab{

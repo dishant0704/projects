@@ -1,5 +1,5 @@
 [
-  {"id":"image-text-component", "layout":"image-text-component.jpg", "name":"Image Text Component", "discription":"We have three properties in this component Image, Title and Discription. we arrange left and right combinatin"},
-  {"id":"profile-picture-component", "layout":"profile-picture-component.jpg", "name":"Profile Picture Component", "discription":"Profile picture with name and title"},
-  {"id":"profile-picture-carousel-component", "layout":"image-text-component.jpg", "name":"Profile Picture Carousel Component", "discription":"Profile picture carousel with name and title"}
+  {"form":"image-text-component", "layout":"image-text-component.jpg", "name":"Image Text Component", "discription":"We have three properties in this component Image, Title and Discription. we arrange left and right combinatin"},
+  {"form":"profile-picture-component", "layout":"profile-picture-component.jpg", "name":"Profile Picture Component", "discription":"Profile picture with name and title"},
+  {"form":"profile-picture-component", "layout":"profile-picture-carousel-component.jpg", "name":"Profile Picture Carousel Component", "discription":"Profile picture carousel with name and title"}
 ]

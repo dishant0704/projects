@@ -103,7 +103,7 @@ const AccordionRoot = () => {
 
       <Link
         to="/"
-        className="text-[14px] text-primary-6-light-6"
+        className="text-[14px] text-primary-6-light-5"
       >
         Back to Dashboard
       </Link>

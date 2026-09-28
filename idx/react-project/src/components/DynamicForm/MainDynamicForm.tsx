@@ -16,18 +16,17 @@ interface AccordionDynamicFormProps {
   setTabId: (tabId: string) => void;
 }
 
-const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({
-  setTabId,
-}) => {
+const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({ setTabId }) => {
   // const config = ComponentRegistry["image-text-component"];
 
   const [openId, setOpenId] = useState<string | number>(0);
+  const [previousIds, setPreviousIds] = useState<(string | number)[]>([]);
   const [data, setData] = useState<ComponentListData[]>([]);
-  const [component, setComponent] = useState<string | undefined>();// TODO: setComponent form Componentlist
+  const [component, setComponent] = useState<string | undefined>(); // TODO: setComponent form Componentlist
   const [subBtnFlag, setSubBtnFlag] = useState<boolean>(true); // TODO: After validation make it false
 
   //TODO: change once get data from local storage
-   const editObject = { flag:false, inx:null } 
+  const editObject = { flag: false, inx: null };
 
   const [formData, setFormData] = useState<FormData>({
     title: "",
@@ -36,50 +35,69 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({
     image: undefined,
   });
 
-  const handleComponentSelect = (id) =>{
-    setComponent(id)
-    setOpenId(1);
-  }
-
-  const handleOpenImageList = () => {
-    setOpenId(2);
+  const handleOpenIdChange = (nextId: string | number) => {
+    setPreviousIds((prev) => [...prev, openId]);
+    setOpenId(nextId);
   };
 
-  const handleImageSelect = (selectedImage: ImageData) => {
-    setFormData((previousData) => ({
-      ...previousData,
-      image: selectedImage,
-    }));
+  const handleGoBack = () => {
+    setPreviousIds((prev) => {
+      if (prev.length === 0) {
+        return prev;
+      }
 
-    // Close image list and reopen form
-    setOpenId(1);
+      const previousId = prev[prev.length - 1];
+
+      setOpenId(previousId);
+
+      return prev.slice(0, -1);
+    });
   };
 
-  const handleSubmit = ( e: React.FormEvent<HTMLFormElement>) =>{
-    e.preventDefault();
-    setOpenId(0);
-    setSubBtnFlag(true)
-  }  
-    const [loading, setLoading] = useState(true);   
+  const handleComponentSelect = (id: string) => {
+    console.log("id: ",id)
+  setComponent(id);
+  handleOpenIdChange(1);
+};
 
-    const config = component
-  ? ComponentRegistry[component]
-  : null;
-  
-    useEffect(() => {
-      const loadData = async () => {
-        try {
-          const result = await getComponentMapData();
-          setData(result);
-        } catch (error) {
-          console.error(error);
-        } finally {
-          setLoading(false);
-        }
-      };
-  
-      loadData();
-    }, []);
+const handleOpenImageList = () => {
+  handleOpenIdChange(2);
+};
+
+const handleImageSelect = (selectedImage: ImageData) => {
+  setFormData((previousData) => ({
+    ...previousData,
+    image: selectedImage,
+  }));
+
+  handleOpenIdChange(1);
+};
+
+const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+
+  setOpenId(0);
+  setPreviousIds([]);
+  setSubBtnFlag(true);
+};
+  const [loading, setLoading] = useState(true);
+
+  const config = component ? ComponentRegistry[component] : null;
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const result = await getComponentMapData();
+        setData(result);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
+  }, []);
 
   const accordionData: AccordionDynamicItemData[] = [
     {
@@ -101,7 +119,7 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({
       props: {
         config,
         formData,
-        setFormData,       
+        setFormData,
         onChangeImage: handleOpenImageList,
       },
     },
@@ -115,28 +133,37 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({
       },
     },
   ];
-console.log("component: ",component)
+  console.log("component: ", component);
   return (
     <div className="p-5">
       <h2>Accordion Setting:</h2>
-
       <p className="mt-1 text-sm/6 text-gray-600">
         This information will update Accordion.
       </p>
+      {previousIds.length > 0 && (
+  <span
+    className="py-2 text-[14px] text-primary-6-light-5 cursor-pointer"
+    onClick={handleGoBack}
+  >
+    Go Back to Previous Section
+  </span>
+)}
       <form onSubmit={handleSubmit}>
-      <AccordionWithComp
-        items={accordionData}
-        openId={openId}
-        onOpenIdChange={(nextId) => {
-          setOpenId(nextId);
-        }}
-      />
-      <div className="grid justify-items-end">
-        {/* TODO: Check all fild are fill then disabled = false */}
-            <button type="submit" className={`btn ${subBtnFlag?"disabled:opacity-50 disabled:bg-gray-400 disabled:cursor-not-allowed":""}`} disabled={subBtnFlag}> 
-              {editObject.flag ? "Save Data" : "Add Data"}
-            </button>
-          </div>
+        <AccordionWithComp
+          items={accordionData}
+          openId={openId}
+          onOpenIdChange={()=>handleOpenIdChange}
+        />
+        <div className="grid justify-items-end">
+          {/* TODO: Check all fild are fill then disabled = false */}
+          <button
+            type="submit"
+            className={`btn ${subBtnFlag ? "disabled:opacity-50 disabled:bg-gray-400 disabled:cursor-not-allowed" : ""}`}
+            disabled={subBtnFlag}
+          >
+            {editObject.flag ? "Save Data" : "Add Data"}
+          </button>
+        </div>
       </form>
     </div>
   );

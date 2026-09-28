@@ -24,8 +24,8 @@ const ComponentLayoutData: React.FC<ComponentLayoutDataProps> = ({
         <>
         <h3>Choose Component from List</h3>
         <ul>
-          {data.map((item) => {
-            const { id, layout, name, discription } = item;
+          {data.map((item, inx) => {
+            const { form, layout, name, discription } = item;
 
             const src = getCarouselImageSrc({
               folder: "component-layout",
@@ -34,16 +34,16 @@ const ComponentLayoutData: React.FC<ComponentLayoutDataProps> = ({
 
             return (
               <li
-                key={id}
+                key={inx}
                 className="py-2 grid grid-cols-[20px_150px_1fr] gap-4"
               >
-                <div className="flex items-center">
+                <div className="py-5">
                   <input
                     className="cursor-pointer"
                     type="radio"
                     name="componentSelected"
-                    value={id}
-                    onChange={()=>setCom(id)}
+                    value={form}
+                    onChange={()=>setCom(form)}
                   />
                 </div>
 

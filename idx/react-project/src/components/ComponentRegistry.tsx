@@ -11,7 +11,6 @@ import ImagesList from "./UiComponents/Images/ImagesList";
 import ComponentLayoutData from "./DynamicForm/ComponentLayoutData";
 
 import DemoA from "./demo/DemoA";
-import DemoB from "./demo/DemoB";
 import DemoC from "./demo/DemoC";
 
 // Icons
@@ -30,23 +29,16 @@ import {
 
 export type DemoComponentProps = {
   title: string;
-  discription: string;
+  content: string;
   conRev: boolean;
-  image: {
-    name: string;
-    img: string;
-  };
+  image: boolean;
 };
 
 // -------------------------------------
 // Registry Types
 // -------------------------------------
 
-export type FieldType =
-  | "text"
-  | "textarea"
-  | "boolean"
-  | "number";
+export type FieldType = "text" | "textarea" | "boolean" | "number";
 
 export interface FieldSchema {
   type: FieldType;
@@ -54,17 +46,14 @@ export interface FieldSchema {
   required?: boolean;
 }
 
-interface ObjectSchema {
-  [key: string]: FieldSchema;
-}
+export type PropSchemaField = FieldSchema | true;
+
+export type PropSchema = Record<string, PropSchemaField>;
 
 export interface RegistryComponentProps {
   component: React.ComponentType<any>;
   props: Record<string, unknown>;
-  propSchema?: Record<
-  string,
-  FieldSchema | ObjectSchema[] | FieldSchema[]
-  >;
+  propSchema?: PropSchema;
 }
 
 // -------------------------------------
@@ -135,32 +124,37 @@ export const ComponentRegistry: Record<string, RegistryComponentProps> = {
         label: "Title",
         required: true,
       },
-      discription: {
+      content: {
         type: "textarea",
-        label: "Description",
+        label: "content",
       },
       conRev: {
         type: "boolean",
         label: "Align Content from Right",
       },
-      images: [
-        {
-          type: "text",
-          label: "Image Name",
-          required: true,
-        },
-        {
-          type: "text",
-          label: "File Name",
-          required: true,
-        },
-      ],
+      images: true,
     },
   },
 
-  demo_b: {
-    component: DemoB,
-    props: {},
+  "profile-picture-component": {
+    component: DemoA,
+    props: {
+      title: "",
+      images: [
+        {
+          imgName: "",
+          fileName: "",
+        },
+      ],
+    },
+    propSchema: {
+      title: {
+        type: "text",
+        label: "Title",
+        required: true,
+      },
+      images: true,
+    },
   },
 
   demo_c: {
@@ -173,6 +167,14 @@ export const ComponentRegistry: Record<string, RegistryComponentProps> = {
         name: "",
         img: "",
       },
+    },
+    propSchema: {
+      title: {
+        type: "text",
+        label: "Title",
+        required: true,
+      },
+      images: true,
     },
   },
 };
