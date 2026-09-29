@@ -1,2 +1,4 @@
-#1. create list image data as well as component to choose image from the same in dynamic form
-#2. Send data to redux
+#1. align save image butoon, BUTTON DISBALE WHEN ARRAY LENTH === 0
+#2. create env file and get path from env
+#3. on ckeckbox click store data into an arry and sent back to parent 
+#4. Send data to redux

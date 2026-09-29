@@ -30,5 +30,13 @@ export interface PageContextType{
 
 export type ImageData = {
   name: string;
-  img: string;
+  image: string;
 };
+
+export type FormData = {
+  title: string;
+  description: string;
+  conRev: boolean;
+  image?: ImageData;
+};
+

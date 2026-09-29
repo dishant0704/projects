@@ -1,25 +1,27 @@
 import React, { useState } from "react";
 import type { RegistryComponentProps } from "../ComponentRegistry";
 import type { DynamicProps } from "../UiComponents/accordion/type";
+import type { FormData } from "../../types/types";
 
 interface DynamicFormProps {
   config: RegistryComponentProps | null;
+  formData:FormData;
   onChangeImage: () => void;
 }
 
 const DynamicForm: React.FC<DynamicFormProps> = ({
   config,
+  formData,
   onChangeImage,
 }) => {
   if (!config) {
     return <p>Please select a component.</p>;
   }
-  const [formData, setFormData] = useState<DynamicProps>(
+  const [newFormData, setNewFormData] = useState<DynamicProps>(
     config.props as unknown as DynamicProps,
   );
 
-  if (!formData) return;
-  const { imgName, fileName } = formData.images[0];
+  if (!newFormData) return; 
 
   const schema = config.propSchema;
 
@@ -29,10 +31,14 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
 
   let imageSrc: string;
 
-  if (imgName) {
-    imageSrc = `/images/carousel-images/${imgName}`;
-  }
-  console.log("formData: ", formData);
+  
+    if(!formData.image){
+      imageSrc = ""
+    }else{
+      const {image } = formData.image;
+      imageSrc = `/images/carousel-images/${image}`;
+    }
+  console.log("formData: ", formData.image);
   return (
     <div>
 
@@ -41,20 +47,20 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
           // ----------------------------
           // Images Fields
           // ----------------------------
-          console.log("fieldSchema: ", fieldSchema)
+          
           if (fieldSchema === true) {
             return (
               <div
                 key={`${fieldName}_${i}`}
-                className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4 align-items-start dark:bg-zinc-800 bg-zinc-700 p-4 text-stone-100"
+                className="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-4 align-items-start dark:bg-zinc-800 bg-zinc-700 p-4 text-stone-100"
               >
                 <div>
-                  <div className="bg-white p-2 grid place-items-center h-40 text-gray-600">
-                    {imgName !== "" ? (
+                  <div className="bg-white p-2 grid place-items-center h-auto text-gray-600">
+                    {imageSrc !== "" ? (
                       <img
                         src={imageSrc}
                         className="d-block w-100"
-                      // alt={formData.images.imgName}
+                      // alt={newFormData.images.imgName}
                       />
                     ) : (
                       <span>No Image</span>
@@ -86,10 +92,10 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                   key={`${fieldName}_${i}`}
                   name={fieldName}
                   value={String(
-                    formData[fieldName as keyof DynamicProps] ?? "",
+                    newFormData[fieldName as keyof DynamicProps] ?? "",
                   )}
                   onChange={(e) =>
-                    setFormData((prev) => ({
+                    setNewFormData((prev) => ({
                       ...prev,
                       [fieldName]: e.target.value,
                     }))
@@ -106,10 +112,10 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                   key={`${fieldName}_${i}`}
                   name={fieldName}
                   value={String(
-                    formData[fieldName as keyof DynamicProps] ?? "",
+                    newFormData[fieldName as keyof DynamicProps] ?? "",
                   )}
                   onChange={(e) =>
-                    setFormData((prev) => ({
+                    setNewFormData((prev) => ({
                       ...prev,
                       content: e.target.value,
                     }))
@@ -126,7 +132,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                   <input
                     type="checkbox"
                     checked={Boolean(
-                      formData[fieldName as keyof DynamicProps],
+                      newFormData[fieldName as keyof DynamicProps],
                     )}
                     onChange={(e) => { }}
                   />
@@ -140,7 +146,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                   type={fieldSchema.type === "number" ? "number" : "text"}
                   required={fieldSchema.required}
                   value={String(
-                    formData[fieldName as keyof DynamicProps] ?? "",
+                    newFormData[fieldName as keyof DynamicProps] ?? "",
                   )}
                   onChange={(e) => { }}
                 />

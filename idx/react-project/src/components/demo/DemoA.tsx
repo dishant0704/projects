@@ -1,6 +1,6 @@
 import React from "react";
 import style from "./demo.module.css";
-import { getCarouselImageSrc } from "../../utils/imageUtils";
+import { getImageSrc } from "../../utils/imageUtils";
 
 type DemoAPropsObj = {
   title:string;
@@ -15,9 +15,9 @@ type DemoAPropsObj = {
 const DemoA: React.FC<DemoAPropsObj> = ({title, discription, conRev, image }) => {
 const { componentWrapper } = style;
 
-const imageSrc = getCarouselImageSrc({
+const imageSrc = getImageSrc({
   folder: "carousel-images",
-  image:image?.img,
+  image: image?.img,
 });
   
   // let imageSrc;

@@ -3,7 +3,11 @@ interface ImageSourceOptions {
   image?: string | null
 }
 
-export const getCarouselImageSrc = ({
+interface GetImageFolderProps {
+  folder: string;
+}
+
+export const getImageSrc = ({
   folder,
   image,
 }: ImageSourceOptions): string | null => {
@@ -13,3 +17,10 @@ export const getCarouselImageSrc = ({
 
   return `/images/${folder}/${image}`;
 };
+
+export const getImageFolder = ({folder}:GetImageFolderProps): string | null =>{
+   if (!folder) {
+    return null;
+  }
+  return `/images/${folder}/`;
+}

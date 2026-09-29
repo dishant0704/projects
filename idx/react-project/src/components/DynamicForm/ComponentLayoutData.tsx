@@ -1,6 +1,6 @@
 import React from "react";
 
-import { getCarouselImageSrc } from "../../utils/imageUtils";
+import { getImageSrc } from "../../utils/imageUtils";
 import type { ComponentListData } from "../../types/types";
 
 interface ComponentLayoutDataProps {
@@ -27,7 +27,7 @@ const ComponentLayoutData: React.FC<ComponentLayoutDataProps> = ({
           {data.map((item, inx) => {
             const { form, layout, name, discription } = item;
 
-            const src = getCarouselImageSrc({
+            const src = getImageSrc({
               folder: "component-layout",
               image:layout,
             });

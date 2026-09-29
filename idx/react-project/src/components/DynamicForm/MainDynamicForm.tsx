@@ -3,14 +3,7 @@ import { getComponentMapData } from "../../services/componentService";
 import { ComponentRegistry } from "../ComponentRegistry";
 import AccordionWithComp from "../UiComponents/accordion/AccordionWithComp";
 import type { AccordionDynamicItemData } from "../UiComponents/accordion/type";
-import type { ComponentListData, ImageData } from "../../types/types";
-
-type FormData = {
-  title: string;
-  description: string;
-  conRev: boolean;
-  image?: ImageData;
-};
+import type { ComponentListData, ImageData, FormData } from "../../types/types";
 
 interface AccordionDynamicFormProps {
   setTabId: (tabId: string) => void;
@@ -54,8 +47,7 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({ setTabId }) => {
     });
   };
 
-  const handleComponentSelect = (id: string) => {
-    console.log("id: ",id)
+  const handleComponentSelect = (id: string) => {  
   setComponent(id);
   handleOpenIdChange(1);
 };
@@ -69,7 +61,7 @@ const handleImageSelect = (selectedImage: ImageData) => {
     ...previousData,
     image: selectedImage,
   }));
-
+  console.log("selectedImage: ", selectedImage)
   handleOpenIdChange(1);
 };
 
@@ -99,6 +91,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     loadData();
   }, []);
 
+  console.log("formData: ", formData)
   const accordionData: AccordionDynamicItemData[] = [
     {
       id: 0,
@@ -130,10 +123,10 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       showHeader: false,
       props: {
         onSelectImage: handleImageSelect,
+        multipleSelect:false,
       },
     },
-  ];
-  console.log("component: ", component);
+  ]; 
   return (
     <div className="p-5">
       <h2>Accordion Setting:</h2>
