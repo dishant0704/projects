@@ -5,7 +5,7 @@ import type { FormData } from "../../types/types";
 
 interface DynamicFormProps {
   config: RegistryComponentProps | null;
-  formData:FormData;
+  formData: FormData;
   onChangeImage: () => void;
 }
 
@@ -21,7 +21,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
     config.props as unknown as DynamicProps,
   );
 
-  if (!newFormData) return; 
+  if (!newFormData) return;
 
   const schema = config.propSchema;
 
@@ -31,45 +31,47 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
 
   let imageSrc: string;
 
-  
-    if(!formData.image){
-      imageSrc = ""
-    }else{
-      const {image } = formData.image;
-      imageSrc = `/images/carousel-images/${image}`;
-    }
+  if (!formData.image) {
+    imageSrc = "";
+  } else {
+    const { image } = formData.image;
+    imageSrc = `/images/carousel-images/${image}`;
+  }
   console.log("formData: ", formData.image);
   return (
     <div>
-
       <div className="grid gap-5 my-5">
-        {Object.entries(schema).map(([fieldName, fieldSchema], i) => {          
+        {Object.entries(schema).map(([fieldName, fieldSchema], i) => {
           // ----------------------------
           // Images Fields
           // ----------------------------
-          
+
           if (fieldSchema === true) {
             return (
               <div
                 key={`${fieldName}_${i}`}
-                className="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-4 align-items-start dark:bg-zinc-800 bg-zinc-700 p-4 text-stone-100"
+                className="grid grid-cols-[150px_1fr] gap-4 align-items-start dark:bg-zinc-800 bg-zinc-200 p-4 dark:text-stone-100 text-zinc-900" 
               >
                 <div>
-                  <div className="bg-white p-2 grid place-items-center h-auto text-gray-600">
-                    {imageSrc !== "" ? (
+                  {imageSrc !== "" ? (
+                    <div className="bg-white p-2 grid place-items-center h-auto text-gray-600">
                       <img
                         src={imageSrc}
                         className="d-block w-100"
-                      // alt={newFormData.images.imgName}
+                        // alt={newFormData.images.imgName}
                       />
-                    ) : (
-                      <span>No Image</span>
-                    )}
-                  </div>
+                    </div>
+                  ) : (
+                    <div className=" h-auto grid place-items-center ">No Image Selected</div>
+                  )}
                 </div>
-                <div className="flex items-center h-40">
+                <div className="grid items-center h-auto">
                   <div>
-                    <p>No Image Selected</p>
+                      {formData.image?.name ? (
+                        <h3>
+                        {formData.image?.name}
+                      </h3>
+                        ) : null}
                     <button
                       className="btn"
                       type="button"
@@ -128,13 +130,16 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
               );
             } else if (fieldSchema.type === "boolean") {
               return (
-                <div key={`${fieldName}_${i}`} className="flex gap-2 justify-items-start">
+                <div
+                  key={`${fieldName}_${i}`}
+                  className="flex gap-2 justify-items-start"
+                >
                   <input
                     type="checkbox"
                     checked={Boolean(
                       newFormData[fieldName as keyof DynamicProps],
                     )}
-                    onChange={(e) => { }}
+                    onChange={(e) => {}}
                   />
                   <label>{fieldSchema.label} </label>
                 </div>
@@ -148,7 +153,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                   value={String(
                     newFormData[fieldName as keyof DynamicProps] ?? "",
                   )}
-                  onChange={(e) => { }}
+                  onChange={(e) => {}}
                 />
               );
             }
