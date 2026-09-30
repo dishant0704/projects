@@ -62,7 +62,7 @@ const handleImageSelect = (selectedImage: ImageData) => {
     image: selectedImage,
   }));
   console.log("selectedImage: ", selectedImage)
-  handleOpenIdChange(1);
+  handleGoBack();
 };
 
 const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
