@@ -1,4 +1,4 @@
-#1. align save image butoon, BUTTON DISBALE WHEN ARRAY LENTH === 0
-#2. create env file and get path from env
-#3. on ckeckbox click store data into an arry and sent back to parent 
-#4. Send data to redux
+#1.   DynamicForm:
+        // todo: multiple image part is pending, single image working fine
+#3. 
+#4. 

@@ -10,8 +10,7 @@ interface AccordionDynamicFormProps {
 }
 
 const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({ setTabId }) => {
-  // const config = ComponentRegistry["image-text-component"];
-
+ 
   const [openId, setOpenId] = useState<string | number>(0);
   const [previousIds, setPreviousIds] = useState<(string | number)[]>([]);
   const [data, setData] = useState<ComponentListData[]>([]);
@@ -60,8 +59,7 @@ const handleImageSelect = (selectedImage: ImageData) => {
   setFormData((previousData) => ({
     ...previousData,
     image: selectedImage,
-  }));
-  console.log("selectedImage: ", selectedImage)
+  }));  
   handleGoBack();
 };
 
@@ -91,7 +89,6 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     loadData();
   }, []);
 
-  console.log("formData: ", formData)
   const accordionData: AccordionDynamicItemData[] = [
     {
       id: 0,
@@ -122,11 +119,14 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       component: "image-list",
       showHeader: false,
       props: {
+        goBack: handleGoBack,
         onSelectImage: handleImageSelect,
-        multipleSelect:false,
+        multipleSelect: false,
+        selectedImageIds:  Array.isArray(formData.image) && formData.image ? formData.image.map((img: ImageData) => img.id) : formData.image ? [formData.image.id]: [],        
       },
     },
   ]; 
+ 
   return (
     <div className="p-5">
       <h2>Accordion Setting:</h2>

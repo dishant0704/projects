@@ -29,6 +29,8 @@ export interface PageContextType{
 }
 
 export type ImageData = {
+  id: string;
+  flag: boolean;
   name: string;
   image: string;
 };

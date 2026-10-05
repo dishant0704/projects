@@ -52,7 +52,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                 key={`${fieldName}_${i}`}
                 className="grid grid-cols-[150px_1fr] gap-4 align-items-start dark:bg-zinc-800 bg-zinc-200 p-4 dark:text-stone-100 text-zinc-900" 
               >
-                <div>
+                <div className="grid items-center h-auto">
                   {imageSrc !== "" ? (
                     <div className="bg-white p-2 grid place-items-center h-auto text-gray-600">
                       <img
@@ -62,7 +62,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                       />
                     </div>
                   ) : (
-                    <div className=" h-auto grid place-items-center ">No Image Selected</div>
+                    <div className="dark:text-yellow-400 text-orange-500">No Image Selected</div>
                   )}
                 </div>
                 <div className="grid items-center h-auto">
