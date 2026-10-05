@@ -4,13 +4,14 @@ import { ComponentRegistry } from "../ComponentRegistry";
 import AccordionWithComp from "../UiComponents/accordion/AccordionWithComp";
 import type { AccordionDynamicItemData } from "../UiComponents/accordion/type";
 import type { ComponentListData, ImageData, FormData } from "../../types/types";
+import { getImageFieldSchema } from "../../services/helper";
 
 interface AccordionDynamicFormProps {
   setTabId: (tabId: string) => void;
 }
 
 const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({ setTabId }) => {
- 
+
   const [openId, setOpenId] = useState<string | number>(0);
   const [previousIds, setPreviousIds] = useState<(string | number)[]>([]);
   const [data, setData] = useState<ComponentListData[]>([]);
@@ -46,33 +47,41 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({ setTabId }) => {
     });
   };
 
-  const handleComponentSelect = (id: string) => {  
-  setComponent(id);
-  handleOpenIdChange(1);
-};
+  const handleComponentSelect = (id: string) => {
+    setComponent(id);
+    handleOpenIdChange(1);
+  };
 
-const handleOpenImageList = () => {
-  handleOpenIdChange(2);
-};
+  const handleOpenImageList = () => {
+    handleOpenIdChange(2);
+  };
 
-const handleImageSelect = (selectedImage: ImageData) => {
-  setFormData((previousData) => ({
-    ...previousData,
-    image: selectedImage,
-  }));  
-  handleGoBack();
-};
+  const handleImageSelect = (selectedImage: ImageData) => {
+    setFormData((previousData) => ({
+      ...previousData,
+      image: selectedImage,
+    }));
+    handleGoBack();
+  };
 
-const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-  setOpenId(0);
-  setPreviousIds([]);
-  setSubBtnFlag(true);
-};
+    setOpenId(0);
+    setPreviousIds([]);
+    setSubBtnFlag(true);
+  };
   const [loading, setLoading] = useState(true);
 
   const config = component ? ComponentRegistry[component] : null;
+
+  const imagesSchema = getImageFieldSchema(config, "images");
+
+  const multiImage = imagesSchema?.multiImage ?? false;
+
+  console.log("multiImage:", multiImage);
+
+  console.log(multiImage);
 
   useEffect(() => {
     const loadData = async () => {
@@ -122,11 +131,10 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         goBack: handleGoBack,
         onSelectImage: handleImageSelect,
         multipleSelect: false,
-        selectedImageIds:  Array.isArray(formData.image) && formData.image ? formData.image.map((img: ImageData) => img.id) : formData.image ? [formData.image.id]: [],        
+        selectedImageIds: Array.isArray(formData.image) && formData.image ? formData.image.map((img: ImageData) => img.id) : formData.image ? [formData.image.id] : [],
       },
     },
-  ]; 
- 
+  ];
   return (
     <div className="p-5">
       <h2>Accordion Setting:</h2>
@@ -134,18 +142,18 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         This information will update Accordion.
       </p>
       {previousIds.length > 0 && (
-  <span
-    className="py-2 text-[14px] text-primary-6-light-5 cursor-pointer"
-    onClick={handleGoBack}
-  >
-    Go Back to Previous Section
-  </span>
-)}
+        <span
+          className="py-2 text-[14px] text-primary-6-light-5 cursor-pointer"
+          onClick={handleGoBack}
+        >
+          Go Back to Previous Section
+        </span>
+      )}
       <form onSubmit={handleSubmit}>
         <AccordionWithComp
           items={accordionData}
           openId={openId}
-          onOpenIdChange={()=>handleOpenIdChange}
+          onOpenIdChange={() => handleOpenIdChange}
         />
         <div className="grid justify-items-end">
           {/* TODO: Check all fild are fill then disabled = false */}

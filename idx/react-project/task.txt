@@ -1,4 +1,4 @@
 #1.   DynamicForm:
-        // todo: multiple image part is pending, single image working fine
+        // todo: As per compnent dynamicaly display check box or redio 
 #3. 
 #4. 

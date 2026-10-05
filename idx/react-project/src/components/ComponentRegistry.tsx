@@ -24,29 +24,24 @@ import {
 } from "lucide-react";
 
 // -------------------------------------
-// Component Props
-// -------------------------------------
-
-export type DemoComponentProps = {
-  title: string;
-  content: string;
-  conRev: boolean;
-  image: boolean;
-};
-
-// -------------------------------------
 // Registry Types
 // -------------------------------------
 
 export type FieldType = "text" | "textarea" | "boolean" | "number";
 
-export interface FieldSchema {
+export interface TextFieldSchema {
   type: FieldType;
   label?: string;
   required?: boolean;
 }
 
-export type PropSchemaField = FieldSchema | true;
+export interface ImageFieldSchema {
+  type: "image";
+  flag?: boolean;
+  multiImage?: boolean;  
+}
+
+export type PropSchemaField = TextFieldSchema | ImageFieldSchema | true;
 
 export type PropSchema = Record<string, PropSchemaField>;
 
@@ -132,7 +127,11 @@ export const ComponentRegistry: Record<string, RegistryComponentProps> = {
         type: "boolean",
         label: "Align Content from Right",
       },
-      images: true,
+      images: {
+        type: "image",
+        flag: true,
+        multiImage: true,
+      },
     },
   },
 
@@ -153,7 +152,36 @@ export const ComponentRegistry: Record<string, RegistryComponentProps> = {
         label: "Title",
         required: true,
       },
-      images: true,
+      images: {
+        type: "image",
+        flag: true,
+        multiImage: true,
+      },
+    },
+  },
+
+  "profile-picture-carousel-component": {
+    component: DemoA,
+    props: {
+      title: "",
+      images: [
+        {
+          imgName: "",
+          fileName: "",
+        },
+      ],
+    },
+    propSchema: {
+      title: {
+        type: "text",
+        label: "Title",
+        required: true,
+      },
+      images: {
+        type: "image",
+        flag: true,
+        multiImage: true,
+      },
     },
   },
 

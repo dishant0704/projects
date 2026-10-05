@@ -113,7 +113,7 @@ const ImagesList: React.FC<ImagesListProps> = ({
       setImages(updatedImages);
 
       // Immediately send selected image to parent
-      const selectedImage = updatedImages.find(
+      const selectedImage = updatedImages.filter(
         (item) => item.id === data.id
       );
 
@@ -175,6 +175,14 @@ const ImagesList: React.FC<ImagesListProps> = ({
   }
 
   // --------------------------------------------------
+  // close button
+  // --------------------------------------------------
+  const closeButton = () =>{
+    goBack
+    onSelectImage([])
+  }
+
+  // --------------------------------------------------
   // Render
   // --------------------------------------------------
 
@@ -230,7 +238,7 @@ const ImagesList: React.FC<ImagesListProps> = ({
           <button
             className="btn"
             type="button"
-            onClick={saveButtonVisible ? saveSelectedImages : goBack}
+            onClick={saveButtonVisible ? saveSelectedImages : closeButton}
           >{saveButtonVisible ? "Save Images" : "Close"}</button>
         </div>
       )}
