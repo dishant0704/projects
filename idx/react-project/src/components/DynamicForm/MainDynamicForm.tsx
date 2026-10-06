@@ -11,7 +11,6 @@ interface AccordionDynamicFormProps {
 }
 
 const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({ setTabId }) => {
-
   const [openId, setOpenId] = useState<string | number>(0);
   const [previousIds, setPreviousIds] = useState<(string | number)[]>([]);
   const [data, setData] = useState<ComponentListData[]>([]);
@@ -20,13 +19,14 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({ setTabId }) => {
 
   //TODO: change once get data from local storage
   const editObject = { flag: false, inx: null };
-
-  const [formData, setFormData] = useState<FormData>({
+  const formDefaultValue = {
     title: "",
     description: "",
     conRev: false,
     image: undefined,
-  });
+  };
+
+  const [formData, setFormData] = useState<FormData>(formDefaultValue);
 
   const handleOpenIdChange = (nextId: string | number) => {
     setPreviousIds((prev) => [...prev, openId]);
@@ -41,6 +41,11 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({ setTabId }) => {
 
       const previousId = prev[prev.length - 1];
 
+      // restate image array
+      if (previousId === 0) {
+        setFormData(formDefaultValue);
+      }
+      
       setOpenId(previousId);
 
       return prev.slice(0, -1);
@@ -74,14 +79,8 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({ setTabId }) => {
   const [loading, setLoading] = useState(true);
 
   const config = component ? ComponentRegistry[component] : null;
-
   const imagesSchema = getImageFieldSchema(config, "images");
-
   const multiImage = imagesSchema?.multiImage ?? false;
-
-  console.log("multiImage:", multiImage);
-
-  console.log(multiImage);
 
   useEffect(() => {
     const loadData = async () => {
@@ -130,8 +129,13 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({ setTabId }) => {
       props: {
         goBack: handleGoBack,
         onSelectImage: handleImageSelect,
-        multipleSelect: false,
-        selectedImageIds: Array.isArray(formData.image) && formData.image ? formData.image.map((img: ImageData) => img.id) : formData.image ? [formData.image.id] : [],
+        multipleSelect: multiImage,
+        selectedImageIds:
+          Array.isArray(formData.image) && formData.image
+            ? formData.image.map((img: ImageData) => img.id)
+            : formData.image
+              ? [formData.image.id]
+              : [],
       },
     },
   ];

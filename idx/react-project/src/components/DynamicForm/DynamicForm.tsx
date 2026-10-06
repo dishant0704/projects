@@ -35,7 +35,9 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
   if (!formData.image) {
     imageArray = [];
   } else {
-    imageArray = Array.isArray(formData.image) ? formData.image : [formData.image];
+    imageArray = Array.isArray(formData.image)
+      ? formData.image
+      : [formData.image];
   }
   const imgFolder = getImageFolder({
     folder: "carousel-images",
@@ -48,46 +50,50 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
           // ----------------------------
           // Images Fields
           // ----------------------------
-
-          if (fieldSchema === true) {
+          if (fieldName === "images") {
             return (
               <div
                 key={`${fieldName}_${i}`}
-                className={`${imageArray && imageArray.length > 1 ? 'align-items-start' : 'grid grid-cols-[150px_1fr] gap-4 align-items-start'} dark:bg-zinc-800 bg-zinc-200 p-4 dark:text-stone-100 text-zinc-900`}
+                className={`${imageArray && imageArray.length > 1 ? "align-items-start" : "grid grid-cols-[150px_1fr] gap-4 align-items-start"} dark:bg-zinc-800 bg-zinc-200 p-4 dark:text-stone-100 text-zinc-900`}
               >
-                <div className={`${imageArray && imageArray.length > 1 ? 'grid grid-cols-4 gap-4 items-center h-auto' : 'grid items-center h-auto'}`}>
+                <div
+                  className={`${imageArray && imageArray.length > 1 ? "grid grid-cols-4 gap-4 items-center h-auto" : "grid items-center h-auto"}`}
+                >
                   {imageArray && imageArray.length > 0 ? (
                     imageArray.map((img) => {
                       const { name, image } = img;
                       return (
-
                         <div className="bg-white p-2 grid place-items-center h-auto text-gray-600">
                           <img
                             src={`${imgFolder}${image}`}
                             alt={name}
                             className="d-block w-100"
-                          // alt={newFormData.images.imgName}
+                            // alt={newFormData.images.imgName}
                           />
                         </div>
-                      )
+                      );
                     })
                   ) : (
-                    <div className="dark:text-yellow-400 text-orange-500">No Image Selected</div>
+                    <div className="dark:text-yellow-400 text-orange-500">
+                      No Image Selected
+                    </div>
                   )}
                 </div>
                 <div className="grid items-center h-auto">
                   <div>
                     {formData.image?.name ? (
-                      <h3>
-                        {formData.image?.name}
-                      </h3>
+                      <h3>{formData.image?.name}</h3>
                     ) : null}
                     <button
                       className="btn"
                       type="button"
                       onClick={onChangeImage}
                     >
-                      Please Select Image
+                      {imageArray && imageArray.length === 1
+                        ? "Change Image"
+                        : imageArray && imageArray.length > 1
+                          ? "Add / Remove Image"
+                          : " Please Select Image"}
                     </button>
                   </div>
                 </div>
@@ -149,15 +155,14 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                     checked={Boolean(
                       newFormData[fieldName as keyof DynamicProps],
                     )}
-                    onChange={(e) => { }}
+                    onChange={(e) => {}}
                   />
                   <label>{fieldSchema.label} </label>
                 </div>
               );
             } else {
               {
-                fieldSchema.type !== "image" ?
-                (
+                fieldSchema.type !== "image" ? (
                   <input
                     key={`${fieldName}_${i}`}
                     type={fieldSchema.type === "number" ? "number" : "text"}
@@ -165,12 +170,10 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                     value={String(
                       newFormData[fieldName as keyof DynamicProps] ?? "",
                     )}
-                    onChange={(e) => { }}
+                    onChange={(e) => {}}
                   />
-                )
-                : null
+                ) : null;
               }
-
             }
           }
         })}

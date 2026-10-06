@@ -41,7 +41,7 @@ export interface ImageFieldSchema {
   multiImage?: boolean;  
 }
 
-export type PropSchemaField = TextFieldSchema | ImageFieldSchema | true;
+export type PropSchemaField = TextFieldSchema | ImageFieldSchema;
 
 export type PropSchema = Record<string, PropSchemaField>;
 
@@ -130,7 +130,7 @@ export const ComponentRegistry: Record<string, RegistryComponentProps> = {
       images: {
         type: "image",
         flag: true,
-        multiImage: true,
+        multiImage: false,
       },
     },
   },
@@ -155,7 +155,7 @@ export const ComponentRegistry: Record<string, RegistryComponentProps> = {
       images: {
         type: "image",
         flag: true,
-        multiImage: true,
+        multiImage: false,
       },
     },
   },
@@ -202,7 +202,11 @@ export const ComponentRegistry: Record<string, RegistryComponentProps> = {
         label: "Title",
         required: true,
       },
-      images: true,
+      images: {
+        type: "image",
+        flag: true,
+        multiImage: true,
+      },
     },
   },
 };
