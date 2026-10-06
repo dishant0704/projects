@@ -15,7 +15,7 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({ setTabId }) => {
   const [previousIds, setPreviousIds] = useState<(string | number)[]>([]);
   const [data, setData] = useState<ComponentListData[]>([]);
   const [component, setComponent] = useState<string | undefined>(); // TODO: setComponent form Componentlist
-  const [subBtnFlag, setSubBtnFlag] = useState<boolean>(true); // TODO: After validation make it false
+  const [subBtnFlag, setSubBtnFlag] = useState<boolean>(false); // TODO: After validation make it false
 
   //TODO: change once get data from local storage
   const editObject = { flag: false, inx: null };
@@ -139,6 +139,8 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({ setTabId }) => {
       },
     },
   ];
+
+  console.log("formData: ", formData)
   return (
     <div className="p-5">
       <h2>Accordion Setting:</h2>

@@ -122,10 +122,12 @@ export const ComponentRegistry: Record<string, RegistryComponentProps> = {
       content: {
         type: "textarea",
         label: "content",
+        required: true,
       },
       conRev: {
         type: "boolean",
         label: "Align Content from Right",
+        required: true,
       },
       images: {
         type: "image",

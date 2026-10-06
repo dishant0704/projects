@@ -61,9 +61,9 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                 >
                   {imageArray && imageArray.length > 0 ? (
                     imageArray.map((img) => {
-                      const { name, image } = img;
+                      const {id, name, image } = img;
                       return (
-                        <div className="bg-white p-2 grid place-items-center h-auto text-gray-600">
+                        <div key={id} className="bg-white p-2 grid place-items-center h-auto text-gray-600">
                           <img
                             src={`${imgFolder}${image}`}
                             alt={name}
@@ -152,10 +152,14 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                 >
                   <input
                     type="checkbox"
+                    name={fieldName}
                     checked={Boolean(
                       newFormData[fieldName as keyof DynamicProps],
                     )}
-                    onChange={(e) => {}}
+                    onChange={(e) => setNewFormData((prev) => (
+                      { ...prev, [fieldName]: e.target.checked, }
+                    ))}
+                    required={fieldSchema.required}
                   />
                   <label>{fieldSchema.label} </label>
                 </div>
