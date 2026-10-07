@@ -106,12 +106,7 @@ export const ComponentRegistry: Record<string, RegistryComponentProps> = {
       title: "",
       discription: "",
       conRev: false,
-      images: [
-        {
-          imgName: "",
-          fileName: "",
-        },
-      ],
+      images: [],
     },
     propSchema: {
       title: {
@@ -141,12 +136,7 @@ export const ComponentRegistry: Record<string, RegistryComponentProps> = {
     component: DemoA,
     props: {
       title: "",
-      images: [
-        {
-          imgName: "",
-          fileName: "",
-        },
-      ],
+      images: [],
     },
     propSchema: {
       title: {
@@ -166,12 +156,7 @@ export const ComponentRegistry: Record<string, RegistryComponentProps> = {
     component: DemoA,
     props: {
       title: "",
-      images: [
-        {
-          imgName: "",
-          fileName: "",
-        },
-      ],
+      images: [],
     },
     propSchema: {
       title: {

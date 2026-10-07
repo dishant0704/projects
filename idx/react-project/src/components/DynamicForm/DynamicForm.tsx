@@ -7,22 +7,19 @@ import { getImageFolder } from "../../utils/imageUtils";
 interface DynamicFormProps {
   config: RegistryComponentProps | null;
   formData: FormData;
+  setFormData: React.Dispatch<React.SetStateAction<FormData>>;
   onChangeImage: () => void;
 }
 
 const DynamicForm: React.FC<DynamicFormProps> = ({
   config,
   formData,
+  setFormData,
   onChangeImage,
-}) => {
+}) => {  
   if (!config) {
     return <p>Please select a component.</p>;
   }
-  const [newFormData, setNewFormData] = useState<DynamicProps>(
-    config.props as unknown as DynamicProps,
-  );
-
-  if (!newFormData) return;
 
   const schema = config.propSchema;
 
@@ -68,7 +65,6 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                             src={`${imgFolder}${image}`}
                             alt={name}
                             className="d-block w-100"
-                            // alt={newFormData.images.imgName}
                           />
                         </div>
                       );
@@ -110,10 +106,10 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                   key={`${fieldName}_${i}`}
                   name={fieldName}
                   value={String(
-                    newFormData[fieldName as keyof DynamicProps] ?? "",
+                    formData[fieldName as keyof FormData] ?? "",
                   )}
                   onChange={(e) =>
-                    setNewFormData((prev) => ({
+                    setFormData((prev) => ({
                       ...prev,
                       [fieldName]: e.target.value,
                     }))
@@ -130,10 +126,10 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                   key={`${fieldName}_${i}`}
                   name={fieldName}
                   value={String(
-                    newFormData[fieldName as keyof DynamicProps] ?? "",
+                    formData[fieldName as keyof FormData] ?? "",
                   )}
                   onChange={(e) =>
-                    setNewFormData((prev) => ({
+                    setFormData((prev) => ({
                       ...prev,
                       content: e.target.value,
                     }))
@@ -154,9 +150,9 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                     type="checkbox"
                     name={fieldName}
                     checked={Boolean(
-                      newFormData[fieldName as keyof DynamicProps],
+                      formData[fieldName as keyof FormData],
                     )}
-                    onChange={(e) => setNewFormData((prev) => (
+                    onChange={(e) => setFormData((prev) => (
                       { ...prev, [fieldName]: e.target.checked, }
                     ))}
                     required={fieldSchema.required}
@@ -172,9 +168,11 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                     type={fieldSchema.type === "number" ? "number" : "text"}
                     required={fieldSchema.required}
                     value={String(
-                      newFormData[fieldName as keyof DynamicProps] ?? "",
+                      formData[fieldName as keyof FormData] ?? "",
                     )}
-                    onChange={(e) => {}}
+                    onChange={(e) => setFormData((prev) => (
+                      { ...prev, [fieldName]: e.target.checked, }
+                    ))}
                   />
                 ) : null;
               }

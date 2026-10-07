@@ -16,6 +16,7 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({ setTabId }) => {
   const [data, setData] = useState<ComponentListData[]>([]);
   const [component, setComponent] = useState<string | undefined>(); // TODO: setComponent form Componentlist
   const [subBtnFlag, setSubBtnFlag] = useState<boolean>(false); // TODO: After validation make it false
+  const [imageError, setImageError] = useState(false);
 
   //TODO: change once get data from local storage
   const editObject = { flag: false, inx: null };
@@ -72,9 +73,17 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({ setTabId }) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    setOpenId(0);
-    setPreviousIds([]);
+    if (!formData.image) {
+      setImageError(true);
+      return;
+    }
+
+    setImageError(false);
+
+    console.log("Final form data:", formData);
     setSubBtnFlag(true);
+    // setOpenId(0);
+    //setPreviousIds([]);
   };
   const [loading, setLoading] = useState(true);
 
@@ -163,6 +172,7 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({ setTabId }) => {
         />
         <div className="grid justify-items-end">
           {/* TODO: Check all fild are fill then disabled = false */}
+          {imageError?"Please Choose Image":null}
           <button
             type="submit"
             className={`btn ${subBtnFlag ? "disabled:opacity-50 disabled:bg-gray-400 disabled:cursor-not-allowed" : ""}`}
