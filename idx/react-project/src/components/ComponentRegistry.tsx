@@ -122,7 +122,7 @@ export const ComponentRegistry: Record<string, RegistryComponentProps> = {
       conRev: {
         type: "boolean",
         label: "Align Content from Right",
-        required: true,
+        required: false,
       },
       images: {
         type: "image",

@@ -81,7 +81,8 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({ setTabId }) => {
     setImageError(false);
 
     console.log("Final form data:", formData);
-    setSubBtnFlag(true);
+    setSubBtnFlag(false);
+    setFormData(formDefaultValue);
     // setOpenId(0);
     //setPreviousIds([]);
   };
