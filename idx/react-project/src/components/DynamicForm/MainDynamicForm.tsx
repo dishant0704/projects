@@ -127,6 +127,7 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({ setTabId }) => {
       props: {
         config,
         formData,
+        imageError,
         setFormData,
         onChangeImage: handleOpenImageList,
       },
@@ -172,8 +173,7 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({ setTabId }) => {
           onOpenIdChange={() => handleOpenIdChange}
         />
         <div className="grid justify-items-end">
-          {/* TODO: Check all fild are fill then disabled = false */}
-          {imageError?"Please Choose Image":null}
+          {/* TODO: Check all fild are fill then disabled = false */}          
           <button
             type="submit"
             className={`btn ${subBtnFlag ? "disabled:opacity-50 disabled:bg-gray-400 disabled:cursor-not-allowed" : ""}`}

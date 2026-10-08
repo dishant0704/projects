@@ -44,7 +44,7 @@
         },
         {
           "id": 2,
-          "title": "Image Text Component",
+          "title": "Profile Picture Component",
           "component": "profile-picture-component",
           "props": {
             "title":"Second slide label",
@@ -55,9 +55,12 @@
         },
         {
           "id": 3,
-          "title": "Component Demo C",
+          "title": "Profile Picture Carousel Component",
           "component": "demo_c",
-          "props": {}
+          "props": {
+            "title":"Second slide label",
+            "image": [{"name": "Image 01", "img": "img_01.jpg"}, {"name": "Image 02", "img": "img_02.jpg"}, {"name": "Image 03", "img": "img_03.jpg"}]
+          }
         }
       ]
     }

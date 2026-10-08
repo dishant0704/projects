@@ -7,6 +7,7 @@ import { getImageFolder } from "../../utils/imageUtils";
 interface DynamicFormProps {
   config: RegistryComponentProps | null;
   formData: FormData;
+  imageError:boolean
   setFormData: React.Dispatch<React.SetStateAction<FormData>>;
   onChangeImage: () => void;
 }
@@ -14,6 +15,7 @@ interface DynamicFormProps {
 const DynamicForm: React.FC<DynamicFormProps> = ({
   config,
   formData,
+  imageError,
   setFormData,
   onChangeImage,
 }) => {  
@@ -51,7 +53,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
             return (
               <div
                 key={`${fieldName}_${i}`}
-                className={`${imageArray && imageArray.length > 1 ? "align-items-start" : "grid grid-cols-[150px_1fr] gap-4 align-items-start"} dark:bg-zinc-800 bg-zinc-200 p-4 dark:text-stone-100 text-zinc-900`}
+                className={`${imageArray && imageArray.length > 1 ? "align-items-start" : "grid grid-cols-[170px_minmax(0,1fr)] gap-4 align-items-start"} dark:bg-zinc-800 bg-zinc-200 p-4 dark:text-stone-100 text-zinc-900`}
               >
                 <div
                   className={`${imageArray && imageArray.length > 1 ? "grid grid-cols-4 gap-4 items-center h-auto" : "grid items-center h-auto"}`}
@@ -69,6 +71,10 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                         </div>
                       );
                     })
+                  ) : imageError? (
+                    <div className="dark:text-red-400 text-red-500">
+                      Please Choose Image
+                    </div>
                   ) : (
                     <div className="dark:text-yellow-400 text-orange-500">
                       No Image Selected
