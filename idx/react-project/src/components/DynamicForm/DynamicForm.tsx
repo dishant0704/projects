@@ -1,14 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import type { RegistryComponentProps } from "../ComponentRegistry";
-import type { DynamicProps } from "../UiComponents/accordion/type";
-import type { FormData, ImageData } from "../../types/types";
+import type { DynamicFormData, ImageData } from "../../types/types";
 import { getImageFolder } from "../../utils/imageUtils";
 
 interface DynamicFormProps {
   config: RegistryComponentProps | null;
-  formData: FormData;
+  formData: DynamicFormData;
   imageError:boolean
-  setFormData: React.Dispatch<React.SetStateAction<FormData>>;
+  setFormData: React.Dispatch<React.SetStateAction<DynamicFormData>>;
   onChangeImage: () => void;
 }
 
@@ -83,8 +82,12 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                 </div>
                 <div className="grid items-center h-auto">
                   <div>
-                    {formData.image?.name ? (
-                      <h3>{formData.image?.name}</h3>
+                    {Array.isArray(formData.image) ? (
+                      formData.image.map((img) =>
+                        img.name ? <h3 key={img.id}>{img.name}</h3> : null
+                      )
+                    ) : formData.image?.name ? (
+                      <h3>{formData.image.name}</h3>
                     ) : null}
                     <button
                       className="btn"
@@ -112,7 +115,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                   key={`${fieldName}_${i}`}
                   name={fieldName}
                   value={String(
-                    formData[fieldName as keyof FormData] ?? "",
+                    formData[fieldName as keyof DynamicFormData] ?? "",
                   )}
                   onChange={(e) =>
                     setFormData((prev) => ({
@@ -132,7 +135,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                   key={`${fieldName}_${i}`}
                   name={fieldName}
                   value={String(
-                    formData[fieldName as keyof FormData] ?? "",
+                    formData[fieldName as keyof DynamicFormData] ?? "",
                   )}
                   onChange={(e) =>
                     setFormData((prev) => ({
@@ -156,7 +159,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                     type="checkbox"
                     name={fieldName}
                     checked={Boolean(
-                      formData[fieldName as keyof FormData],
+                      formData[fieldName as keyof DynamicFormData],
                     )}
                     onChange={(e) => setFormData((prev) => (
                       { ...prev, [fieldName]: e.target.checked, }
@@ -174,7 +177,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                     type={fieldSchema.type === "number" ? "number" : "text"}
                     required={fieldSchema.required}
                     value={String(
-                      formData[fieldName as keyof FormData] ?? "",
+                      formData[fieldName as keyof DynamicFormData] ?? "",
                     )}
                     onChange={(e) => setFormData((prev) => (
                       { ...prev, [fieldName]: e.target.checked, }

@@ -3,7 +3,7 @@ import { getComponentMapData } from "../../services/componentService";
 import { ComponentRegistry } from "../ComponentRegistry";
 import AccordionWithComp from "../UiComponents/accordion/AccordionWithComp";
 import type { AccordionDynamicItemData } from "../UiComponents/accordion/type";
-import type { ComponentListData, ImageData, FormData } from "../../types/types";
+import type { ComponentListData, ImageData, DynamicFormData } from "../../types/types";
 import { getImageFieldSchema } from "../../services/helper";
 
 interface AccordionDynamicFormProps {
@@ -21,13 +21,14 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({ setTabId }) => {
   //TODO: change once get data from local storage
   const editObject = { flag: false, inx: null };
   const formDefaultValue = {
+    id:"",
     title: "",
-    description: "",
+    content: "",
     conRev: false,
-    image: undefined,
+    image: [],
   };
 
-  const [formData, setFormData] = useState<FormData>(formDefaultValue);
+  const [formData, setFormData] = useState<DynamicFormData>(formDefaultValue);
 
   const handleOpenIdChange = (nextId: string | number) => {
     setPreviousIds((prev) => [...prev, openId]);
@@ -72,7 +73,7 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({ setTabId }) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    formData.id = crypto.randomUUID();
     if (!formData.image) {
       setImageError(true);
       return;

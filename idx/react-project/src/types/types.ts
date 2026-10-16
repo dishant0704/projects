@@ -29,16 +29,18 @@ export interface PageContextType{
 }
 
 export type ImageData = {
-  id: string;
+  id?: string;
   flag: boolean;
   name: string;
   image: string;
 };
 
-export type FormData = {
+export type DynamicFormData = {
+  id:string;
   title: string;
-  description: string;
+  content: string;
   conRev: boolean;
-  image?: ImageData;
+  image?: ImageData | ImageData[];
 };
+
 
