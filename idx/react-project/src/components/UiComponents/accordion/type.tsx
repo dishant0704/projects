@@ -1,7 +1,7 @@
 import type React from "react";
 
 export interface BaseAccordionItemData {
-  id: number;
+  id: string | number;
   title: string;
   props?: Record<string, unknown>;
   showHeader?: boolean;
@@ -12,7 +12,7 @@ export interface BaseAccordionItemData {
 // =====================================================
 
 export interface AccordionItemData {
-  id: number;
+  id: string | number;
   title: string;
   content: string;
   index?: number;
@@ -121,7 +121,7 @@ export interface DynamicImage {
 
 export interface DynamicProps {
   title: string;
-  discription: string;
-  conRev: boolean;
+  content: string;
+  conRev?: boolean;
   images: DynamicImage[];
 }

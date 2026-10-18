@@ -4,20 +4,21 @@ import { getImageSrc } from "../../utils/imageUtils";
 
 type DemoAPropsObj = {
   title:string;
-  discription: string;
+  content: string;
   conRev: boolean;
   image?: {
     name: string;
-    img: string;
-  };
+    image: string;
+  }[] | undefined;
 };
 
-const DemoA: React.FC<DemoAPropsObj> = ({title, discription, conRev, image }) => {
+const DemoA: React.FC<DemoAPropsObj> = ({title, content, conRev, image }) => {
 const { componentWrapper } = style;
-
+console.log("image: ", image)
+if(!image){return}
 const imageSrc = getImageSrc({
   folder: "carousel-images",
-  image: image?.img,
+  image: image[0]?.image,
 });
   
   // let imageSrc;
@@ -26,7 +27,7 @@ const imageSrc = getImageSrc({
   //   return (
   //     <div className={`${componentWrapper} py-4`}>
   //       <p className="error">Image data is missing.</p>
-  //       <p>{discription}</p>
+  //       <p>{content}</p>
   //     </div>
   //   );
   // } else {
@@ -42,13 +43,13 @@ const imageSrc = getImageSrc({
       >
         <div>
           <div className="bg-white p-2">
-            <img src={imageSrc} className="d-block w-100" alt={image.name} />
+            <img src={imageSrc} className="d-block w-100" alt={image[0].name} />
           </div>
         </div>
 
         <div className="v-aligh-center text-left">
           <h1>{title}</h1>
-          <p>{discription}</p>
+          <p>{content}</p>
         </div>
       </div>
     </div>

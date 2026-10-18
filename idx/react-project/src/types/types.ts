@@ -36,7 +36,8 @@ export type ImageData = {
 };
 
 export type DynamicFormData = {
-  id:string;
+  id?:string;
+  accordionTitle:string;
   title: string;
   content: string;
   conRev: boolean;

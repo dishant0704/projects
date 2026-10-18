@@ -3,8 +3,15 @@ import { getComponentMapData } from "../../services/componentService";
 import { ComponentRegistry } from "../ComponentRegistry";
 import AccordionWithComp from "../UiComponents/accordion/AccordionWithComp";
 import type { AccordionDynamicItemData } from "../UiComponents/accordion/type";
-import type { ComponentListData, ImageData, DynamicFormData } from "../../types/types";
+import type {
+  ComponentListData,
+  ImageData,
+  DynamicFormData,
+} from "../../types/types";
 import { getImageFieldSchema } from "../../services/helper";
+import { useAppDispatch, useAppSelector } from "../../app/hooks/reducHooks";
+import { getPageData } from "../../utils/accordionUtils";
+import { addDynamicAccordionItem } from "../../app/features/accordion/accordionSlice";
 
 interface AccordionDynamicFormProps {
   setTabId: (tabId: string) => void;
@@ -18,10 +25,38 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({ setTabId }) => {
   const [subBtnFlag, setSubBtnFlag] = useState<boolean>(false); // TODO: After validation make it false
   const [imageError, setImageError] = useState(false);
 
-  //TODO: change once get data from local storage
-  const editObject = { flag: false, inx: null };
+  const [loading, setLoading] = useState(true);
+
+  const config = component ? ComponentRegistry[component] : null;
+  const imagesSchema = getImageFieldSchema(config, "images");
+  const multiImage = imagesSchema?.multiImage ?? false;
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const result = await getComponentMapData();
+        setData(result);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
+  }, []);
+
+  const dispatch = useAppDispatch();
+
+  //Get Data from redux / local storage
+  const {
+    page,
+    editObject: { flag, inx },
+  } = useAppSelector((state) => state.accordion);
+
   const formDefaultValue = {
-    id:"",
+    id: "",
+    accordionTitle:"",
     title: "",
     content: "",
     conRev: false,
@@ -29,6 +64,39 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({ setTabId }) => {
   };
 
   const [formData, setFormData] = useState<DynamicFormData>(formDefaultValue);
+
+  const isAccordionItemData = (
+    item: DynamicFormData,
+  ): item is DynamicFormData => {
+    return "conRev" in item;
+  };
+  
+  // this will used at edite mode
+  useEffect(() => {
+    if (!page || typeof inx !== "number" || !flag) {
+      return;
+    }
+
+    const dynamicAccordion = getPageData({
+      pageData: page,
+      pageId: "dynAcc",
+    });
+
+    const currentDynamicItem = dynamicAccordion?.items?.[inx];
+
+    if (!currentDynamicItem || !isAccordionItemData(currentDynamicItem)) {
+      return;
+    }
+
+    setFormData({
+      id: String(currentDynamicItem.id),
+      accordionTitle:currentDynamicItem.accordionTitle,
+      title: currentDynamicItem.title,
+      content: currentDynamicItem.content,
+      conRev: currentDynamicItem.conRev,
+      image: currentDynamicItem.image,
+    });
+  }, [page, flag, inx]);
 
   const handleOpenIdChange = (nextId: string | number) => {
     setPreviousIds((prev) => [...prev, openId]);
@@ -47,7 +115,7 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({ setTabId }) => {
       if (previousId === 0) {
         setFormData(formDefaultValue);
       }
-      
+
       setOpenId(previousId);
 
       return prev.slice(0, -1);
@@ -73,7 +141,6 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({ setTabId }) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    formData.id = crypto.randomUUID();
     if (!formData.image) {
       setImageError(true);
       return;
@@ -81,32 +148,44 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({ setTabId }) => {
 
     setImageError(false);
 
+    if (!page) {
+      return;
+    }
+
+    const dynamicAccordion = page.items.find((item) => item.id === "dynAcc");
+
+    if (!dynamicAccordion || !component) {
+      return;
+    }
+
+    const currentItems = dynamicAccordion.items ?? [];
+
+    if (flag) {
+      // -----------------------------
+      // EDIT
+      // -----------------------------
+    } else {
+      // -----------------------------
+      // ADD
+      // -----------------------------
+      dispatch(
+        addDynamicAccordionItem({
+          props:{...formData},
+          title: formData.accordionTitle,
+          id: crypto.randomUUID(),
+          index: currentItems.length,
+          component: component,
+        }),
+      );
+    }
+
     console.log("Final form data:", formData);
+    console.log("component:", component);
     setSubBtnFlag(false);
     setFormData(formDefaultValue);
     // setOpenId(0);
     //setPreviousIds([]);
-  };
-  const [loading, setLoading] = useState(true);
-
-  const config = component ? ComponentRegistry[component] : null;
-  const imagesSchema = getImageFieldSchema(config, "images");
-  const multiImage = imagesSchema?.multiImage ?? false;
-
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        const result = await getComponentMapData();
-        setData(result);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadData();
-  }, []);
+  }; 
 
   const accordionData: AccordionDynamicItemData[] = [
     {
@@ -152,7 +231,7 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({ setTabId }) => {
     },
   ];
 
-  console.log("formData: ", formData)
+ 
   return (
     <div className="p-5">
       <h2>Accordion Setting:</h2>
@@ -174,13 +253,13 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({ setTabId }) => {
           onOpenIdChange={() => handleOpenIdChange}
         />
         <div className="grid justify-items-end">
-          {/* TODO: Check all fild are fill then disabled = false */}          
+          {/* TODO: Check all fild are fill then disabled = false */}
           <button
             type="submit"
             className={`btn ${subBtnFlag ? "disabled:opacity-50 disabled:bg-gray-400 disabled:cursor-not-allowed" : ""}`}
             disabled={subBtnFlag}
           >
-            {editObject.flag ? "Save Data" : "Add Data"}
+            {flag ? "Save Data" : "Add Data"}
           </button>
         </div>
       </form>

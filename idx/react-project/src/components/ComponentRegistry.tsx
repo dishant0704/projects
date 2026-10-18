@@ -109,9 +109,14 @@ export const ComponentRegistry: Record<string, RegistryComponentProps> = {
       images: [],
     },
     propSchema: {
+      accordionTitle:{
+        type: "text",
+        label: "Accordion Title",
+        required: true,
+      },
       title: {
         type: "text",
-        label: "Title",
+        label: "Component Title",
         required: true,
       },
       content: {
@@ -139,6 +144,7 @@ export const ComponentRegistry: Record<string, RegistryComponentProps> = {
       images: [],
     },
     propSchema: {
+      
       title: {
         type: "text",
         label: "Title",

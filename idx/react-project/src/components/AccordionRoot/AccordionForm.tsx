@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 
-import type { AccordionData, AccordionItemData } from "../UiComponents/accordion/type";
+import type { AccordionData, AccordionDynamicItemData, AccordionItemData } from "../UiComponents/accordion/type";
 
 import { useAppDispatch, useAppSelector } from "../../app/hooks/reducHooks"; //reducHooks
 
 import { addAccordionItem, setAccordionPage, setEditObject } from "../../app/features/accordion/accordionSlice";
+import { getPageData } from "../../utils/accordionUtils";
 
 interface AccordionFormProps {
   setTabId: (tabId: string) => void;
@@ -27,29 +28,31 @@ const AccordionForm: React.FC<AccordionFormProps> = (props) => {
     index: 0,
   });
 
-  const getPageData = () => {
-    if (!page) return
-    return page.items.find(
-      (item) => item.id === "regAcc"
-    );
-  }
+  const isAccordionItemData = (
+  item: AccordionItemData | AccordionDynamicItemData
+): item is AccordionItemData => {
+  return "content" in item;
+};
 
   useEffect(() => {
-    if (!flag || typeof inx !== "number") {
+    if (!flag || typeof inx !== "number" || !page) {
       return;
     }
-    const regularAccordion = getPageData();
-    // const currData: AccordionItemData = items[inx];
+    const regularAccordion = getPageData({ pageData:page, pageId:"regAcc"})
+    
     const currentItem = regularAccordion?.items?.[inx];
-    if (!currentItem) {
+    
+    if (!currentItem || !isAccordionItemData(currentItem)) {
       return;
     }
+
     setFormData({
       id: currentItem.id,
       title: currentItem.title,
       content: currentItem.content,
       index: inx,
     });
+    
     console.log("currentItem: ", currentItem);
 
   }, [flag, inx, page]);
@@ -120,7 +123,7 @@ const AccordionForm: React.FC<AccordionFormProps> = (props) => {
     dispatch(
       addAccordionItem({
         ...formData,
-        id: Date.now(),
+        id: crypto.randomUUID(),
         index: currentItems.length,
       })
     );
@@ -148,7 +151,7 @@ const AccordionForm: React.FC<AccordionFormProps> = (props) => {
           <input
             value={formData.title}
             onChange={(e) =>
-              setFormData((prev: any) => ({
+              setFormData((prev) => ({
                 ...prev,
                 title: e.target.value,
               }))
