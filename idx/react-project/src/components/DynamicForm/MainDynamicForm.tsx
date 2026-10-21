@@ -168,10 +168,13 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({ setTabId }) => {
       // -----------------------------
       // ADD
       // -----------------------------
+      
+      let accTitle = formData.accordionTitle === ""? formData.title : formData.accordionTitle
+     
       dispatch(
         addDynamicAccordionItem({
           props:{...formData},
-          title: formData.accordionTitle,
+          title: accTitle,
           id: crypto.randomUUID(),
           index: currentItems.length,
           component: component,

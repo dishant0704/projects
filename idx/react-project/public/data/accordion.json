@@ -36,10 +36,19 @@
           "title": "Image Text Component",
           "component": "image-text-component",
           "props": {
-            "title":"First slide label",
-            "content":"Some representative placeholder content for the first slide. Some representative placeholder content for the first slide.vSome representative placeholder content for the first slide.",
-            "conRev":false,
-            "image": [{"name": "Image 01", "image": "img_01.jpg"}]
+            "id": "",
+            "accordionTitle": "Test",
+            "title": "First slide label",
+            "content": "Some representative placeholder content for the first slide. Some representative placeholder content for the first slide.vSome representative placeholder content for the first slide.",
+            "conRev": true,
+            "image": [
+              {
+                "name": "Image 08",
+                "image": "img_08.jpg",
+                "id": "cf634b08-4835-4aa9-b39e-ad23ddeb59f9",
+                "flag": true
+              }
+            ]
           }
         },
         {
@@ -47,10 +56,21 @@
           "title": "Profile Picture Component",
           "component": "profile-picture-component",
           "props": {
-            "title":"Second slide label",
-            "content":"Some representative placeholder content for the first slide. Some representative placeholder content for the first slide.vSome representative placeholder content for the first slide.",
-            "conRev":true,
-            "image": [{"name": "Image 02", "image": "img_02.jpg"}]
+            "id": "",
+            "accordionTitle": "Developer",
+            "title": "",
+            "content": "",
+            "conRev": false,
+            "image": [
+              {
+                "name": "Image 03",
+                "image": "img_03.jpg",
+                "id": "f28cff94-8571-478e-86f1-e830a0f1899b",
+                "flag": true
+              }
+            ],
+            "name": "Ketan",
+            "designation": "Sr.Developer"
           }
         },
         {
@@ -58,8 +78,43 @@
           "title": "Profile Picture Carousel Component",
           "component": "demo_c",
           "props": {
-            "title":"Second slide label",
-            "image": [{"name": "Image 01", "image": "img_01.jpg"}, {"name": "Image 02", "img": "img_02.jpg"}, {"name": "Image 03", "img": "img_03.jpg"}]
+            "id": "",
+            "accordionTitle": "Developer",
+            "title": "",
+            "content": "",
+            "conRev": false,
+            "image": [
+              {
+                "name": "Image 01",
+                "image": "img_01.jpg",
+                "id": "fc0af871-f166-476b-ad78-07e0b9099098",
+                "flag": true
+              },
+              {
+                "name": "Image 02",
+                "image": "img_02.jpg",
+                "id": "9f2cf87c-1edf-46d2-bf52-54ab020d3c30",
+                "flag": true
+              },
+              {
+                "name": "Image 06",
+                "image": "img_06.jpg",
+                "id": "6757a50d-8e9d-414a-9322-0e22700aee80",
+                "flag": true
+              },
+              {
+                "name": "Image 07",
+                "image": "img_07.jpg",
+                "id": "613fa375-27fd-441c-9a8f-87464d994484",
+                "flag": true
+              },
+              {
+                "name": "Image 10",
+                "image": "img_10.jpg",
+                "id": "d37b1b8a-aba3-4985-b893-bea2cdf66ebd",
+                "flag": true
+              }
+            ]
           }
         }
       ]

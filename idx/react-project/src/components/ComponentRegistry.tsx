@@ -22,6 +22,7 @@ import {
   SettingsIcon,
   Trash2Icon,
 } from "lucide-react";
+import DemoB from "./demo/DemoB";
 
 // -------------------------------------
 // Registry Types
@@ -138,16 +139,25 @@ export const ComponentRegistry: Record<string, RegistryComponentProps> = {
   },
 
   "profile-picture-component": {
-    component: DemoA,
+    component: DemoB,
     props: {
       title: "",
       images: [],
     },
-    propSchema: {
-      
-      title: {
+    propSchema: {      
+      accordionTitle: {
         type: "text",
-        label: "Title",
+        label: "Accordion Title",
+        required: true,
+      },
+      name: {
+        type: "text",
+        label: "Name",
+        required: true,
+      },
+      designation: {
+        type: "text",
+        label: "Designation",
         required: true,
       },
       images: {
@@ -159,15 +169,15 @@ export const ComponentRegistry: Record<string, RegistryComponentProps> = {
   },
 
   "profile-picture-carousel-component": {
-    component: DemoA,
+    component: DemoC,
     props: {
       title: "",
       images: [],
     },
     propSchema: {
-      title: {
+      accordionTitle: {
         type: "text",
-        label: "Title",
+        label: "Accordion Title",
         required: true,
       },
       images: {
