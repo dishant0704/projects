@@ -1,6 +1,6 @@
 import React from "react";
 import style from "./demo.module.css";
-import { getImageSrc } from "../../utils/imageUtils";
+import Image from "../UiComponents/Images/Image";
 
 type DemoAPropsObj = {
   title:string;
@@ -14,25 +14,17 @@ type DemoAPropsObj = {
 
 const DemoA: React.FC<DemoAPropsObj> = ({title, content, conRev, image }) => {
 const { componentWrapper } = style;
-console.log("image: ", image)
-if(!image){return}
-const imageSrc = getImageSrc({
-  folder: "carousel-images",
-  image: image[0]?.image,
-});
-  
-  // let imageSrc;
 
-  // if (!image?.img) {
-  //   return (
-  //     <div className={`${componentWrapper} py-4`}>
-  //       <p className="error">Image data is missing.</p>
-  //       <p>{content}</p>
-  //     </div>
-  //   );
-  // } else {
-  //   imageSrc = `/images/carousel-images/${image.img}`;
-  // }
+if(!image){return}
+  
+  if (!image[0]?.image) {
+    return (
+      <div className={`${componentWrapper} py-4`}>
+        <p className="error">Image data is missing.</p>
+        <p>{content}</p>
+      </div>
+    );
+  }
 
   // Build the public image URL
   return (
@@ -42,9 +34,8 @@ const imageSrc = getImageSrc({
         dir={conRev ? "rtl" : "ltr"}
       >
         <div>
-          <div className="bg-white p-2">
-            <img src={imageSrc} className="d-block w-100" alt={image[0].name} />
-          </div>
+          {/* image must be an array data */}
+          <Image image={image}/>
         </div>
 
         <div className="v-aligh-center text-left">

@@ -90,7 +90,7 @@ const ImagesList: React.FC<ImagesListProps> = ({
 
   const updatedImages = mainImagesData.map((item) => ({
     ...item,
-    flag: ids.includes(item.id),
+    flag: item.id? ids.includes(item.id) : false,
   }));
   
   setImages(updatedImages);
