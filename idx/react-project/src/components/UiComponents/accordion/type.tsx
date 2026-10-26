@@ -1,7 +1,7 @@
 import type React from "react";
 
 export interface BaseAccordionItemData {
-  id: string | number;
+  id: number | string;
   title: string;
   props?: Record<string, unknown>;
   showHeader?: boolean;

@@ -1,32 +1,35 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks/reducHooks';
 import SorTableList from '../UiComponents/dragAndDrop/SorTableList';
 import type { AccordionDynamicItemData} from '../UiComponents/accordion/type';
-import { reorderAccordionDynamicItems } from '../../app/features/accordion/accordionSlice';
+import { deleteDynamicAccordionItem, reorderAccordionDynamicItems } from '../../app/features/accordion/accordionSlice';
 import { PencilIcon, Trash2Icon } from 'lucide-react';
 
 interface AccordionDynamicListProps{
     setTabId:(tabId:string)=>void
 }
 
-const AccordionDynamicList:React.FC<AccordionDynamicListProps> = (props) => {
+const AccordionDynamicList:React.FC<AccordionDynamicListProps> = () => {
     const dispatch = useAppDispatch();
-    const{setTabId} = props;
     
     const {page} = useAppSelector((state) => state.accordion);   
     const accordionDynamicData: AccordionDynamicItemData[] =  page?.items?.find((item) => item.id === "dynAcc")?.items ?? [];
 
-    const handleEdit = () =>{}
+    const handleEdit = useCallback((index:number)=>{
+        console.log("index: ", index)
+    },[dispatch])
 
-    const handleDelete = () =>{}
+    const handleDelete = useCallback((id:number | string)=>{
+        dispatch(deleteDynamicAccordionItem(id))
+    },[dispatch])
     
   return (
     <div>
         <SorTableList<AccordionDynamicItemData> items={accordionDynamicData} onReorder={(items) => {
                   dispatch(reorderAccordionDynamicItems(items));
                 }} 
-                onEdit={(item)=>{}} 
-                onDelete={(item)=>{}} 
+                // onEdit={(item)=>{}} 
+                // onDelete={(item)=>{}} 
                 renderItem={(item, inx) => (
                 <div className="items-center justify-between w-full grid grid-cols-5 gap-5 sm:grid-cols-7 flex-1">
                     <div className="col-span-5 align-middle">
@@ -36,7 +39,7 @@ const AccordionDynamicList:React.FC<AccordionDynamicListProps> = (props) => {
                     <div>
                     <button
                         type="button"
-                        onClick={() => {}}
+                        onClick={() => handleEdit(inx)}
                         className="p-2 text-base block text-orange-400 cursor-pointer"
                     >
                         <PencilIcon />
@@ -46,7 +49,7 @@ const AccordionDynamicList:React.FC<AccordionDynamicListProps> = (props) => {
                     <div>
                     <button
                         type="button"
-                        onClick={() => {}}
+                        onClick={() => handleDelete(item.id)}
                         className="p-2 text-base block text-red-400 cursor-pointer"
                     >
                         <Trash2Icon/>

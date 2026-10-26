@@ -6,7 +6,6 @@ import type {
   AccordionItemData,
   EditState
 } from "../../../components/UiComponents/accordion/type";
-import type { DynamicFormData } from "../../../types/types";
 
 const STORAGE_KEY = "idx-component-demo:accordion";
 
@@ -213,6 +212,35 @@ const accordionSlice = createSlice({
     },
 
     // --------------------------------------------------
+    //  Delete an accordion item from Dynamic Accordion.
+    // --------------------------------------------------
+    deleteDynamicAccordionItem: (
+      state,
+      action: PayloadAction<number | string>
+    ) => {
+      if (!state.page) {
+        return;
+      }
+
+      const dynamicAccordion = state.page.items.find(
+        (item) => item.id === "dynAcc"
+      );
+
+      if (!dynamicAccordion || !Array.isArray(dynamicAccordion.items)) {
+        return;
+      }
+
+      dynamicAccordion.items = dynamicAccordion.items.filter(
+        (item) => item.id !== action.payload
+      );
+
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(state.page)
+      );
+    },
+
+    // --------------------------------------------------
     //  Replace the order of Regular Accordion items.
     // --------------------------------------------------
     reorderAccordionItems: (
@@ -305,6 +333,7 @@ export const {
   addAccordionItem,
   addDynamicAccordionItem,
   deleteAccordionItem,
+  deleteDynamicAccordionItem,
   reorderAccordionItems,
   reorderAccordionDynamicItems,
   setEditObject,

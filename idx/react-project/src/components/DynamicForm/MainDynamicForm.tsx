@@ -186,8 +186,8 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({ setTabId }) => {
     console.log("component:", component);
     setSubBtnFlag(false);
     setFormData(formDefaultValue);
-    // setOpenId(0);
-    //setPreviousIds([]);
+    setOpenId(0);
+    setTabId("accList");
   }; 
 
   const accordionData: AccordionDynamicItemData[] = [
