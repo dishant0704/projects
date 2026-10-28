@@ -2,21 +2,26 @@ import React, { useCallback } from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks/reducHooks';
 import SorTableList from '../UiComponents/dragAndDrop/SorTableList';
 import type { AccordionDynamicItemData} from '../UiComponents/accordion/type';
-import { deleteDynamicAccordionItem, reorderAccordionDynamicItems } from '../../app/features/accordion/accordionSlice';
+import { deleteDynamicAccordionItem, reorderAccordionDynamicItems, setEditObject } from '../../app/features/accordion/accordionSlice';
 import { PencilIcon, Trash2Icon } from 'lucide-react';
 
 interface AccordionDynamicListProps{
     setTabId:(tabId:string)=>void
 }
 
-const AccordionDynamicList:React.FC<AccordionDynamicListProps> = () => {
+const AccordionDynamicList:React.FC<AccordionDynamicListProps> = (props) => {
     const dispatch = useAppDispatch();
+    const {setTabId} = props
     
     const {page} = useAppSelector((state) => state.accordion);   
     const accordionDynamicData: AccordionDynamicItemData[] =  page?.items?.find((item) => item.id === "dynAcc")?.items ?? [];
 
     const handleEdit = useCallback((index:number)=>{
-        console.log("index: ", index)
+        dispatch(setEditObject({
+            flag:true,
+            inx:index
+        }));
+        setTabId("accForm")
     },[dispatch])
 
     const handleDelete = useCallback((id:number | string)=>{

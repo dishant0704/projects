@@ -268,6 +268,8 @@ const accordionSlice = createSlice({
     },
 
     // --------------------------------------------------
+    //  Replace the order of Dynamic Accordion items.
+    // --------------------------------------------------
     reorderAccordionDynamicItems: (
       state,
       action: PayloadAction<AccordionDynamicItemData[]>
@@ -297,6 +299,7 @@ const accordionSlice = createSlice({
     ) => {
       state.editObject = action.payload;
     },
+
   },
 
   extraReducers: (builder) => {
