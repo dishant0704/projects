@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { getComponentMapData } from "../../services/componentService";
 import { ComponentRegistry } from "../ComponentRegistry";
 import AccordionWithComp from "../UiComponents/accordion/AccordionWithComp";
-import type { AccordionDynamicItemData } from "../UiComponents/accordion/type";
+import type { AccordionDynamicItemData, AccordionItemData, DynamicImage } from "../UiComponents/accordion/type";
 import type {
   ComponentListData,
   ImageData,
-  DynamicFormData,
 } from "../../types/types";
+import type { DynamicFormData } from "../../components/UiComponents/accordion/type";
 import { getImageFieldSchema } from "../../services/helper";
 import { useAppDispatch, useAppSelector } from "../../app/hooks/reducHooks";
 import { getPageData } from "../../utils/accordionUtils";
@@ -65,12 +65,31 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({ setTabId }) => {
 
   const [formData, setFormData] = useState<DynamicFormData>(formDefaultValue);
 
-  const isAccordionItemData = (
-    item: DynamicFormData,
-  ): item is DynamicFormData => {
-    return "conRev" in item;
-  };
-  
+  const isDynamicAccordionItem = (
+  item: AccordionItemData | AccordionDynamicItemData
+): item is AccordionDynamicItemData => {
+  return "component" in item;
+};
+
+const isDynamicFormData = (
+  props: unknown
+): props is DynamicFormData => {
+  if (typeof props !== "object" || props === null) {
+    return false;
+  }
+
+  return (
+    "accordionTitle" in props &&
+    typeof props.accordionTitle === "string" &&
+    "conRev" in props &&
+    typeof props.conRev === "boolean" &&
+    "title" in props &&
+    typeof props.title === "string" &&
+    "content" in props &&
+    typeof props.content === "string"
+  );
+};
+
   // this will used at edite mode
   useEffect(() => {
     if (!page || typeof inx !== "number" || !flag) {
@@ -84,18 +103,37 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({ setTabId }) => {
 
     const currentDynamicItem = dynamicAccordion?.items?.[inx];
 
-    if (!currentDynamicItem || !isAccordionItemData(currentDynamicItem)) {
+     // Check whether the item is a dynamic accordion item
+    if (
+      !currentDynamicItem ||
+      !isDynamicAccordionItem(currentDynamicItem)
+    ) {
       return;
     }
 
+      // Form data is inside props, not directly inside the item
+    const currentFormData = currentDynamicItem.props;
+
+    console.log("currentFormData:", currentFormData);
+
+    if (!isDynamicFormData(currentFormData)) {
+      return;
+    }
+
+
     setFormData({
-      id: String(currentDynamicItem.id),
-      accordionTitle:currentDynamicItem.accordionTitle,
-      title: currentDynamicItem.title,
-      content: currentDynamicItem.content,
-      conRev: currentDynamicItem.conRev,
-      image: currentDynamicItem.image,
-    });
+    id: currentFormData.id ?? String(currentDynamicItem.id),
+    accordionTitle: currentFormData.accordionTitle,
+    title: currentFormData.title,
+    content: currentFormData.content,
+    conRev: currentFormData.conRev,
+    image: currentFormData.image ?? [],
+    name: currentFormData.name,
+    designation: currentFormData.designation,
+  });
+  setComponent(currentDynamicItem.component);
+  setOpenId(1);
+
   }, [page, flag, inx]);
 
   const handleOpenIdChange = (nextId: string | number) => {
@@ -131,7 +169,7 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({ setTabId }) => {
     handleOpenIdChange(2);
   };
 
-  const handleImageSelect = (selectedImage: ImageData) => {
+  const handleImageSelect = (selectedImage: DynamicImage) => {
     setFormData((previousData) => ({
       ...previousData,
       image: selectedImage,
@@ -164,6 +202,7 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({ setTabId }) => {
       // -----------------------------
       // EDIT
       // -----------------------------
+      
     } else {
       // -----------------------------
       // ADD

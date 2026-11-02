@@ -1,4 +1,5 @@
 import type React from "react";
+import type { RegistryComponentProps } from "../../ComponentRegistry";
 
 export interface BaseAccordionItemData {
   id: number | string;
@@ -23,9 +24,10 @@ export interface AccordionItemData {
 // =====================================================
 
 export interface AccordionDynamicItemData
-  extends BaseAccordionItemData {
+  extends Omit<BaseAccordionItemData, "props"> {
   component: string;
   index?: number;
+  props?: DynamicRuntimeProps;
 }
 // =====================================================
 // Regular Accordion Component
@@ -114,9 +116,31 @@ export interface DynamicAccordionProps {
 // Runtime Dynamic Form
 // =====================================================
 
+
 export interface DynamicImage {
-  imgName: string;
-  fileName: string;
+  name: string;
+  image: string;
+  id: string;
+  flag: boolean;
+}
+
+export type DynamicFormData = {
+  [key: string]: unknown;
+  id?: string;
+  accordionTitle: string;
+  title: string;
+  content: string;
+  conRev: boolean;
+  image?: DynamicImage | DynamicImage[];
+  name?: string;
+  designation?: string;
+};
+
+export interface DynamicRuntimeProps extends DynamicFormData {
+  setCom?: (id: string) => void;
+  config?: RegistryComponentProps | null;
+  goBack?: () => void;
+  data?: DynamicFormData;
 }
 
 export interface DynamicProps {
@@ -124,4 +148,10 @@ export interface DynamicProps {
   content: string;
   conRev?: boolean;
   images: DynamicImage[];
+}
+
+export function isDynamicAccordionItem(
+  item: AccordionItemData | AccordionDynamicItemData
+): item is AccordionDynamicItemData {
+  return "component" in item;
 }

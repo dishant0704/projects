@@ -1,6 +1,7 @@
 import React from "react";
 import type { RegistryComponentProps } from "../ComponentRegistry";
-import type { DynamicFormData, ImageData } from "../../types/types";
+import type {ImageData } from "../../types/types";
+import type { DynamicFormData } from "../UiComponents/accordion/type";
 import { getImageFolder } from "../../utils/imageUtils";
 
 interface DynamicFormProps {
