@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getComponentMapData } from "../../services/componentService";
 import { ComponentRegistry } from "../ComponentRegistry";
 import AccordionWithComp from "../UiComponents/accordion/AccordionWithComp";
-import type { AccordionDynamicItemData, AccordionItemData, DynamicImage } from "../UiComponents/accordion/type";
+import type { AccordionDynamicItemData, AccordionItemData, DynamicAccordionItemData, DynamicImage } from "../UiComponents/accordion/type";
 import type {
   ComponentListData,
   ImageData,
@@ -11,7 +11,7 @@ import type { DynamicFormData } from "../../components/UiComponents/accordion/ty
 import { getImageFieldSchema } from "../../services/helper";
 import { useAppDispatch, useAppSelector } from "../../app/hooks/reducHooks";
 import { getPageData } from "../../utils/accordionUtils";
-import { addDynamicAccordionItem } from "../../app/features/accordion/accordionSlice";
+import { addDynamicAccordionItem, setAccordionPage} from "../../app/features/accordion/accordionSlice";
 
 interface AccordionDynamicFormProps {
   setTabId: (tabId: string) => void;
@@ -56,7 +56,7 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({ setTabId }) => {
 
   const formDefaultValue = {
     id: "",
-    accordionTitle:"",
+    accordionTitle: "",
     title: "",
     content: "",
     conRev: false,
@@ -66,29 +66,29 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({ setTabId }) => {
   const [formData, setFormData] = useState<DynamicFormData>(formDefaultValue);
 
   const isDynamicAccordionItem = (
-  item: AccordionItemData | AccordionDynamicItemData
-): item is AccordionDynamicItemData => {
-  return "component" in item;
-};
+    item: AccordionItemData | AccordionDynamicItemData
+  ): item is AccordionDynamicItemData => {
+    return "component" in item;
+  };
 
-const isDynamicFormData = (
-  props: unknown
-): props is DynamicFormData => {
-  if (typeof props !== "object" || props === null) {
-    return false;
-  }
+  const isDynamicFormData = (
+    props: unknown
+  ): props is DynamicFormData => {
+    if (typeof props !== "object" || props === null) {
+      return false;
+    }
 
-  return (
-    "accordionTitle" in props &&
-    typeof props.accordionTitle === "string" &&
-    "conRev" in props &&
-    typeof props.conRev === "boolean" &&
-    "title" in props &&
-    typeof props.title === "string" &&
-    "content" in props &&
-    typeof props.content === "string"
-  );
-};
+    return (
+      "accordionTitle" in props &&
+      typeof props.accordionTitle === "string" &&
+      "conRev" in props &&
+      typeof props.conRev === "boolean" &&
+      "title" in props &&
+      typeof props.title === "string" &&
+      "content" in props &&
+      typeof props.content === "string"
+    );
+  };
 
   // this will used at edite mode
   useEffect(() => {
@@ -103,7 +103,7 @@ const isDynamicFormData = (
 
     const currentDynamicItem = dynamicAccordion?.items?.[inx];
 
-     // Check whether the item is a dynamic accordion item
+    // Check whether the item is a dynamic accordion item
     if (
       !currentDynamicItem ||
       !isDynamicAccordionItem(currentDynamicItem)
@@ -111,7 +111,7 @@ const isDynamicFormData = (
       return;
     }
 
-      // Form data is inside props, not directly inside the item
+    // Form data is inside props, not directly inside the item
     const currentFormData = currentDynamicItem.props;
 
     console.log("currentFormData:", currentFormData);
@@ -122,17 +122,17 @@ const isDynamicFormData = (
 
 
     setFormData({
-    id: currentFormData.id ?? String(currentDynamicItem.id),
-    accordionTitle: currentFormData.accordionTitle,
-    title: currentFormData.title,
-    content: currentFormData.content,
-    conRev: currentFormData.conRev,
-    image: currentFormData.image ?? [],
-    name: currentFormData.name,
-    designation: currentFormData.designation,
-  });
-  setComponent(currentDynamicItem.component);
-  setOpenId(1);
+      id: currentFormData.id ?? String(currentDynamicItem.id),
+      accordionTitle: currentFormData.accordionTitle,
+      title: currentFormData.title,
+      content: currentFormData.content,
+      conRev: currentFormData.conRev,
+      image: currentFormData.image ?? [],
+      name: currentFormData.name,
+      designation: currentFormData.designation,
+    });
+    setComponent(currentDynamicItem.component);
+    setOpenId(1);
 
   }, [page, flag, inx]);
 
@@ -199,20 +199,56 @@ const isDynamicFormData = (
     const currentItems = dynamicAccordion.items ?? [];
 
     if (flag) {
-      // -----------------------------
       // EDIT
-      // -----------------------------
-      
+
+      if (typeof inx !== "number") return;
+
+      if (inx < 0 || inx >= currentItems.length) return;
+
+      const existingItem = currentItems[inx];
+
+      if (!("component" in existingItem)) return;
+
+      const accTitle =
+        formData.accordionTitle === ""
+          ? formData.title
+          : formData.accordionTitle;
+
+      const updatedItems = [...currentItems];
+
+      updatedItems[inx] = {
+        ...existingItem,
+        title: accTitle,
+        index: inx,
+        props: {
+          ...existingItem.props,
+          ...formData,
+        },
+      };
+
+      dispatch(
+        setAccordionPage({
+          ...page,
+          items: page.items.map((item) =>
+            item.id === "dynAcc"
+              ? {
+                ...item,
+                items: updatedItems,
+              }
+              : item
+          ),
+        })
+      );
     } else {
       // -----------------------------
       // ADD
       // -----------------------------
-      
-      let accTitle = formData.accordionTitle === ""? formData.title : formData.accordionTitle
-     
+
+      let accTitle = formData.accordionTitle === "" ? formData.title : formData.accordionTitle
+
       dispatch(
         addDynamicAccordionItem({
-          props:{...formData},
+          props: { ...formData },
           title: accTitle,
           id: crypto.randomUUID(),
           index: currentItems.length,
@@ -227,9 +263,9 @@ const isDynamicFormData = (
     setFormData(formDefaultValue);
     setOpenId(0);
     setTabId("accList");
-  }; 
+  };
 
-  const accordionData: AccordionDynamicItemData[] = [
+  const accordionData: DynamicAccordionItemData[] = [
     {
       id: 0,
       title: "component layout list",
@@ -273,7 +309,7 @@ const isDynamicFormData = (
     },
   ];
 
- 
+
   return (
     <div className="p-5">
       <h2>Accordion Setting:</h2>
@@ -292,7 +328,13 @@ const isDynamicFormData = (
         <AccordionWithComp
           items={accordionData}
           openId={openId}
-          onOpenIdChange={() => handleOpenIdChange}
+          onOpenIdChange={(id) => {
+            if (id !== null) {
+              handleOpenIdChange(id);
+            } else {
+              setOpenId(0);
+            }
+          }}
         />
         <div className="grid justify-items-end">
           {/* TODO: Check all fild are fill then disabled = false */}

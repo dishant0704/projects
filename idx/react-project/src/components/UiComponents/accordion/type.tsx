@@ -1,4 +1,3 @@
-import type React from "react";
 import type { RegistryComponentProps } from "../../ComponentRegistry";
 
 export interface BaseAccordionItemData {
@@ -25,9 +24,9 @@ export interface AccordionItemData {
 
 export interface AccordionDynamicItemData
   extends Omit<BaseAccordionItemData, "props"> {
-  component: string;
+  component?: string;
   index?: number;
-  props?: DynamicRuntimeProps;
+  props?: Record<string, unknown>;
 }
 // =====================================================
 // Regular Accordion Component
@@ -98,7 +97,7 @@ export interface AccordionProps {
 
 export interface DynamicAccordionItemData
   extends BaseAccordionItemData {
-  component: string | React.ComponentType<any>;
+  component: string;
 }
 
 export interface DynamicAccordionProps {
