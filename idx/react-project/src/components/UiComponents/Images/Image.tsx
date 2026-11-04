@@ -19,7 +19,7 @@ const Image:React.FC<ImageProps> = ({image, roundedFlag=false, cssClass}) => {
       }); 
 
   return (
-    <div className="p-2">
+    <div className="p-2 justify-center items-center flex">
       <img
         src={imageSrc ? imageSrc : ""}
         className={`${roundedFlag? "rounded-full w-32 h-32 object-cover" :"d-block w-100 "} border-5 border-white ${cssClass}`}
