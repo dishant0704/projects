@@ -83,7 +83,7 @@ export const loadImagesPage = createAsyncThunk<
 
     const imageData: ImageData[] = imageDefaultData.map((item) => ({
       ...item,
-      id: crypto.randomUUID(),
+      // id: crypto.randomUUID(),
       flag: false,
     }));
 

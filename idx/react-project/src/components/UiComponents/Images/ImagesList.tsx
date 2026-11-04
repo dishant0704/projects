@@ -87,7 +87,7 @@ const ImagesList: React.FC<ImagesListProps> = ({
   const ids = Array.isArray(selectedImageIds)
     ? selectedImageIds
     : [];
-
+   
   const updatedImages = mainImagesData.map((item) => ({
     ...item,
     flag: item.id? ids.includes(item.id) : false,

@@ -114,8 +114,6 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({ setTabId }) => {
     // Form data is inside props, not directly inside the item
     const currentFormData = currentDynamicItem.props;
 
-    console.log("currentFormData:", currentFormData);
-
     if (!isDynamicFormData(currentFormData)) {
       return;
     }
@@ -124,7 +122,7 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({ setTabId }) => {
     setFormData({
       id: currentFormData.id ?? String(currentDynamicItem.id),
       accordionTitle: currentFormData.accordionTitle,
-      title: currentFormData.title,
+      title: currentFormData.title === "" ? currentFormData.accordionTitle : currentFormData.title,
       content: currentFormData.content,
       conRev: currentFormData.conRev,
       image: currentFormData.image ?? [],
@@ -257,8 +255,6 @@ const MainDynamicForm: React.FC<AccordionDynamicFormProps> = ({ setTabId }) => {
       );
     }
 
-    console.log("Final form data:", formData);
-    console.log("component:", component);
     setSubBtnFlag(false);
     setFormData(formDefaultValue);
     setOpenId(0);

@@ -37,7 +37,7 @@
           "component": "image-text-component",
           "props": {
             "id": "",
-            "accordionTitle": "Test",
+            "accordionTitle": "Image Text Component",
             "title": "First slide label",
             "content": "Some representative placeholder content for the first slide. Some representative placeholder content for the first slide.vSome representative placeholder content for the first slide.",
             "conRev": true,
@@ -45,7 +45,7 @@
               {
                 "name": "Image 08",
                 "image": "img_08.jpg",
-                "id": "cf634b08-4835-4aa9-b39e-ad23ddeb59f9",
+                "id": "9c53f535-40a1-46ab-9706-496ed30f44b4",
                 "flag": true
               }
             ]
@@ -65,7 +65,7 @@
               {
                 "name": "Image 04",
                 "image": "img_04.jpg",
-                "id": "1d5c4983-4b9a-4d37-bd38-db9a96a6d730",
+                "id": "9b806ef3-700d-47f0-878e-92e6689ad68f",
                 "flag": true
               }
             ],
@@ -79,7 +79,7 @@
           "component": "demo_c",
           "props": {
             "id": "",
-            "accordionTitle": "Developer",
+            "accordionTitle": "Profile Picture Carousel Component",
             "title": "",
             "content": "",
             "conRev": false,
@@ -87,31 +87,31 @@
               {
                 "name": "Image 01",
                 "image": "img_01.jpg",
-                "id": "fc0af871-f166-476b-ad78-07e0b9099098",
+                "id": "f50b282a-dbc3-4589-b1b1-1a74b53e5a02",
                 "flag": true
               },
               {
                 "name": "Image 02",
                 "image": "img_02.jpg",
-                "id": "9f2cf87c-1edf-46d2-bf52-54ab020d3c30",
+                "id": "fb2c5a40-4802-474f-b023-b8f407bef63b",
                 "flag": true
               },
               {
                 "name": "Image 06",
                 "image": "img_06.jpg",
-                "id": "6757a50d-8e9d-414a-9322-0e22700aee80",
+                "id": "c43a81ad-24b0-468e-a9c2-5a98966de19c",
                 "flag": true
               },
               {
                 "name": "Image 07",
                 "image": "img_07.jpg",
-                "id": "613fa375-27fd-441c-9a8f-87464d994484",
+                "id": "b9a0fda2-df30-47e9-bd0a-43a524765d01",
                 "flag": true
               },
               {
                 "name": "Image 10",
                 "image": "img_10.jpg",
-                "id": "d37b1b8a-aba3-4985-b893-bea2cdf66ebd",
+                "id": "5c184957-a7a3-4794-9bc8-0bc26c8b37b0",
                 "flag": true
               }
             ]

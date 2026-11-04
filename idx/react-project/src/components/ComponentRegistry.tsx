@@ -200,6 +200,11 @@ export const ComponentRegistry: Record<string, RegistryComponentProps> = {
       },
     },
     propSchema: {
+      accordionTitle:{
+        type: "text",
+        label: "Accordion Title",
+        required: true,
+      },
       title: {
         type: "text",
         label: "Title",

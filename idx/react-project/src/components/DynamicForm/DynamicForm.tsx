@@ -82,14 +82,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                   )}
                 </div>
                 <div className="grid items-center h-auto py-2">
-                  <div>
-                    {/* {Array.isArray(formData.image) ? (
-                      formData.image.map((img) =>
-                        img.name ? <h3 key={img.id}>{img.name}</h3> : null
-                      )
-                    ) : formData.image?.name ? (
-                      <h3>{formData.image.name}</h3>
-                    ) : null} */}
+                  <div>                   
                     <button
                       className="btn"
                       type="button"

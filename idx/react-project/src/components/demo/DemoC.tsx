@@ -18,10 +18,10 @@ const DemoC: React.FC<DemoAPropsObj> = ({ image }) => {
       className={`${componentWrapper} py-4 grid grid-cols-4 gap-3 dark:bg-zinc-800 bg-zinc-700 p-4 text-stone-100`}
     >
       {image &&
-        image.map((item) => {
+        image.map((item,inx) => {
           return (
             //* image must be an array data */
-            <Image image={[item]} />
+            <Image key={`${item.name}_${inx}`} image={[item]} />
           );
         })}
     </div>

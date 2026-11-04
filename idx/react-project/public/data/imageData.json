@@ -1,12 +1,62 @@
 [
-    {"name":"Image 01", "image":"img_01.jpg"},
-    {"name":"Image 02", "image":"img_02.jpg"},
-    {"name":"Image 03", "image":"img_03.jpg"},
-    {"name":"Image 04", "image":"img_04.jpg"},
-    {"name":"Image 05", "image":"img_05.jpg"},
-    {"name":"Image 06", "image":"img_06.jpg"},
-    {"name":"Image 07", "image":"img_07.jpg"},
-    {"name":"Image 08", "image":"img_08.jpg"},
-    {"name":"Image 09", "image":"img_09.jpg"},
-    {"name":"Image 10", "image":"img_10.jpg"}
+    {
+        "name": "Image 01",
+        "image": "img_01.jpg",
+        "id": "f50b282a-dbc3-4589-b1b1-1a74b53e5a02",
+        "flag": false
+    },
+    {
+        "name": "Image 02",
+        "image": "img_02.jpg",
+        "id": "fb2c5a40-4802-474f-b023-b8f407bef63b",
+        "flag": false
+    },
+    {
+        "name": "Image 03",
+        "image": "img_03.jpg",
+        "id": "c73a618b-414b-4ea5-ba7a-a2023c269ca4",
+        "flag": false
+    },
+    {
+        "name": "Image 04",
+        "image": "img_04.jpg",
+        "id": "9b806ef3-700d-47f0-878e-92e6689ad68f",
+        "flag": false
+    },
+    {
+        "name": "Image 05",
+        "image": "img_05.jpg",
+        "id": "17f0148f-8f7b-4751-9830-b236598079cc",
+        "flag": false
+    },
+    {
+        "name": "Image 06",
+        "image": "img_06.jpg",
+        "id": "c43a81ad-24b0-468e-a9c2-5a98966de19c",
+        "flag": false
+    },
+    {
+        "name": "Image 07",
+        "image": "img_07.jpg",
+        "id": "b9a0fda2-df30-47e9-bd0a-43a524765d01",
+        "flag": false
+    },
+    {
+        "name": "Image 08",
+        "image": "img_08.jpg",
+        "id": "9c53f535-40a1-46ab-9706-496ed30f44b4",
+        "flag": false
+    },
+    {
+        "name": "Image 09",
+        "image": "img_09.jpg",
+        "id": "f15def49-2fcf-4608-92b7-f4df816b72ab",
+        "flag": false
+    },
+    {
+        "name": "Image 10",
+        "image": "img_10.jpg",
+        "id": "5c184957-a7a3-4794-9bc8-0bc26c8b37b0",
+        "flag": false
+    }
 ]

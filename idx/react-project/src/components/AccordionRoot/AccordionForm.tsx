@@ -52,8 +52,6 @@ const AccordionForm: React.FC<AccordionFormProps> = (props) => {
       content: currentItem.content,
       index: inx,
     });
-    
-    console.log("currentItem: ", currentItem);
 
   }, [flag, inx, page]);
 
