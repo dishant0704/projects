@@ -8,7 +8,7 @@ import MainTemplate from "./components/page-templates/MainTemplate.tsx";
 import Dashboard from "./components/Dashboard.tsx";
 import AccordionRoot from "./components/AccordionRoot/AccordionRoot.tsx";
 
-import Chart from "./Chart.tsx";
+import ChartRoot from "./components/Chart/ChartRoot.tsx";
 import Swiper from "./components/swiper/Swiper.tsx";
 
 import './index.css'
@@ -42,7 +42,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/chart",
-        element: <Chart />
+        element: <ChartRoot />
       },
       {
         path: "/swiper",
