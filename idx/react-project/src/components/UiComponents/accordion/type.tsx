@@ -154,3 +154,13 @@ export function isDynamicAccordionItem(
 ): item is AccordionDynamicItemData {
   return "component" in item;
 }
+
+// =====================================================
+// Chart Page
+// =====================================================
+
+export interface ChartData {
+  name: string;
+  advSettings: Record<string, unknown>;
+  items: AccordionComponentData[];
+}

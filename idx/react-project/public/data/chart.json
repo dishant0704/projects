@@ -1,0 +1,28 @@
+{
+    "name": "chart",
+    "advSettings": {},
+    "items": [
+        {
+            "id": "chart-page",
+            "label": "Chart Page",
+            "component": "chartComponent",
+            "props": {
+                "chartType": "line",
+                "data": [
+                    {
+                        "label": "January",
+                        "value": 30
+                    },
+                    {
+                        "label": "February",
+                        "value": 20
+                    },
+                    {
+                        "label": "March",
+                        "value": 50
+                    }
+                ]
+            }            
+        }
+    ]
+}
