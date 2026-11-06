@@ -47,7 +47,6 @@ export const loadAccordionPage = createAsyncThunk<
     if (storedData) {
       try {
         const pageData = JSON.parse(storedData) as AccordionData;
-
         if (
           pageData &&
           typeof pageData === "object" &&
@@ -55,7 +54,7 @@ export const loadAccordionPage = createAsyncThunk<
         ) {
           return pageData;
         }
-
+        
         // Invalid/old structure
         localStorage.removeItem(STORAGE_KEY);
       } catch {

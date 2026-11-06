@@ -155,6 +155,50 @@ export function isDynamicAccordionItem(
   return "component" in item;
 }
 
+
+// =====================================================
+// Chart Item Data
+// =====================================================
+
+export interface ChartItemData {
+  label: string;
+  value: number;
+}
+
+// =====================================================
+// Chart Props
+// =====================================================
+
+export interface ChartProps {
+  chartType: "line" | "bar" | "pie";
+  data: ChartItemData[];
+}
+
+// =====================================================
+// Chart List Data
+// Represents individual charts
+// =====================================================
+
+export interface ChartListData {
+  id: string;
+  label: string;
+  component: string;
+  props?: ChartProps;
+}
+
+// =====================================================
+// Chart Component Data
+// Represents the parent chart-page component
+// =====================================================
+
+export interface ChartComponentData {
+  id: "chart-page";
+  label: string;
+  component: string;
+  props?: Record<string, unknown>;
+  items?: ChartListData[];
+}
+
 // =====================================================
 // Chart Page
 // =====================================================
@@ -162,5 +206,5 @@ export function isDynamicAccordionItem(
 export interface ChartData {
   name: string;
   advSettings: Record<string, unknown>;
-  items: AccordionComponentData[];
+  items: ChartComponentData[];
 }
