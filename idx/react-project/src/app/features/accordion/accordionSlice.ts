@@ -4,8 +4,9 @@ import type {
   AccordionData,
   AccordionDynamicItemData,
   AccordionItemData,
-  EditState
 } from "../../../components/UiComponents/accordion/type";
+
+import type {EditState } from "../../../types/types";
 
 const STORAGE_KEY = "idx-component-demo:accordion";
 

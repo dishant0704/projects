@@ -1,6 +1,7 @@
 
 import { createAsyncThunk, createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type {ChartData, ChartListData, EditState } from "../../../components/UiComponents/accordion/type";
+import type {EditState } from "../../../types/types";
+import type {ChartData, ChartListData } from "../../../types/chart";
 
 const STORAGE_KEY = "idx-component-demo:chart-data";
 

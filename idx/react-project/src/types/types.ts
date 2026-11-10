@@ -35,3 +35,13 @@ export type ImageData = {
   image: string;
 };
 
+// =====================================================
+// Edit State
+// =====================================================
+
+export type EditState = {
+  flag: boolean;
+  inx: number | null;
+};
+
+

@@ -36,7 +36,6 @@
           "title": "Image Text Component",
           "component": "image-text-component",
           "props": {
-            "id": "",
             "accordionTitle": "Image Text Component",
             "title": "First slide label",
             "content": "Some representative placeholder content for the first slide. Some representative placeholder content for the first slide.vSome representative placeholder content for the first slide.",
@@ -56,7 +55,6 @@
           "title": "Profile Picture Component",
           "component": "profile-picture-component",
           "props": {
-            "id": "",
             "accordionTitle": "Developer",
             "title": "",
             "content": "",
@@ -78,7 +76,6 @@
           "title": "Profile Picture Carousel Component",
           "component": "demo_c",
           "props": {
-            "id": "",
             "accordionTitle": "Profile Picture Carousel Component",
             "title": "",
             "content": "",

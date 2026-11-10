@@ -24,10 +24,11 @@ export interface AccordionItemData {
 
 export interface AccordionDynamicItemData
   extends Omit<BaseAccordionItemData, "props"> {
-  component?: string;
+  component: string;
   index?: number;
   props?: Record<string, unknown>;
 }
+
 // =====================================================
 // Regular Accordion Component
 // =====================================================
@@ -61,15 +62,6 @@ export type AccordionComponentData =
   | DynamicAccordionComponentData;
 
 // =====================================================
-// Edit State
-// =====================================================
-
-export type EditState = {
-  flag: boolean;
-  inx: number | null;
-};
-
-// =====================================================
 // Accordion Page
 // =====================================================
 
@@ -95,13 +87,17 @@ export interface AccordionProps {
 // Runtime Dynamic Accordion Item
 // =====================================================
 
-export interface DynamicAccordionItemData
-  extends BaseAccordionItemData {
-  component: string;
-}
+// export interface DynamicAccordionItemData
+//   extends BaseAccordionItemData {
+//   component: string;
+// }
+
+export type DynamicAccordionItemData =
+  AccordionDynamicItemData;
 
 export interface DynamicAccordionProps {
   items: DynamicAccordionItemData[];
+  defaultActiveTab?: number;
   allowMultiple?: boolean;
   headerButtonObj?: {
     flag: boolean;
@@ -153,58 +149,4 @@ export function isDynamicAccordionItem(
   item: AccordionItemData | AccordionDynamicItemData
 ): item is AccordionDynamicItemData {
   return "component" in item;
-}
-
-
-// =====================================================
-// Chart Item Data
-// =====================================================
-
-export interface ChartItemData {
-  label: string;
-  value: number;
-}
-
-// =====================================================
-// Chart Props
-// =====================================================
-
-export interface ChartProps {
-  chartType: "line" | "bar" | "pie";
-  data: ChartItemData[];
-}
-
-// =====================================================
-// Chart List Data
-// Represents individual charts
-// =====================================================
-
-export interface ChartListData {
-  id: string;
-  label: string;
-  component: string;
-  props?: ChartProps;
-}
-
-// =====================================================
-// Chart Component Data
-// Represents the parent chart-page component
-// =====================================================
-
-export interface ChartComponentData {
-  id: "chart-page";
-  label: string;
-  component: string;
-  props?: Record<string, unknown>;
-  items?: ChartListData[];
-}
-
-// =====================================================
-// Chart Page
-// =====================================================
-
-export interface ChartData {
-  name: string;
-  advSettings: Record<string, unknown>;
-  items: ChartComponentData[];
 }

@@ -3,7 +3,8 @@ import type { AccordionItemData } from "../accordion/type";
 
 export type ComponentName =
   | "ReguralAccordion"
-  | "DynamicAccordion";
+  | "DynamicAccordion"
+  | "SubPage";
 
 export interface PageTabItem {
   id: string;
@@ -21,7 +22,7 @@ export interface TabItem {
   componentName?:string;
   icon?:React.ComponentType<any>;
   iconWithText?:boolean | false
-  component: React.ComponentType<any>;
+  component?: React.ElementType<any>;
   props?: Record<string, unknown>;
   data?: unknown[]
   disabled?: boolean;

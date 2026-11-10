@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import type { TabsProps } from "./types";
 
 import TabPanel from "./TabPanel";
@@ -33,11 +33,11 @@ const Tabs: React.FC<TabsProps> = (props) => {
   const activeContent = items.find(
     (item) => item.id === activeTab
   );
-
+  console.log("activeContent:", activeContent);
   const Component = activeContent?.component;
   const componentProps = activeContent?.props;
 
-  // console.log("activeTab:", activeTab);
+  console.log("componentProps:", componentProps);
 
   return (
     <div className={`w-full ${className ?? ""}`}>
@@ -63,7 +63,9 @@ const Tabs: React.FC<TabsProps> = (props) => {
 
       {/* Content */}
       <TabPanel>
-        {Component && <Component {...componentProps} />}
+        <Suspense fallback={<div>Loading component...</div>}>
+          {Component && <Component {...componentProps} />}
+        </Suspense>
       </TabPanel>
 
     </div>

@@ -1,35 +1,35 @@
 {
-    "name": "chart",
-    "advSettings": {},
-    "items": [
+  "name": "chart",
+  "advSettings": {},
+  "items": [
+    {
+      "id": "chart-page",
+      "label": "Chart Page",
+      "component": "SubPage",
+      "props": {},
+      "items": [
         {
-            "id": "chart-page",
-            "label": "Chart Page",
-            "component": "chartComponent",
-            "props": {},
-            "items": [
-                {
-                    "label": "Chart Page",
-                    "component": "chartComponent",
-                    "props": {
-                        "chartType": "line",
-                        "data": [
-                            {
-                                "label": "January",
-                                "value": 30
-                            },
-                            {
-                                "label": "February",
-                                "value": 20
-                            },
-                            {
-                                "label": "March",
-                                "value": 50
-                            }
-                        ]
-                    }
-                }
+          "id": 1,
+          "title": "Line Chart",
+          "component": "line-chart",
+          "props": {
+            "data": [
+              {
+                "label": "January",
+                "value": 30
+              },
+              {
+                "label": "February",
+                "value": 20
+              },
+              {
+                "label": "March",
+                "value": 50
+              }
             ]
+          }
         }
-    ]
+      ]
+    }
+  ]
 }

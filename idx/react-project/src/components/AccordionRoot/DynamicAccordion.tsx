@@ -47,29 +47,28 @@ const DynamicAccordion = ({data = []}:DynamicAccordionProps) => {
 
         return tabsData.map((tab) => {
             const{componentName, icon, id, label, iconWithText, props}=tab
-            const registryItem = ComponentRegistry[componentName];
-            if (!registryItem) {
-              return <div>Component not found: {componentName}</div>;
-            }
-            const defaultProps = registryItem.props;
+             const registryItem = ComponentRegistry[componentName];
 
-            const Component = registryItem.component;
+            const Component = registryItem?.component;
+
             const Icon = icon ? IconRegistry[icon] : undefined;
-            const tabData = {
-                id: id,
-                label: label,
+
+            return {
+                id,
+                label,
                 icon: Icon,
-                iconWithText: iconWithText,
-                component:
-                    Component ??
-                    (() => <div>Component "{componentName}" not found</div>),
+                iconWithText,
+
+                component: Component ?? (() => (
+                    <div>Component "{componentName}" not found</div>
+                )),
+
                 props: {
-                    ...defaultProps,
+                    ...(registryItem?.props ?? {}),
                     ...props,
                     data: safeData,
                 },
-            }
-            return tabData
+            };
         })
 
     },[data])

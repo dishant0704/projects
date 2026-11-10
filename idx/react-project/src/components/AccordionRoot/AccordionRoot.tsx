@@ -3,9 +3,6 @@ import { useEffect, useMemo } from "react";
 
 import Tabs from "../UiComponents/Tabs";
 
-import ReguralAccordion from "./ReguralAccordion";
-import DynamicAccordion from "./DynamicAccordion";
-
 import {
   useAppDispatch,
   useAppSelector,
@@ -16,14 +13,7 @@ import {
 } from "../../app/features/accordion/accordionSlice";
 
 import type { TabItem } from "../UiComponents/Tabs/types";
-
-const componentRegistry: Record<
-  string,
-  React.ComponentType<any>
-> = {
-  ReguralAccordion,
-  DynamicAccordion,
-};
+import { ComponentRegistry } from "../ComponentRegistry";
 
 const AccordionRoot = () => {
   const dispatch = useAppDispatch();
@@ -57,16 +47,17 @@ const AccordionRoot = () => {
     if (!page?.items) {
       return [];
     }
-
+    
     return page.items.map((tab) => {
-      const Component = componentRegistry[tab.component];
+      const ParentComponent =
+          ComponentRegistry[tab.component]?.component;
 
       return {
         id: tab.id,
         label: tab.label,
 
         component:
-          Component ?? (() => <div>Component "{tab.component}" not found</div>),
+          ParentComponent ?? (() => <div>Component "{tab.component}" not found</div>),
 
         props: {
           ...(tab.props ?? {}),

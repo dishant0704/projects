@@ -30,7 +30,7 @@ const ReguralAccordion = ({ data = [] }: ReguralAccordionProps) => {
   const tabs = useMemo<TabItem[]>(() => {
     const safeData = Array.isArray(data) ? data : [];
 
-    const tabsData:TabConfig[] = [
+    const tabsData: TabConfig[] = [
       {
         id: "accList",
         componentName: "accordion-list",
@@ -52,33 +52,27 @@ const ReguralAccordion = ({ data = [] }: ReguralAccordionProps) => {
     return tabsData.map((tab) => {
       const { componentName, icon, id, label, iconWithText, props } = tab;
       const registryItem = ComponentRegistry[componentName];
-      if (!registryItem) {
-        return <div>Component not found: {componentName}</div>;
-      }
-      const defaultProps = registryItem.props;
 
-      const Component = registryItem.component;     
-      
-       const Icon = icon
-      ? IconRegistry[icon]
-      : undefined;
-      
-      const tabData = {
-        id: id,
-        label: label,
+      const Component = registryItem?.component;
+
+      const Icon = icon ? IconRegistry[icon] : undefined;
+
+      return {
+        id,
+        label,
         icon: Icon,
-        iconWithText: iconWithText,
-        component:
-          Component ?? (() => <div>Component "{componentName}" not found</div>),
+        iconWithText,
+
+        component: Component ?? (() => (
+          <div>Component "{componentName}" not found</div>
+        )),
 
         props: {
-          ...defaultProps,
+          ...(registryItem?.props ?? {}),
           ...props,
           data: safeData,
         },
       };
-
-      return tabData
     });
   }, [data]);
 

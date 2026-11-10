@@ -1,4 +1,4 @@
-import type React from "react";
+import { lazy } from "react";
 
 import AccordionForm from "./AccordionRoot/AccordionForm";
 import AccordionList from "./AccordionRoot/AccordionList";
@@ -10,8 +10,15 @@ import DynamicForm from "./DynamicForm/DynamicForm";
 import ImagesList from "./UiComponents/Images/ImagesList";
 import ComponentLayoutData from "./DynamicForm/ComponentLayoutData";
 
+const ReguralAccordion = lazy(() => import("../components/AccordionRoot/ReguralAccordion"));
+const DynamicAccordion = lazy(() => import("../components/AccordionRoot/DynamicAccordion"));
+
 import DemoA from "./demo/DemoA";
 import DemoC from "./demo/DemoC";
+
+
+import SubPage from "./SubPage";
+import Chart from "./Chart/Chart"
 
 // Icons
 import {
@@ -23,6 +30,8 @@ import {
   Trash2Icon,
 } from "lucide-react";
 import DemoB from "./demo/DemoB";
+
+
 
 // -------------------------------------
 // Registry Types
@@ -39,15 +48,21 @@ export interface TextFieldSchema {
 export interface ImageFieldSchema {
   type: "image";
   flag?: boolean;
-  multiImage?: boolean;  
+  multiImage?: boolean;
 }
 
 export type PropSchemaField = TextFieldSchema | ImageFieldSchema;
 
 export type PropSchema = Record<string, PropSchemaField>;
 
+// export interface RegistryComponentProps {
+//   component: React.ComponentType<any>;
+//   props: Record<string, unknown>;
+//   propSchema?: PropSchema;
+// }
+
 export interface RegistryComponentProps {
-  component: React.ComponentType<any>;
+  component: React.ElementType<any>;
   props: Record<string, unknown>;
   propSchema?: PropSchema;
 }
@@ -110,7 +125,7 @@ export const ComponentRegistry: Record<string, RegistryComponentProps> = {
       images: [],
     },
     propSchema: {
-      accordionTitle:{
+      accordionTitle: {
         type: "text",
         label: "Accordion Title",
         required: true,
@@ -144,7 +159,7 @@ export const ComponentRegistry: Record<string, RegistryComponentProps> = {
       title: "",
       images: [],
     },
-    propSchema: {      
+    propSchema: {
       accordionTitle: {
         type: "text",
         label: "Accordion Title",
@@ -200,7 +215,7 @@ export const ComponentRegistry: Record<string, RegistryComponentProps> = {
       },
     },
     propSchema: {
-      accordionTitle:{
+      accordionTitle: {
         type: "text",
         label: "Accordion Title",
         required: true,
@@ -216,6 +231,25 @@ export const ComponentRegistry: Record<string, RegistryComponentProps> = {
         multiImage: true,
       },
     },
+  },
+
+  ReguralAccordion: {
+    component: ReguralAccordion,
+    props: {},
+  },
+
+  DynamicAccordion: {
+    component: DynamicAccordion,
+    props: {},
+  },
+  SubPage: {
+    component: SubPage,
+    props: {},
+  },
+
+  "chart-component": {
+    component: Chart,
+    props: {},
   },
 };
 
