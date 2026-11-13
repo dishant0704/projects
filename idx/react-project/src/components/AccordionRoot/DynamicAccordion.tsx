@@ -1,53 +1,53 @@
 import { useMemo, useState } from 'react'
 import SubPageTemplate from '../page-templates/SubPageTemplate'
 import AccordionWithComp from '../UiComponents/accordion/AccordionWithComp'
-import type { AccordionDynamicItemData, AccordionItemData} from '../UiComponents/accordion/type'
+import type { AccordionDynamicItemData, AccordionItemData } from '../UiComponents/accordion/type'
 
 import Tabs from '../UiComponents/Tabs'
 import type { TabItem } from '../UiComponents/Tabs/types'
 import { ComponentRegistry, IconRegistry } from '../ComponentRegistry'
 import { useAppSelector } from '../../app/hooks/reducHooks'
 
-interface DynamicAccordionProps{
-    data?:AccordionItemData[]
+interface DynamicAccordionProps {
+    data?: AccordionItemData[]
 }
 
-interface TabConfig{
+interface TabConfig {
     id: string;
-  componentName: string;
-  icon?: string;
-  iconWithText?: boolean;
-  label: string;
-  props?: Record<string, unknown>;
+    componentName: string;
+    icon?: string;
+    iconWithText?: boolean;
+    label: string;
+    props?: Record<string, unknown>;
 }
 
-const DynamicAccordion = ({data = []}:DynamicAccordionProps) => {    
+const DynamicAccordion = ({ data = [] }: DynamicAccordionProps) => {
     const [tabId, setTabId] = useState("accList");
 
     const tabs = useMemo<TabItem[]>(() => {
-        const safeData = Array.isArray(data)? data : [];
-        const tabsData:TabConfig[] = [
+        const safeData = Array.isArray(data) ? data : [];
+        const tabsData: TabConfig[] = [
             {
-        id: "accList",
-        componentName: "accordion-dynamic-list",
-        icon: "list",
-        label: "List",
-        props: { setTabId },
-      },
-      {
-        id: "accForm",
-        componentName: "accordion-dynamic-form",
-        icon: "form",
-        label: "Add Data",
-        props: {
-          setTabId,
-        },
-      },
+                id: "accList",
+                componentName: "accordion-dynamic-list",
+                icon: "list",
+                label: "List",
+                props: { setTabId },
+            },
+            {
+                id: "accForm",
+                componentName: "accordion-dynamic-form",
+                icon: "form",
+                label: "Add Data",
+                props: {
+                    setTabId,
+                },
+            },
         ]
 
         return tabsData.map((tab) => {
-            const{componentName, icon, id, label, iconWithText, props}=tab
-             const registryItem = ComponentRegistry[componentName];
+            const { componentName, icon, id, label, iconWithText, props } = tab
+            const registryItem = ComponentRegistry[componentName];
 
             const Component = registryItem?.component;
 
@@ -71,20 +71,20 @@ const DynamicAccordion = ({data = []}:DynamicAccordionProps) => {
             };
         })
 
-    },[data])
+    }, [data])
 
-    const {page} = useAppSelector((state) => state.accordion);   
-        const accordionDynamicData: AccordionDynamicItemData[] =  page?.items?.find((item) => item.id === "dynAcc")?.items ?? [];    
-   
+    const { page } = useAppSelector((state) => state.accordion);
+    const accordionDynamicData: AccordionDynamicItemData[] = page?.items?.find((item) => item.id === "dynAcc")?.items ?? [];
+
     return (
         <section className=''>
             <SubPageTemplate>
                 <SubPageTemplate.Left>
-                     <h1 className="py-4 border-b border-gray-300 dark:border-zinc-700">Client</h1>
-                    <AccordionWithComp items={accordionDynamicData} defaultActiveTab={0}/>
+                    <h2 className="py-4 border-b border-gray-300 dark:border-zinc-700">Client</h2>
+                    <AccordionWithComp items={accordionDynamicData} defaultActiveTab={0} />
                 </SubPageTemplate.Left>
                 <SubPageTemplate.Right>
-                    <h1 className="py-4 border-b border-gray-300 dark:border-zinc-700">Admin</h1>
+                    <h2 className="py-4 border-b border-gray-300 dark:border-zinc-700">Admin</h2>
                     <Tabs
                         items={tabs}
                         activeTabId={tabId}

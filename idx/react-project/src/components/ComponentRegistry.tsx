@@ -9,6 +9,7 @@ import SorTableList from "./UiComponents/dragAndDrop/SorTableList";
 import DynamicForm from "./DynamicForm/DynamicForm";
 import ImagesList from "./UiComponents/Images/ImagesList";
 import ComponentLayoutData from "./DynamicForm/ComponentLayoutData";
+import ChartListComponent from "./Chart/ChartListComponent";
 
 const ReguralAccordion = lazy(() => import("../components/AccordionRoot/ReguralAccordion"));
 const DynamicAccordion = lazy(() => import("../components/AccordionRoot/DynamicAccordion"));
@@ -17,8 +18,11 @@ import DemoA from "./demo/DemoA";
 import DemoC from "./demo/DemoC";
 
 
-import SubPage from "./SubPage";
-import Chart from "./Chart/Chart"
+import ChartSubPage from "./Chart/ChartSubPage";
+import LineChartComponent from "./Chart/LineChartComponent";
+import CustomShapeBarChart from "./Chart/CustomShapeBarChart";
+import BarChartComponent from "./Chart/BarChartComponent";
+import PieChartComponent from "./Chart/PieChartComponent";
 
 // Icons
 import {
@@ -243,12 +247,32 @@ export const ComponentRegistry: Record<string, RegistryComponentProps> = {
     props: {},
   },
   SubPage: {
-    component: SubPage,
+    component: ChartSubPage,
     props: {},
   },
 
-  "chart-component": {
-    component: Chart,
+  "list-component": {
+    component: ChartListComponent,
+    props: {},
+  },
+
+  "list-chart-component": {
+    component: LineChartComponent,
+    props: {},
+  },
+
+   "custom-shape-bar-chart-component": {
+    component: CustomShapeBarChart,
+    props: {},
+  },
+
+  "bar-chart-component": {
+    component: BarChartComponent,
+    props: {},
+  },
+
+   "pie-chart-component": {
+    component: PieChartComponent,
     props: {},
   },
 };

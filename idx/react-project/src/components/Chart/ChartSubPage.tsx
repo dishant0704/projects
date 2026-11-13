@@ -1,10 +1,11 @@
 import { useMemo, useState } from "react";
-import { useAppSelector } from "../app/hooks/reducHooks";
-import { ComponentRegistry, IconRegistry } from "./ComponentRegistry";
-import type { ChartListData, subPageItemData } from "../types/chart";
-import type { TabItem } from "./UiComponents/Tabs/types";
-import SubPageTemplate from "./page-templates/SubPageTemplate";
-import Tabs from "./UiComponents/Tabs";
+import { useAppSelector } from "../../app/hooks/reducHooks";
+import { ComponentRegistry, IconRegistry } from "../ComponentRegistry";
+import type { ChartListData, subPageItemData } from "../../types/chart";
+import type { TabItem } from "../UiComponents/Tabs/types";
+import SubPageTemplate from "../page-templates/SubPageTemplate";
+import Tabs from "../UiComponents/Tabs";
+import ChartWrapper from "./ChartWrapper";
 
 interface SubPageProps {
     data?: subPageItemData[];
@@ -20,15 +21,16 @@ interface TabConfig {
     props?: Record<string, unknown>;
 }
 
-const SubPage = ({ data = [], pageId }: SubPageProps) => {
+const ChartSubPage = ({ data = [], pageId }: SubPageProps) => {
     const [tabId, setTabId] = useState("chartList");
+    const [index, setIndex] = useState<number>(0)
 
     const tabs = useMemo<TabItem[]>(() => {
         const safeData = Array.isArray(data) ? data : [];
         const tabsData: TabConfig[] = [
             {
                 id: "chartList",
-                componentName: "chart-list",
+                componentName: "list-component",
                 icon: "list",
                 label: "List",
                 props: { setTabId },
@@ -71,20 +73,16 @@ const SubPage = ({ data = [], pageId }: SubPageProps) => {
         })
 
     }, [data]);
-
-    console.log("pageId:", pageId);
-
-    const { page } = useAppSelector((state) => state.chart);
-    const chartsData: ChartListData[] = page?.items?.find((item) => item.id === pageId)?.items ?? [];
-    console.log("chartsData:", chartsData);
+    
     return (
         <section className=''>
             <SubPageTemplate>
                 <SubPageTemplate.Left>
-                    <h1 className="py-4 border-b border-gray-300 dark:border-zinc-700">Client</h1>
+                    <h2 className="py-4 border-b border-gray-300 dark:border-zinc-700">Client</h2>
+                    <ChartWrapper index={index} />
                 </SubPageTemplate.Left>
                 <SubPageTemplate.Right>
-                    <h1 className="py-4 border-b border-gray-300 dark:border-zinc-700">Admin</h1>
+                    <h2 className="py-4 border-b border-gray-300 dark:border-zinc-700">Admin</h2>
                     <Tabs
                         items={tabs}
                         activeTabId={tabId}
@@ -98,4 +96,4 @@ const SubPage = ({ data = [], pageId }: SubPageProps) => {
     )
 }
 
-export default SubPage
+export default ChartSubPage

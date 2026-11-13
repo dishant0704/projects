@@ -3,7 +3,7 @@
 // Chart Item Data
 // =====================================================
 
-import type { AccordionItemData } from "../components/UiComponents/accordion/type";
+import type { AccordionItemData, BaseAccordionItemData } from "../components/UiComponents/accordion/type";
 
 export interface subPageItemData extends AccordionItemData{}
 
@@ -58,4 +58,15 @@ export interface ChartData {
   name: string;
   advSettings: Record<string, unknown>;
   items: ChartComponentData[];
+}
+
+// =====================================================
+// Dynamic Accordion Item (JSON / Redux data)
+// =====================================================
+
+export interface ChartDynamicItemData
+  extends Omit<BaseAccordionItemData, "props"> {
+  component: string;
+  index?: number;
+  props?: Record<string, unknown>;
 }

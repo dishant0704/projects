@@ -33,33 +33,34 @@ const Tabs: React.FC<TabsProps> = (props) => {
   const activeContent = items.find(
     (item) => item.id === activeTab
   );
-  console.log("activeContent:", activeContent);
+  
   const Component = activeContent?.component;
   const componentProps = activeContent?.props;
-
-  console.log("componentProps:", componentProps);
 
   return (
     <div className={`w-full ${className ?? ""}`}>
 
       {/* Tab Buttons */}
-      <div
-        className={`flex ${align === "right" ? "justify-end":""} border-b border-gray-300 dark:border-zinc-700 gap-4`}
-        role="tablist"
-      >
-        {items.map((tabItem) => {
-          const { id } = tabItem;
+      {items.length > 1 && (
 
-          return (
-            <Tab
-              key={id}
-              item={tabItem}
-              active={activeTab === id}
-              onClick={() => handleTabChange(id)}
-            />
-          );
-        })}
-      </div>
+        <div
+          className={`flex ${align === "right" ? "justify-end" : ""} border-b border-gray-300 dark:border-zinc-700 gap-4`}
+          role="tablist"
+        >
+          {items.map((tabItem) => {
+            const { id } = tabItem;
+
+            return (
+              <Tab
+                key={id}
+                item={tabItem}
+                active={activeTab === id}
+                onClick={() => handleTabChange(id)}
+              />
+            );
+          })}
+        </div>
+      )}
 
       {/* Content */}
       <TabPanel>

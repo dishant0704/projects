@@ -1,7 +1,7 @@
 
 import { createAsyncThunk, createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type {EditState } from "../../../types/types";
-import type {ChartData, ChartListData } from "../../../types/chart";
+import type { EditState } from "../../../types/types";
+import type { ChartData, ChartDynamicItemData, ChartListData } from "../../../types/chart";
 
 const STORAGE_KEY = "idx-component-demo:chart-data";
 
@@ -123,7 +123,7 @@ const chartSlice = createSlice({
     // --------------------------------------------------
     //  Add a new chart.
     // --------------------------------------------------
-    addChart: (
+    addChartItem: (
       state,
       action: PayloadAction<ChartListData>
     ) => {
@@ -150,6 +150,104 @@ const chartSlice = createSlice({
         JSON.stringify(state.page)
       );
     },
+
+    // --------------------------------------------------
+    //  Add a new Chart item
+    // --------------------------------------------------
+    addDynamicChartItem: (
+      state,
+      action: PayloadAction<ChartDynamicItemData>
+    ) => {
+      if (!state.page) {
+        return;
+      }
+
+      const dynamicAccordion = state.page.items.find(
+        (item) => item.id === "chart-page"
+      );
+
+      if (!dynamicAccordion) {
+        return;
+      }
+
+      if (!Array.isArray(dynamicAccordion.items)) {
+        dynamicAccordion.items = [];
+      }
+      console.log("action.payload: ", action.payload)
+      dynamicAccordion.items.push(action.payload);
+
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(state.page)
+      );
+    },
+
+    // --------------------------------------------------
+    //  Delete an accordion item from Dynamic Accordion.
+    // --------------------------------------------------
+    deleteDynamicChartItem: (
+      state,
+      action: PayloadAction<number | string>
+    ) => {
+      if (!state.page) {
+        return;
+      }
+
+      const dynamicAccordion = state.page.items.find(
+        (item) => item.id === "chart-page"
+      );
+
+      if (!dynamicAccordion || !Array.isArray(dynamicAccordion.items)) {
+        return;
+      }
+
+      dynamicAccordion.items = dynamicAccordion.items.filter(
+        (item) => item.id !== action.payload
+      );
+
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(state.page)
+      );
+    },
+
+    // --------------------------------------------------
+    //  Replace the order of Regular Accordion items.
+    // --------------------------------------------------
+    reorderChartItems: (
+      state,
+      action: PayloadAction<ChartDynamicItemData[]>
+    ) => {
+      if (!state.page) {
+        return;
+      }
+
+      const regularAccordion = state.page.items.find(
+        (item) => item.id === "chart-page"
+      );
+
+      if (!regularAccordion) {
+        return;
+      }
+
+      regularAccordion.items = action.payload;
+
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(state.page)
+      );
+    },
+
+    // --------------------------------------------------
+    //  Store the edite object.
+    // --------------------------------------------------
+    setEditObject: (
+      state,
+      action: PayloadAction<EditState>
+    ) => {
+      state.editObject = action.payload;
+    },
+
   },
 
   extraReducers: (builder) => {
@@ -170,5 +268,18 @@ const chartSlice = createSlice({
       });
   },
 });
+
+// =====================================================
+// Exports
+// =====================================================
+
+export const {
+  setChartPage,
+  addChartItem,
+  addDynamicChartItem,
+  deleteDynamicChartItem,
+  reorderChartItems,
+  setEditObject,
+} = chartSlice.actions;
 
 export default chartSlice.reducer;

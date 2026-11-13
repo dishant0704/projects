@@ -11,20 +11,199 @@
         {
           "id": 1,
           "title": "Line Chart",
-          "component": "line-chart",
+          "component": "list-chart-component",
           "props": {
+            "xAxisKey": "year",
             "data": [
               {
-                "label": "January",
-                "value": 30
+                "year": 2017,
+                "react": 32,
+                "vue": 37,
+                "angular": 60
               },
               {
-                "label": "February",
-                "value": 20
+                "year": 2018,
+                "react": 42,
+                "vue": 57,
+                "angular": 42
               },
               {
-                "label": "March",
-                "value": 50
+                "year": 2019,
+                "react": 51,
+                "vue": 54,
+                "angular": 41
+              },
+              {
+                "year": 2020,
+                "react": 60,
+                "vue": 28,
+                "angular": 31
+              },
+              {
+                "year": 2021,
+                "react": 51,
+                "vue": 27,
+                "angular": 31
+              },
+              {
+                "year": 2022,
+                "react": 95,
+                "vue": 49,
+                "angular": 44
+              },
+              {
+                "year": 2023,
+                "react": 73,
+                "vue": 42,
+                "angular": 31
+              },
+              {
+                "year": 2024,
+                "react": 85,
+                "vue": 15,
+                "angular": 31
+              }
+            ]
+          }
+        },
+        {
+          "id": 2,
+          "title": "Custom Shape Bar Chart",
+          "component": "custom-shape-bar-chart-component",
+          "props": {
+            "xAxisKey": "year",
+            "data": [
+              {
+                "year": 2017,
+                "react": 32,
+                "vue": 37,
+                "angular": 60
+              },
+              {
+                "year": 2018,
+                "react": 42,
+                "vue": 57,
+                "angular": 42
+              },
+              {
+                "year": 2019,
+                "react": 51,
+                "vue": 54,
+                "angular": 41
+              },
+              {
+                "year": 2020,
+                "react": 60,
+                "vue": 28,
+                "angular": 31
+              },
+              {
+                "year": 2021,
+                "react": 51,
+                "vue": 27,
+                "angular": 31
+              },
+              {
+                "year": 2022,
+                "react": 95,
+                "vue": 49,
+                "angular": 44
+              },
+              {
+                "year": 2023,
+                "react": 73,
+                "vue": 42,
+                "angular": 31
+              },
+              {
+                "year": 2024,
+                "react": 85,
+                "vue": 15,
+                "angular": 31
+              }
+            ]
+          }
+        },
+        {
+          "id": 3,
+          "title": "Bar Chart",
+          "component": "bar-chart-component",
+          "props": {
+            "xAxisKey": "year",
+            "data": [
+              {
+                "year": 2017,
+                "react": 32,
+                "vue": 37,
+                "angular": 60
+              },
+              {
+                "year": 2018,
+                "react": 42,
+                "vue": 57,
+                "angular": 42
+              },
+              {
+                "year": 2019,
+                "react": 51,
+                "vue": 54,
+                "angular": 41
+              },
+              {
+                "year": 2020,
+                "react": 60,
+                "vue": 28,
+                "angular": 31
+              },
+              {
+                "year": 2021,
+                "react": 51,
+                "vue": 27,
+                "angular": 31
+              },
+              {
+                "year": 2022,
+                "react": 95,
+                "vue": 49,
+                "angular": 44
+              },
+              {
+                "year": 2023,
+                "react": 73,
+                "vue": 42,
+                "angular": 31
+              },
+              {
+                "year": 2024,
+                "react": 85,
+                "vue": 15,
+                "angular": 31
+              }
+            ]
+          }
+        },
+        {
+          "id": 4,
+          "title": "Pie Chart",
+          "component": "pie-chart-component",
+          "props": {
+            "xAxisKey": "name",
+            "data": [
+              {
+                "name": "react",
+                "value": 10
+              },
+              {
+                "name": "vue",
+                "value": 1
+              },
+              {
+                "name": "angular",
+                "value": 3
+              },
+              {
+                "name": "JavaScript",
+                "value": 15
               }
             ]
           }

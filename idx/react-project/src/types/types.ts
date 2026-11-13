@@ -44,4 +44,14 @@ export type EditState = {
   inx: number | null;
 };
 
+// =====================================================
+// List Item
+// =====================================================
+
+export interface ListItemData {
+  id: string | number;
+  title: string;
+  content: string;
+  index?: number;
+}
 

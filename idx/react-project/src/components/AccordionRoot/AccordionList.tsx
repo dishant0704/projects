@@ -15,11 +15,11 @@ import type {
 
 import { Trash2Icon, PencilIcon } from "lucide-react";
 
-interface AccordionFormProps {
+interface AccordionListProps {
   setTabId: (tabId: string) => void;
 }
 
-const AccordionList:React.FC<AccordionFormProps>= (props) => {
+const AccordionList:React.FC<AccordionListProps>= (props) => {
   const dispatch = useAppDispatch();
   const{setTabId} = props
 
