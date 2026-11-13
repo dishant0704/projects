@@ -9,12 +9,13 @@ import { Trash2Icon, PencilIcon } from "lucide-react";
 import { reorderChartItems } from '../../app/features/chart/chartSlice';
 
 interface ChartListComponentProps {
+  setIndex?:(inx: number) => void;
   setTabId: (tabId: string) => void;
 }
 
 const ChartListComponent:React.FC<ChartListComponentProps> = (props) => {
   const dispatch = useAppDispatch();
-  const { setTabId } = props;
+  const {setIndex, setTabId } = props;
 
   const { page } = useAppSelector((state) => state.chart);
 
@@ -39,8 +40,7 @@ const ChartListComponent:React.FC<ChartListComponentProps> = (props) => {
         // dispatch(deleteAccordionItem(item.id));
       },
       [dispatch]
-    );
-
+    );    
   return (
     <div>
       <SorTableList<ChartListData>
@@ -57,7 +57,8 @@ const ChartListComponent:React.FC<ChartListComponentProps> = (props) => {
         renderItem={(item, inx) => (
           <div className="items-center justify-between w-full grid grid-cols-5 gap-5 sm:grid-cols-7 flex-1">
             <div className="col-span-5 align-middle">
-              <h3 className="font-medium">{item.title}</h3>
+              {setIndex? <div><a onClick={()=>setIndex(inx)} className="font-medium cursor-pointer">{item.title}</a></div>: <h3 className="font-medium">{item.title}</h3> }
+              
             </div>
 
             <div>

@@ -33,7 +33,7 @@ const ChartSubPage = ({ data = [], pageId }: SubPageProps) => {
                 componentName: "list-component",
                 icon: "list",
                 label: "List",
-                props: { setTabId },
+                props: { setIndex, setTabId },
             },
             {
                 id: "chartForm",
