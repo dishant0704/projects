@@ -23,6 +23,11 @@ import LineChartComponent from "./Chart/LineChartComponent";
 import CustomShapeBarChart from "./Chart/CustomShapeBarChart";
 import BarChartComponent from "./Chart/BarChartComponent";
 import PieChartComponent from "./Chart/PieChartComponent";
+import ScatterChartComponent from "./Chart/ScatterChartComponent";
+import StraightAnglePieChartComponent from "./Chart/StraightAnglePieChartComponent";
+import CustomActiveShapePieChartComponent from "./Chart/CustomActiveShapePieChartComponent";
+import PieChartGapRoundedCorners from "./Chart/PieChartGapRoundedCorners";
+import NightingaleChartComponent from "./Chart/NightingaleChartComponent";
 
 // Icons
 import {
@@ -261,7 +266,7 @@ export const ComponentRegistry: Record<string, RegistryComponentProps> = {
     props: {},
   },
 
-   "custom-shape-bar-chart-component": {
+  "custom-shape-bar-chart-component": {
     component: CustomShapeBarChart,
     props: {},
   },
@@ -271,12 +276,40 @@ export const ComponentRegistry: Record<string, RegistryComponentProps> = {
     props: {},
   },
 
-   "pie-chart-component": {
+  "pie-chart-component": {
     component: PieChartComponent,
+    props: {},
+  },
+
+  "straight-angle-pie-chart": {
+    component: StraightAnglePieChartComponent,
+    props: {},
+  },
+
+  "custom-active-shape-pie-chart": {
+    component: CustomActiveShapePieChartComponent,
+    props: {},
+  },
+
+  "pie-chart-with-gap-and-rounded-corners": {
+    component: PieChartGapRoundedCorners,
+    props: {},
+  },
+
+  "nightingale-chart-component": {
+    component: NightingaleChartComponent,
+    props: {},
+  },
+
+  "scatter-chart-component": {
+    component: ScatterChartComponent,
     props: {},
   },
 };
 
+//chart data
+//
+// straight-angle-pie-chart
 // -------------------------------------
 // Icon Registry
 // -------------------------------------
