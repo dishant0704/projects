@@ -35,15 +35,15 @@ const ChartSubPage = ({ data = [], pageId }: SubPageProps) => {
                 label: "List",
                 props: { setIndex, setTabId },
             },
-            {
-                id: "chartForm",
-                componentName: "chart-form",
-                icon: "form",
-                label: "Add Data",
-                props: {
-                    setTabId,
-                },
-            },
+            // {
+            //     id: "chartForm",
+            //     componentName: "chart-form",
+            //     icon: "form",
+            //     label: "Add Data",
+            //     props: {
+            //         setTabId,
+            //     },
+            // },
         ]
 
         return tabsData.map((tab) => {

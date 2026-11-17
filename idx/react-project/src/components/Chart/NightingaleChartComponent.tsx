@@ -98,12 +98,15 @@ const NightingaleChartComponent: React.FC<NightingaleChartComponentProps> = ({ d
     // #endregion
     const maxValue = Math.max(...data.map(entry => entry.value));
 
+    const newData = data.map((itme, inx)=> {return{...itme, fill:COLORS[inx]}})
+    console.log("newData: ", newData)
+
     const getOuterRadius = (entry: PieData) =>
         `${25 + (entry.value / maxValue) * 65}%`;
     return (
         <PieChart style={chartStyle} responsive>
             <Pie
-                data={data}
+                data={newData}
                 dataKey="value"
                 nameKey="name"
                 cx="50%"

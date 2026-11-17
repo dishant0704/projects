@@ -28,6 +28,7 @@ import StraightAnglePieChartComponent from "./Chart/StraightAnglePieChartCompone
 import CustomActiveShapePieChartComponent from "./Chart/CustomActiveShapePieChartComponent";
 import PieChartGapRoundedCorners from "./Chart/PieChartGapRoundedCorners";
 import NightingaleChartComponent from "./Chart/NightingaleChartComponent";
+import RadialBarChartComponent from "./Chart/RadialBarChartComponent";
 
 // Icons
 import {
@@ -303,6 +304,11 @@ export const ComponentRegistry: Record<string, RegistryComponentProps> = {
 
   "scatter-chart-component": {
     component: ScatterChartComponent,
+    props: {},
+  },
+
+  "radial-bar-chart-component": {
+    component: RadialBarChartComponent,
     props: {},
   },
 };

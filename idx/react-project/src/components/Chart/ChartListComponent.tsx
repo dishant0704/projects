@@ -62,23 +62,23 @@ const ChartListComponent:React.FC<ChartListComponentProps> = (props) => {
             </div>
 
             <div>
-              <button
+              {/* <button
                 type="button"
                 onClick={() => handleEdit(inx)}
                 className="p-2 text-base block text-orange-400 cursor-pointer"
               >
                 <PencilIcon />
-              </button>
+              </button> */}
             </div>
 
             <div>
-              <button
+              {/* <button
                 type="button"
                 onClick={() => handleDelete(item)}
                 className="p-2 text-base block text-red-400 cursor-pointer"
               >
                 <Trash2Icon />
-              </button>
+              </button> */}
             </div>
           </div>
         )}
